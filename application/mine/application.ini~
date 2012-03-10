@@ -81,7 +81,7 @@ resources.doctrine.dbal.connections.default.parameters.dbname   = "db-flo-test" 
 resources.doctrine.dbal.connections.default.parameters.host = "localhost" ;db01-share
 resources.doctrine.dbal.connections.default.parameters.port = 3306
 resources.doctrine.dbal.connections.default.parameters.user = "root" ;Custom App-22840
-resources.doctrine.dbal.connections.default.parameters.password = "root" ;
+resources.doctrine.dbal.connections.default.parameters.password = "root" ; flow.123
 ;resources.doctrine.dbal.connections.default.parameters.driverOptions.ATTR_USE_BUFFERED_QUERIES = true
 
 ; ------------------------------------------------------------------------------
