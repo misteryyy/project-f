@@ -26,6 +26,7 @@ class CallsTest extends \PHPUnit_Framework_TestCase {
     public function testQuote()
     {
         $calls = new Calls();
+        
         $request = new \App_Webservice_Types_Request_QuoteRequest();
         $request->id = 1;
         $response = $calls->quote($request);

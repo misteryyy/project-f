@@ -2,10 +2,10 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\User")
- * @Table(name="user")
+ * @Entity(repositoryClass="App\Repository\UserTag")
+ * @Table(name="user_tag")
  */
-class User
+class UserTag
 {
     /**
      * @Id @Column(type="integer", name="id")
@@ -14,32 +14,12 @@ class User
     private $id;
     /** @Column(type="string", name="name") */
     private $name;
-    /** @Column(type="string", name="email") */
-    private $email;
-
-    /** @Column(type="string", name="password") */
-    private $password;
     
     /**
-     *
-     * @param \Doctrine\Common\Collections\Collection $property
-     *
-     * @OneToMany(targetEntity="Project",mappedBy="user", cascade={"persist","remove"})
+     * 
+     * @ManyToMany(targetEntity="User",mappedBy="user", cascade={"ALL"})
      */
-    private $projects; 
-    
-     /**
-      * @ManyToMany(targetEntity="UserTag", inversedBy="user_tag", cascade={"persist,remove"})
-      * @JoinTable(name="user_has_user_tag",
-      *  joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-      *  inverseJoinColumns={@JoinColumn(name="user_tag_id",referencedColumnName="id")})
-      */
-  	private $user_tags;
-    
-    public function __construct(){
-    	$this->user_tags = new \Doctrine\Common\Collections\ArrayCollection();
-    	
-    }
+    private $users;
     
     /*
      * Reflection methods
@@ -53,6 +33,7 @@ class User
     {
     	$this->$property = $value;
     }
+    
     
     
 //     public function getId()

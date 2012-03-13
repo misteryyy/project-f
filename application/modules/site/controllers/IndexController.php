@@ -199,7 +199,14 @@ class Site_IndexController extends Zend_Controller_Action
             		'controller' => 'index',
             		'module'     => 'site',
             		'label'      => 'Server Info'
+            		),
+            	array(
+            		'label' => 'RackTest',
+            		'uri'   => 'http://www.flo.dev/check-env.php'
             		)
+            	
+            		
+            		
               
             )
         );
