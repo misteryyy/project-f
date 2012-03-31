@@ -5,6 +5,7 @@
       <directory>./application</directory>
     </testsuite>
   </testsuites>
+  
   <filter>
     <whitelist>
         <directory suffix=".php">./library/App</directory>

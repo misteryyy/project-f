@@ -1,13 +1,26 @@
-<div class="topbar">
-  <div class="fill">
-    <div class="container">
-      <a class="brand" href="/">Project-F</a>
-      <?php echo $this->navigation()->menu(); ?>
-        <form action="<?=$this->baseUrl('/index/search')?>" class="pull-right">
-            <input class="input" name="query" type="text" placeholder="">
-            <button class="btn" type="submit"><?php echo $this->translate("Search"); ?></button>
-        </form>
-    </div>
-  </div>
-</div>
+<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/admin">Project-F</a>			
+        			<div class="nav-collapse">
+                    <ul class="nav">
+					  <?php echo $this->navigation()->menu()->setUlClass('nav'); ?>
+        		    </ul>	             
+                    	    <form  action="<?=$this->baseUrl('/index/search')?>" class="navbar-search pull-right">
+    						  <input type="text" class="query" placeholder="Search">
+     						</form>
+					</div>	
+        			
+			</div>
+		</div>
+	</div>
 
+	<!-- Breadcrumbs generation -->
+		<ul class="breadcrumb">
+		<?php 
+		echo $this->navigation()->breadcrumbs()
+		->setLinkLast(true)->setMinDepth(0)
+		->setPartial(array('/index/partials/breadcrumb.phtml','site'));
+		?>
+		</ul>
+	

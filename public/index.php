@@ -5,7 +5,7 @@ defined('APPLICATION_PATH')
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
@@ -19,6 +19,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
 		get_include_path(),
 )));
 
+// Custom functions to help development
+require_once APPLICATION_PATH . '/../library/Utils.php';
 
 // Activate PSR-0 Autoloading; pseudo-namespaces defined in application.ini
 include "Zend/Loader/Autoloader.php";
@@ -35,11 +37,23 @@ if (APPLICATION_ENV == 'development')
 }
 
 // Create application, bootstrap, and run
+//$application = new Zend_Application(
+  //  APPLICATION_ENV,
+  //  APPLICATION_PATH . '/configs/application.ini'
+//);
+
+
+// Bootstrap with initialization in manyfiles
 $application = new Zend_Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
-);
+		APPLICATION_ENV,
+		array( 'config' => array(
+						APPLICATION_PATH . '/configs/application.ini',
+				)
+				)
+				);
+
 
 $application->bootstrap()
             ->run();
+
  

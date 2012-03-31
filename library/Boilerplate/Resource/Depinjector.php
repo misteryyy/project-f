@@ -6,6 +6,7 @@ class Boilerplate_Resource_Depinjector
 
     public function init()
     {
+    	//die ("init");
         return $this->getDependencyInjector();
     }
 

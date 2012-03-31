@@ -52,7 +52,7 @@ class ZFDebug_Controller_Plugin_Debug_Plugin_Doctrine2
      */
     public function __construct(array $options = array())
     {
-    	
+
         if (isset($options['entityManagers'])) {
             $this->_em = $options['entityManagers'];
         }

@@ -1,6 +1,6 @@
 <?php
 
-class Site_IndexController extends Zend_Controller_Action
+class Site_IndexController extends Custom_Controller_Action_Abstract
 {
 
     /**
@@ -21,6 +21,7 @@ class Site_IndexController extends Zend_Controller_Action
 
     public function init()
     {
+    	parent::init();
         $this->_em = Zend_Registry::get('em');
     }
 
@@ -127,27 +128,11 @@ class Site_IndexController extends Zend_Controller_Action
         }
     }
     
-    public function playgroundAction()
-    {
-    	$addQuoteForm = new \App\Form\AddQuote();
-    	$this->view->form = $addQuoteForm;
-    	$this->checkSearchindex();
-    
-    	try {
-    		$data = $this->_em->getRepository("\App\Entity\Quote")
-    		->findThemAll();
-    		$this->view->data = $data;
-    	}
-    	catch (Exception $e) {
-    		$this->view->databaseError = true;
-    	}
-    }
     
     public function phpInfoAction(){
     			
     }
-    
-    
+     
     private function checkSearchindex()
     {
         try {
@@ -179,41 +164,22 @@ class Site_IndexController extends Zend_Controller_Action
     }
 
     public function headerAction()
+    {    
+    }
+    
+    public function leftMenuAction()
     {
-        $container = new Zend_Navigation(
-            array(
-                array(
-                    'action'     => 'index',
-                    'controller' => 'index',
-                    'module'     => 'site',
-                    'label'      => 'Home'
-                ),
-            	array(
-                    'action'     => 'playground',
-                    'controller' => 'index',
-                    'module'     => 'site',
-                    'label'      => 'Playground'
-                ),
-            	array(
-            		'action'     => 'php-info',
-            		'controller' => 'index',
-            		'module'     => 'site',
-            		'label'      => 'Server Info'
-            		),
-            	array(
-            		'label' => 'RackTest',
-            		'uri'   => 'http://www.flo.dev/check-env.php'
-            		)
-            	
-            		
-            		
-              
-            )
-        );
-
-        $this->view->navigation($container);
     }
 
+    
+    public function sitemapAction()
+    {
+    	$this->view->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	echo $this->view->navigation()->sitemap();
+    
+    }
+    
     public function footerAction()
     { 
         $cache = Zend_Registry::get('cache');

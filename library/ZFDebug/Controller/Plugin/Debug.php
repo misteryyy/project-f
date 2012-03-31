@@ -235,7 +235,23 @@ class ZFDebug_Controller_Plugin_Debug extends Zend_Controller_Plugin_Abstract
             if ($tab == '') {
                 continue;
             }
-
+			
+            //setting debug panel
+            if (strtolower($tab) == 'debug')
+            {
+            	$debug_session = new Zend_Session_Namespace(Custom_Controller_Plugin_Debug::DEBUG_NAMESPACE);
+            	if (isset($debug_session->debug))
+            	{
+            		$plugin->setPanel( $debug_session->debug);
+            		//Delete session for next debugging information
+            		Zend_Session::namespaceUnset(Custom_Controller_Plugin_Debug::DEBUG_NAMESPACE);
+            		$style = 'style="background-color:#ff4500;"';	 
+            	}
+            }else
+            	{
+            		$style = '';
+            }
+  
             if (null !== $this->_options['image_path'] && 
                 file_exists($this->_options['image_path'] .'/'. $plugin->getIdentifier() .'.png')) {
                 
@@ -244,9 +260,12 @@ class ZFDebug_Controller_Plugin_Debug extends Zend_Controller_Plugin_Abstract
                 $pluginIcon = $plugin->getIconData();
             }
 
+       
+            
+            
             /* @var $plugin ZFDebug_Controller_Plugin_Debug_Plugin_Interface */
             $showPanel = ($plugin->getPanel() == '') ? 'log' : $plugin->getIdentifier();
-            $html .= "\t".'<span id="ZFDebugInfo_'.$plugin->getIdentifier()
+            $html .= "\t".'<span '.$style.'  id="ZFDebugInfo_'.$plugin->getIdentifier()
                    . '" class="ZFDebug_span clickable" onclick="ZFDebugPanel(\'ZFDebug_' 
                    . $showPanel . '\');">' . "\n";
             if ($pluginIcon) {
@@ -266,6 +285,7 @@ class ZFDebug_Controller_Plugin_Debug extends Zend_Controller_Plugin_Abstract
         $html .= "</div>\n";
         $html .= '<div id="ZFDebugResize"></div>';
 
+        
         /**
          * Creating menu tab for all registered plugins
          */
@@ -284,6 +304,11 @@ class ZFDebug_Controller_Plugin_Debug extends Zend_Controller_Plugin_Abstract
         $this->_output($html);
     }
 
+    
+   
+    
+    
+    
     ### INTERNAL METHODS BELOW ###
 
     /**

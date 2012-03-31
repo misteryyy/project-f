@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <nav>
+     	<home>
+            <label>Home</label>
+            <order>0</order>
+            <module>site</module>
+            <controller>index</controller>
+            <action>index</action>
+        </home>
+        
+        <member>
+            <label>Member</label>
+            <uri>/member/</uri>
+            <pages>
+                <login>
+                    <label>Member Login</label>
+                    <uri>/member/index/login</uri>    
+                </login>
+                <signup>
+                    <label>Member Sign Up</label>
+                    <uri>/member/index/sign-up</uri>
+                   	<resource>guest</resource>
+                 </signup>
+            </pages>
+        </member>
+        
+     
+           <playground>
+			<label>Playground</label>
+			<uri>/site/playground/index</uri>
+					<pages>
+		              <server-info>
+							<label>Server info</label>
+							<uri>/site/index/php-info</uri>
+						</server-info>
+						
+						<rack-test>
+								<label>Rack Test</label>
+								<uri>/check-env.php</uri>
+						</rack-test>
+              
+            		</pages>	
+			</playground>
+     
+ 
+    </nav>
+</config>
+

@@ -1,17 +1,34 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
-{   
-   // protected function _initConfig() {
-    	//BP version / Zend_Registry::set('config', $this->getOptions());
-    //	Zend_Registry::set('config', new Zend_Config($this->getOptions()));
-    //}
-    
+{     
     public function _initConfig()
     {
     	Zend_Registry::set('config', $this->getOptions());
     }
     
+    public function _initNavigation(){
+    	$this->bootstrap('layout');
+    	$layout = $this->getResource('layout');
+    	$view = $layout->getView();
+    	
+    	$config = new Zend_Config_Xml(APPLICATION_PATH. '/configs/navigation/navigation.xml','nav');
+    	$navigation_container = new Zend_Navigation($config);
+    	$view->navigation($navigation_container);
+    	$view->navigation_container = $navigation_container;
+    }
+    
+    
+    /*
+     * Registering of better Twitter UI FlashMessenger 
+     */
+    public function _initRegViewHelpers(){
+    	$this->bootstrap('layout');
+    	$layout = $this->getResource('layout');
+    	$view = $layout->getView();
+    	$view->addHelperPath('Boilerplate/View/Helper','Boilerplate_View_Helper');
+    }
+  
     public function _initAutoloaderNamespaces()
     {
         require_once APPLICATION_PATH .
@@ -28,7 +45,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('App');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'App');
-
+        
+        $fmmAutoloader = new \Doctrine\Common\ClassLoader('Custom');
+        $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'Custom');
+         
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('Boilerplate');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'Boilerplate');
 
@@ -66,13 +86,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     			->datetime);
     }
     
+   
     
     public function _initLocale()
     {
         $config = $this->getOptions();
         
+        // Reading information about language setting
         try{
             $locale = new Zend_Locale(Zend_Locale::BROWSER);
+                    
         } catch (Zend_Locale_Exception $e) {
             $locale = new Zend_Locale($config['resources']['locale']['default']);
         }
@@ -122,7 +145,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	if (FALSE === defined('DEBUG')) {
     		define('DEBUG', FALSE);
     	}
-    
+    	
     	$logger = new Zend_Log();
     	$writer = new Zend_Log_Writer_Firebug();
     	$logger->addWriter($writer);
@@ -130,25 +153,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
       
     
-    
-    protected function _initZFDebug()
-    {
-    	if (!DEBUG) { return FALSE;} // if debug mod is not on, don't display ZFDebug panel
-    	
-    	$autoloader = Zend_Loader_Autoloader::getInstance();
-    	$autoloader->registerNamespace('ZFDebug');
-    
-    	$options = array(
-    			'plugins' => array('Variables', 
-    		 	'File' => array('basePath' => '/'),	
-    			'ZFDebug_Controller_Plugin_Debug_Plugin_Doctrine2',
-    			'Exception')
-    	);
-    	  	
-    	$debug = new ZFDebug_Controller_Plugin_Debug($options); 
-    	$this->bootstrap('frontController');
-    	$frontController = $this->getResource('frontController');
-    	$frontController->registerPlugin($debug);
+    //adding routes to the application
+    protected function _initRewrite() {
+    	$front = Zend_Controller_Front::getInstance();
+    	$router = $front->getRouter();
+    	$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/routes.ini', 'production');
+    	$router->addConfig($config,'routes');
     }
+    
 
 }

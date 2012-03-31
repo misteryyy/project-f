@@ -20,43 +20,59 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
-
-  <!-- CSS: implied media=all -->
+  <!-- CSS: implied media=all -->  
   <!-- CSS concatenated and minified via ant build script-->
   <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
   <link rel="stylesheet" href="<?=$this->baseUrl('/css/bootstrap.css')?>">
   <!-- end CSS-->
-
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
-
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
+	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
+	     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 </head>
 
 <body>
 
-    <?= $this->action('header', 'index', 'site');  ?>
+    
 
-    <div class="container" style="margin-top:70px;">
-      <?php echo $this->layout()->content; ?>
+  <div class="row-fluid" style="margin-left:10px">
+  <div class="span11" >
+   
+   <?= $this->action('header', 'index', 'site');  ?>
 
+    <div class="row-fluid">
+      <div class="span2" >
+      	   <?= $this->action('left-menu', 'index', 'site');  ?>
+      </div>
+
+      <div class="span10">
+         <!-- Bootstrap messaging generator -->
+      	<?php echo $this->flashMessenger() ; ?>
+      	
+      	
+        <?php echo $this->layout()->content; ?>
+      </div>
+    </div>
+    
     <footer>
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>
+  </div>
+</div>
+      
+    
 
-    </div>
+    
   <!-- JavaScript at the bottom for fast page loading -->
-
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
-
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
   <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="<?=$this->baseUrl('js/libs/bootstrap.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/script.js')?>"></script>
+
   <!-- end scripts-->
 
 
@@ -67,8 +83,6 @@
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
     });
   </script>
-
-
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7 ]>

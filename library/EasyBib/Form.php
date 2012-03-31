@@ -47,6 +47,11 @@
 
 class EasyBib_Form extends Zend_Form
 {
+	/**
+	 * Class constants
+	 */
+	const DISPOSITION_HORIZONTAL = 'horizontal';
+	
     protected $model;
 
     /**
@@ -64,6 +69,7 @@ class EasyBib_Form extends Zend_Form
     {
         $this->model = $model;
     }
+    
     /**
      * Proxie to Zend_Form::isValid()
      * calls buildBootstrapErrorDecorators for parent::isValid() returning false

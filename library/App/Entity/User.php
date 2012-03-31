@@ -5,8 +5,15 @@ namespace App\Entity;
  * @Entity(repositoryClass="App\Repository\User")
  * @Table(name="user")
  */
-class User
+class User implements \Zend_Acl_Role_Interface
 {
+	// must be implemented for acl
+	public function getRoleId()
+	{
+		return 'guest';
+	}
+	
+	
     /**
      * @Id @Column(type="integer", name="id")
      * @GeneratedValue

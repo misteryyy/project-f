@@ -12,6 +12,9 @@ class DatabaseTest extends phpRack_Test
         $password = $config['resources']['doctrine']['dbal']['connections']['default']['parameters']['password'];
         $dbname = $config['resources']['doctrine']['dbal']['connections']['default']['parameters']['dbname'];
 
+       // var_dump(array($host,$port,$username,$password,$dbname));
+      //  exit;
+        
         $this->assert->db->mysql
             ->connect($host, $port, $username, $password)
             ->dbExists($dbname);
