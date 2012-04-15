@@ -1,11 +1,11 @@
 <?php
 
 function debug($object, $label = '') {
-    Custom_Controller_Plugin_Debug::debug($object, $label);
+    Boilerplate_Controller_Plugin_Debug::debug($object, $label);
 }
 
 function logger($message, $type = Zend_Log::INFO) {
-    Custom_Controller_Plugin_Debug::logger($message, $type);
+    Boilerplate_Controller_Plugin_Debug::logger($message, $type);
 }
 
 function array_key_exists_recursive($needle, $haystack) {

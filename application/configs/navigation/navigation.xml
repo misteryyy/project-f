@@ -7,6 +7,12 @@
             <module>site</module>
             <controller>index</controller>
             <action>index</action>
+        	<pages>
+						<sitemap>
+								<label>Sitemap</label>
+								<uri>/site/index/sitemap</uri>
+						</sitemap>
+        	</pages>
         </home>
         
         <member>
@@ -15,13 +21,19 @@
             <pages>
                 <login>
                     <label>Member Login</label>
-                    <uri>/member/index/login</uri>    
+                    <uri>/member/index/login</uri>
+                    <resource>guest</resource>    
                 </login>
                 <signup>
                     <label>Member Sign Up</label>
                     <uri>/member/index/sign-up</uri>
                    	<resource>guest</resource>
                  </signup>
+                  <dashboard>
+                    <label>Member Dashboard </label>
+                    <uri>/member/dashboard/index</uri>
+                   	<resource>member</resource>
+                 </dashboard>
             </pages>
         </member>
         
@@ -39,6 +51,7 @@
 								<label>Rack Test</label>
 								<uri>/check-env.php</uri>
 						</rack-test>
+							
               
             		</pages>	
 			</playground>

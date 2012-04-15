@@ -11,7 +11,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$this->bootstrap('layout');
     	$layout = $this->getResource('layout');
     	$view = $layout->getView();
-    	
     	$config = new Zend_Config_Xml(APPLICATION_PATH. '/configs/navigation/navigation.xml','nav');
     	$navigation_container = new Zend_Navigation($config);
     	$view->navigation($navigation_container);
@@ -150,8 +149,38 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$writer = new Zend_Log_Writer_Firebug();
     	$logger->addWriter($writer);
     	Zend_Registry::set('logger', $logger);
+    
     }
-      
+
+    // init Auth Plugin
+    protected function _initAuthPlugin() {
+    	Zend_Controller_Front::getInstance()->registerPlugin(
+    			new Boilerplate_Controller_Plugin_Auth(Zend_Auth::getInstance())
+    	);
+    }
+    
+    
+    /**
+     * Initialisation of the ACL singleton class with injected dependencies.
+     *
+     * @return void
+     */
+    protected function _initAcl()
+    {
+    	$roleConfigPath = APPLICATION_PATH . '/configs/acl/roles.xml';
+    	$resourceConfigPath = APPLICATION_PATH . '/configs/acl/resources.xml';
+    
+    	//$acl = Default_Model_Acl::getInstance();
+    	//$acl->setRoles(new Zend_Config_Xml($roleConfigPath,
+    		//	Default_Model_Acl::ROLES_CONFIG_CHILDROLES_IDENTIFIER))
+    		//	->setResources(new Zend_Config_Xml($resourceConfigPath,
+    		//			Default_Model_Acl::RESOURCES_CONFIG_CHILDRESOURCES_IDENTIFIER));
+    
+    	//		$this->registerPluginResource(new Default_Model_Acl_Plugin());
+    }
+    
+    
+    
     
     //adding routes to the application
     protected function _initRewrite() {

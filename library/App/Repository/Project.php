@@ -1,7 +1,11 @@
 <?php
 namespace App\Repository;
 
+
+use Doctrine\ORM\Mapping\Entity;
+
 use Doctrine\ORM\EntityRepository;
+use App\Entity;
  
 class Project extends EntityRepository
 {

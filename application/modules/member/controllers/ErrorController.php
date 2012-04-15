@@ -1,6 +1,6 @@
 <?php
 
-class Member_ErrorController extends Zend_Controller_Action
+class Member_ErrorController extends  Boilerplate_Controller_Action_Abstract
 {
 
     public function errorAction()

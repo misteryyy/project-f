@@ -32,21 +32,23 @@ class PublicMemberSignUp extends \EasyBib_Form
     	->setDescription('is used like a login name')
     	->addValidator('emailAddress');
     	
+    	
     	$password->setLabel("Password:")
     	->setRequired(true)
     	->setDescription('Password has to be min 5 letters long')
-    	->addValidator('Between',true, array('min' => 5, 'max' => 20)); // password bettween 5-20 letters
+    	->addValidator('StringLength',array(5,20));
     	
     	$password_verify->setLabel("Password verification:")
     	->setRequired(true)
     	->addValidator('Identical', true, array('token' => 'password'))
-    	->addValidator('Between',true, array('min' => 5, 'max' => 20)); // password bettween 5-20 letters
-    	
+    	->addValidator('StringLength',array(5,20));
     	
     	$radio->setLabel('Choose green color box:')
-    	->setMultiOptions(array('1' => PHP_EOL . 'Yellow', '2' => PHP_EOL . 'Blue','3' => PHP_EOL . 'Red','4' => PHP_EOL . 'Black'))
-    	->setRequired(true);
-    	
+    	->setMultiOptions(array('1' => PHP_EOL . 'Green', '2' => PHP_EOL . 'Blue','3' => PHP_EOL . 'Red','4' => PHP_EOL . 'Black'))
+    	->setRequired(true)
+    	->addValidator('Between',true, array('min' => 1, 'max' => 1)); // value one
+    	   
+
     	$submit->setLabel('Sign up')
     	->setAttrib('type', 'submit');
     	$cancel->setLabel('Cancel');
@@ -72,6 +74,7 @@ class PublicMemberSignUp extends \EasyBib_Form
     		require_once 'Zend/Form/Exception.php';
     		throw new \Zend_Form_Exception(__METHOD__ . ' expects an array');
     	}
+
     	return parent::isValid($data);
     }
 

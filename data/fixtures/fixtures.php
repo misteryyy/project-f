@@ -1,13 +1,19 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: Michael
- * Date: 15.03.11
- * Time: 18:32
- * To change this template use File | Settings | File Templates.
+ * Created by Studio Slepice
+ * User: Misteryyy
+ * Date: 4.4.2012
+ * Time: 
  */
+
 $newQuote = new \App\Entity\Quote();
-$newQuote->setWording("Don’t let the past steal your present.");
+$newQuote->setWording("Don't let steal your present.");
 $newQuote->setAuthor("Cherralea Morgen");
+$em->persist($newQuote);
+$em->flush();
+
+$newQuote = new \App\Entity\Quote();
+$newQuote->setWording("Koukni se doprava,  než přejdeš doleva.");
+$newQuote->setAuthor("Josef Kortan");
 $em->persist($newQuote);
 $em->flush();

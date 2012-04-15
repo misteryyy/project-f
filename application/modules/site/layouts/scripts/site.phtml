@@ -34,14 +34,12 @@
 </head>
 
 <body>
-
-    
-
   <div class="row-fluid" style="margin-left:10px">
   <div class="span11" >
    
    <?= $this->action('header', 'index', 'site');  ?>
-
+   <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+  
     <div class="row-fluid">
       <div class="span2" >
       	   <?= $this->action('left-menu', 'index', 'site');  ?>
@@ -50,12 +48,9 @@
       <div class="span10">
          <!-- Bootstrap messaging generator -->
       	<?php echo $this->flashMessenger() ; ?>
-      	
-      	
         <?php echo $this->layout()->content; ?>
       </div>
-    </div>
-    
+    </div> 
     <footer>
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>

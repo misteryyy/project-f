@@ -1,6 +1,6 @@
 <?php
 
-class Project_IndexController extends Zend_Controller_Action
+class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 {
 
     public function init()

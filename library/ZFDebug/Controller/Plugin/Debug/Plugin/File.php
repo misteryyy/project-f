@@ -65,9 +65,9 @@ class ZFDebug_Controller_Plugin_Debug_Plugin_File
      */
     public function __construct(array $options = array())
     {
-        isset($options['base_path']) || $options['base_path'] = $_SERVER['DOCUMENT_ROOT'];
+    	
+        isset($options['base_path']) || $options['base_path'] = $_SERVER["DOCUMENT_ROOT"];
         isset($options['library']) || $options['library'] = null;
-        
         $this->_basePath = realpath($options['base_path']);
         is_array($options['library']) || $options['library'] = array($options['library']);
         $this->_library = array_merge($options['library'], array('Zend', 'ZFDebug'));

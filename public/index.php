@@ -26,6 +26,7 @@ require_once APPLICATION_PATH . '/../library/Utils.php';
 include "Zend/Loader/Autoloader.php";
 Zend_Loader_Autoloader::getInstance();
 
+
 // Making XDebug more chatty in Development Environment
 if (APPLICATION_ENV == 'development')
 {

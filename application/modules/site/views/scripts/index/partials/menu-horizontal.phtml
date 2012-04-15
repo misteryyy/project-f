@@ -14,7 +14,9 @@ foreach ($this->container as $page) {
     
     // header
     $html[] = '<li class="nav-header">';
+    $html[] = '<a href="' . $page->getHref() . '">';
     $html[] = $page->getLabel();
+    $html[] = "</a>";
     $html[] = "</li>";
 
     if (!empty($page->pages)) {

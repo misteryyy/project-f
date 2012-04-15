@@ -1,6 +1,6 @@
 <?php
 
-class Site_PlaygroundController extends Custom_Controller_Action_Abstract
+class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
 {
 
     /**
@@ -30,7 +30,10 @@ class Site_PlaygroundController extends Custom_Controller_Action_Abstract
     
     public function indexAction()
     {
-    	$this->_helper->layout()->disableLayout();
+    	//$this->_helper->layout()->disableLayout();
+    	
+   
+    	
     	
     	
     	/*

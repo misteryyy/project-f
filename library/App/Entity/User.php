@@ -5,15 +5,8 @@ namespace App\Entity;
  * @Entity(repositoryClass="App\Repository\User")
  * @Table(name="user")
  */
-class User implements \Zend_Acl_Role_Interface
+class User 
 {
-	// must be implemented for acl
-	public function getRoleId()
-	{
-		return 'guest';
-	}
-	
-	
     /**
      * @Id @Column(type="integer", name="id")
      * @GeneratedValue
@@ -47,6 +40,8 @@ class User implements \Zend_Acl_Role_Interface
     	$this->user_tags = new \Doctrine\Common\Collections\ArrayCollection();
     	
     }
+    
+    
     
     /*
      * Reflection methods

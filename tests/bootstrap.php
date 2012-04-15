@@ -6,7 +6,7 @@ defined('APPLICATION_PATH')
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
@@ -20,13 +20,16 @@ set_include_path(implode(PATH_SEPARATOR, array(
 		get_include_path(),
 )));
 
+
 include "Zend/Loader/Autoloader.php";
-$l = Zend_Loader_Autoloader::getInstance();
-$l->registerNamespace('Bisna_');
-// Create application, bootstrap, and run
+Zend_Loader_Autoloader::getInstance();
+
+require_once 'ModelTestCase.php';
+// Creating application
 $application = new Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
 
+// Bootstrapping resources
 $application->bootstrap();

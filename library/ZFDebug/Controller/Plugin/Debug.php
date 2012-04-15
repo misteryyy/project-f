@@ -239,12 +239,12 @@ class ZFDebug_Controller_Plugin_Debug extends Zend_Controller_Plugin_Abstract
             //setting debug panel
             if (strtolower($tab) == 'debug')
             {
-            	$debug_session = new Zend_Session_Namespace(Custom_Controller_Plugin_Debug::DEBUG_NAMESPACE);
+            	$debug_session = new Zend_Session_Namespace(Boilerplate_Controller_Plugin_Debug::DEBUG_NAMESPACE);
             	if (isset($debug_session->debug))
             	{
             		$plugin->setPanel( $debug_session->debug);
             		//Delete session for next debugging information
-            		Zend_Session::namespaceUnset(Custom_Controller_Plugin_Debug::DEBUG_NAMESPACE);
+            		Zend_Session::namespaceUnset(Boilerplate_Controller_Plugin_Debug::DEBUG_NAMESPACE);
             		$style = 'style="background-color:#ff4500;"';	 
             	}
             }else
