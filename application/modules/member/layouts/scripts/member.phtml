@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
   <meta charset="utf-8">
-  <title>Project-F Beta / Member ZONE</title>
+  <title>Project-F Beta / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
   <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
   <link rel="stylesheet" href="<?=$this->baseUrl('/css/bootstrap.css')?>">
 	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>

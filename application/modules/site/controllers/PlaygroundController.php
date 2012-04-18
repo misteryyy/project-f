@@ -19,6 +19,8 @@ class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
      */
     protected $_randomQuote = null;
 
+    
+    
     public function init()
     {
     	parent::init();
@@ -32,10 +34,15 @@ class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
     {
     	//$this->_helper->layout()->disableLayout();
     	
-   
-    	
-    	
-    	
+    	try{
+  		throw new Exception("Password already exists");
+    	} catch (Exception $e){
+    		/*
+    		 * Exception message
+    		*/
+    		$this->_helper->FlashMessenger( array('error' => 	$e->getMessage())
+    		);		
+    	}
     	/*
     	 * Error message
     	*/
@@ -74,6 +81,7 @@ class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
     		// print error
     		else {
     			$testForm->buildBootstrapErrorDecorators();
+    			
     			$this->view->messages = array('error', 'Please control your input!'); // extra message on top
     		}
     	}

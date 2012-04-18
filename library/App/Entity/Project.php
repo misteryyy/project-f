@@ -1,12 +1,19 @@
 <?php
 namespace App\Entity;
-
 /**
  * @Entity(repositoryClass="App\Repository\Project")
  * @Table(name="project")
  */
 class Project
 {
+	const LEVEL_1 = 1;
+	const LEVEL_2 = 2;
+	const LEVEL_3 = 3;
+	
+	const STATUS_DRAFT = 1;
+	const STATUS_PUBLISHED = 2;
+	
+	
     /**
      * @Id @Column(type="integer", name="id")
      * @GeneratedValue
@@ -18,13 +25,44 @@ class Project
     /** @Column(type="string", name="pitch_sentence") */
     private $_pitch_sentence;
 
+    /** @Column(type="datetime",name="created") */
+    private $created;
+    
+    /** @Column(type="integer", name="view_count") */ 
+    private $viewCount;
+    
+    
+    /** @Column(type="integer") */
+    private $status;
+    
+    /**
+     * @column(type="datetime")
+     */
+    public $modified;
+    /**
+     * @prePersist
+     * @preUpdatet
+     */
+    public function update(){
+    	$this->modified = new \DateTime('now');	
+    }
+    
+    public function getCreated(){
+    	return $this->created;
+    }
+
+    /**
+     * @manyToOne(targetEntity="Category", inversedBy="project")
+     * @joinColumn(name="category_id")
+     */
+    private $category;
+    
     public function getId()
     {
         return $this->_id;
     }
     
     /**
-     *
      * @var User
      * @ManyToOne(targetEntity="User")
      * @JoinColumns({
@@ -32,7 +70,45 @@ class Project
      * })
      */
     private $user;
+        
+	/**
+	* @manyToMany(targetEntity="ProjectTag")
+	* @joinTable(
+	* name="project_has_project_tag",
+	* joinColumns={
+	*         @joinColumn(name="project_id", referencedColumnName="id")
+	*    },
+	*inverseJoinColumns={
+	*         @joinColumn(name="project_tag_id", referencedColumnName="id")
+	*     }
+	* )
+	*/ 
+    private $tags;
     
+    /**
+     * Date initialization
+     */
+    public function __construct(){
+    	// date
+    	$this->created = new \DateTime("now");
+    	$this->status = static::STATUS_DRAFT;
+    	$this->viewCount = 0;
+    }
+    
+    /**
+     * @return Category
+     */
+    public function getCategory(){
+    	return $this->category;
+    }
+    
+    /**
+     * Set Category
+     */
+    public function setCategory(Category $category){
+    	
+    	$this->category = $category;
+    }
     
     /*
      * Reflection methods
@@ -46,39 +122,5 @@ class Project
     {
     	$this->$property = $value;
     }
-    
-    
-    
-//     /**
-// 	 * @return the $_pitch_sentence
-// 	 */
-// 	public function getPitchSentence() {
-// 		return $this->_pitch_sentence;
-// 	}
-
-// 	/**
-// 	 * @param field_type $_pitch_sentence
-// 	 */
-// 	public function setPitchSentence($pitch) {
-// 		$this->_pitch_sentence = $pitch;
-// 		return $this;
-// 	}
-
-// 	/**
-// 	 * @param field_type $name
-// 	 */
-// 	public function setName($name) {
-// 		$this->_name = $name;
-// 		return $this;
-// 	}
-
-// 	public function getName()
-//     {
-//         return $this->_name;
-//     }
-
-
-
-
 
 }

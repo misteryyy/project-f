@@ -1,7 +1,7 @@
 <phpunit bootstrap="./bootstrap.php" colors="true">
         <testsuite name="App" >
-                <directory>./library</directory>
-                <directory>./application</directory>
+                <directory>./library/App/Entity</directory>
+               <!-- <directory>./application</directory> !-->
         </testsuite>
 <!--
 !-->

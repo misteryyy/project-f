@@ -107,10 +107,10 @@ class ZFDebug_Controller_Plugin_Debug_Plugin_Auth implements ZFDebug_Controller_
     	}
     	$identity = $this->_auth->getIdentity();
 	    if (is_object($identity)) {
-    		$username = $identity->username;
+    		$username = $identity->email;
     	}
     	else {
-    	    $username = $identity['username'];
+    	    $username = $identity['email'];
     	}
 
     	return ' ' . $username;
