@@ -1,3 +1,29 @@
-<div>
-    <?php echo $this->form; ?>
-</div>
+ <?php echo $this->form; ?>
+
+<hr/>
+
+<!-- Load jQuery build -->
+<script type="text/javascript" src="<?=$this->baseUrl('/media/tiny_mce/tiny_mce.js')?>"></script>
+<script type="text/javascript">
+tinyMCE.init({
+        // General options
+        mode : "textareas",
+        theme : "simple",
+        mode : "exact",
+        elements : "content", // just for textarea with id content   
+        plugins : "autolink",
+        width : '80%'
+     
+});
+</script>
+
+
+
+    <ul class="pager">
+    <li>
+    <a href="#">Previous</a>
+    </li>
+    <li>
+    <a href="#">Next</a>
+    </li>
+    </ul>

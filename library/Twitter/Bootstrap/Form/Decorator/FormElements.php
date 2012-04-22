@@ -27,6 +27,7 @@ class Twitter_Bootstrap_Form_Decorator_FormElements extends Zend_Form_Decorator_
     public function render($content)
     {
         $form    = $this->getElement();
+        
         if ((!$form instanceof Zend_Form) && (!$form instanceof Zend_Form_DisplayGroup)) {
             return $content;
         }
@@ -40,6 +41,7 @@ class Twitter_Bootstrap_Form_Decorator_FormElements extends Zend_Form_Decorator_
         foreach ($form as $item) {
             $item->setView($view)
                  ->setTranslator($translator);
+            
             if ($item instanceof Zend_Form_Element) {
                 foreach ($displayGroups as $group) {
                     $elementName = $item->getName();

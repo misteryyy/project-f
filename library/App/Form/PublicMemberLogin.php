@@ -9,8 +9,7 @@ class PublicMemberLogin extends \EasyBib_Form
 {
     public function init()
     {
-        	$this->setMethod('POST');
-    //	$this->setAction($this->getView()->baseUrl('/index/add-custom'));
+        $this->setMethod('post');
     	$this->setAttrib('class', 'form-horizontal');
 
     	$mail = new \Zend_Form_Element_Text('email');

@@ -29,11 +29,40 @@
                     <uri>/member/index/sign-up</uri>
                    	<resource>guest</resource>
                  </signup>
+                 <lost-password>
+                    <label>Member Lost Password</label>
+                    <uri>/member/index/lost-password</uri>
+                   	<resource>guest</resource>
+                 </lost-password>
                   <dashboard>
                     <label>Member Dashboard </label>
                     <uri>/member/dashboard/index</uri>
                    	<resource>member</resource>
                  </dashboard>
+                     <profile>
+               		<label>My Profile</label>
+                    <uri>/member/profile/index</uri>
+                   	<resource>member</resource>   
+                   	 </profile>
+                   	<profile-setting> 
+                   	<label>Profile Settings</label>
+                    <uri>/member/profile-setting/index</uri>
+                   	<resource>member</resource>   
+ 					<pages>
+						<personal-info>
+							<label>Personal Info</label>
+							<uri>/member/profile-setting/personal-info</uri>
+						</personal-info>
+						<member-skills>
+							<label>My skills</label>
+							<uri>/member/profile-setting/member-skills</uri>
+						</member-skills>	
+						<member-picture>
+							<label>Profile picture</label>
+							<uri>/member/profile-setting/member-picture</uri>
+						</member-picture>
+        			</pages>  
+        			</profile-setting>
             </pages>
         </member>
         

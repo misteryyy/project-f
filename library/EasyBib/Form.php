@@ -88,16 +88,21 @@ class EasyBib_Form extends Zend_Form
 
     /**
      * Build Bootstrap Error Decorators
+     * Added text error to the class control-group
      */
     public function buildBootstrapErrorDecorators() {
         foreach ($this->getErrors() AS $key=>$errors) {
+        	
             $htmlTagDecorator = $this->getElement($key)->getDecorator('HtmlTag');
+
             if (empty($htmlTagDecorator)) {
                 continue;
             }
+            
             if (empty($errors)) {
                 continue;
             }
+            
             $class = $htmlTagDecorator->getOption('class');
             $htmlTagDecorator->setOption('class', $class . ' error');
         }

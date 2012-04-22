@@ -15,9 +15,9 @@ class User extends EntityRepository
     
     public function findOneByEmail($email)
     {
-    	$query = $this->_em->createQuery ('SELECT PARTIAL u.{id} FROM App\Entity\User u WHERE u.email = ?1' )
-    	->setParameter (1, $email );
-    	return $query->getResult();
+    	return $this->_em->createQuery ('SELECT u FROM App\Entity\User u WHERE u.email = ?1' )
+    	->setParameter (1, $email )->getResult();
+    	 
     }
     
     

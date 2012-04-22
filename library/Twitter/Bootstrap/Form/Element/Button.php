@@ -32,6 +32,8 @@ class Twitter_Bootstrap_Form_Element_Button extends Twitter_Bootstrap_Form_Eleme
 
     public function __construct($spec, $options = null)
     {
+
+    	 
         if (isset($options['icon'])) {
             // Disable automatic label escaping
             $options['escape'] = false;
@@ -55,7 +57,13 @@ class Twitter_Bootstrap_Form_Element_Button extends Twitter_Bootstrap_Form_Eleme
      */
     private function _renderIcon()
     {
-        return '<i class="' . $this->_icon . '"></i>';
+    	// if we have icon to render
+    	if($this->_icon){
+        
+    		return '<i class="' . $this->_icon . '"></i>';
+    	
+    	}
+    
     }
 
     /**

@@ -27,9 +27,73 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 	
 	}
 	
-	public function logoutAction() {
 	
+	
+	/*
+	 * Lost password 
+	*/
+	public function lostPasswordAction() {	
+		$this->view->pageTitle = 'Lost password';
+
+
+		$form = new \App\Form\PublicMemberLostPassword();
+		$this->view->form = $form;
+		
+		if ($this->_request->isPost ()) {
+				
+			if ($form->isValid ( $this->_request->getPost () )) {
+				// finding user
+				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );	
+				// user doesn't exist, we can create new one
+				if ($user[0]) {	
+					try {
+						$value = createRandomHash(); // newpassword
+						$user[0]->setPassword($value);
+						echo $this->_em->flush ();
+				
+						// TODO SENDING EMAIL
+						// $mailer = new \App\Mailer\HtmlMailer();
+						// $mailer->setSubject("FLO~ Platform / Lost password")
+						// ->addTo("j.kortan@gmail.com")
+						// ->setViewParam('name',"Josef Kortan")
+						// ->sendHtmlTemplate("lost-password.phtml");
+				
+						// SUCCESS
+						$this->_helper->FlashMessenger ( array ('success' => "Now you can use this password to login to FLO~ '$value'" ) );
+						//$this->_redirect('/member/index/login');
+				
+						// something bad happen with Doctrine
+					} catch ( Exception $e ) {
+						$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
+					}
+				}
+				else {
+					$this->_helper->FlashMessenger ( array ('error' => "The provided e-mail address is not associated with a registered user." ) );
+				}
+		
+				$this->_helper->FlashMessenger ( array ('success' => 'New password was sent. After first login please change this password to new one' ) );
+			//	$this->_helper->redirector('index', 'dashboard','member');
+			
+			} else {
+				// $form->buildBootstrapErrorDecorators();
+				$this->_helper->FlashMessenger ( array ('error' => 'Oops... something is wrong with your account email or password. Please try it again.' ) );
+			}
+			
+		}
+	//	$this->_helper->FlashMessenger ( array ('success' => "You have been logout." ) );
+
 	}
+	
+	/*
+	 * Logout from Account
+	 */
+	public function logoutAction() {
+		Zend_Auth::getInstance()->clearIdentity();
+		$this->_helper->FlashMessenger ( array ('success' => "You have been logout." ) );
+		$this->_redirect('/');			
+		
+	}
+	
 	
 	public function loginAction() {
 		$this->view->pageTitle = 'Login';
@@ -84,7 +148,6 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 			if ($form->isValid ( $this->_request->getPost () )) {
 				
 				// finding user
-				
 				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );
 				
 				// user doesn't exist, we can create new one
@@ -132,13 +195,8 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 	
 	}
 	
-	public function headerAction() {
-		// action body
-	}
-	
-	public function footerAction() {
-		// action body
-	}
+
+
 
 }
 

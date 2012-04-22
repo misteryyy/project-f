@@ -8,6 +8,25 @@ function logger($message, $type = Zend_Log::INFO) {
     Boilerplate_Controller_Plugin_Debug::logger($message, $type);
 }
 
+ /*
+  * Function creates random hash, which is used for password recovery
+  */
+ function createRandomHash($length = 8)
+{
+	// Define supported characters in the unique string
+	$seeds = 'abcdefghijklmnopqrstuvwqyz0123456789';
+	$code = '';
+	$count = strlen($seeds);
+
+	for ($i = 0; $i < $length; $i++)
+	{
+	$code .= $seeds[mt_rand(0, $count - 1)];
+	}
+
+	return $code;
+}
+
+
 function array_key_exists_recursive($needle, $haystack) {
     foreach ($haystack as $key => $val) {
         if (is_array($val)) {

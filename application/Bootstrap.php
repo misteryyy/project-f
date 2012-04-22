@@ -8,6 +8,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
     
     public function _initNavigation(){
+    	
     	$this->bootstrap('layout');
     	$layout = $this->getResource('layout');
     	$view = $layout->getView();
@@ -153,11 +154,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     // init Auth Plugin
-    protected function _initAuthPlugin() {
-    	Zend_Controller_Front::getInstance()->registerPlugin(
-    			new Boilerplate_Controller_Plugin_Auth(Zend_Auth::getInstance())
-    	);
-    }
+//     protected function _initAuthPlugin() {
+//     	Zend_Controller_Front::getInstance()->registerPlugin(
+//     			new Boilerplate_Controller_Plugin_Auth(Zend_Auth::getInstance())
+//     	);
+//     }
     
     
     /**

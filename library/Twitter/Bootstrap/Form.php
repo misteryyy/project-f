@@ -26,18 +26,12 @@ abstract class Twitter_Bootstrap_Form extends Zend_Form
     const DISPOSTION_SEARCH      = 'search';
 
     /**
-     * @var string
-     */
-    private $_disposition;
-
-    /**
      * Override the base form constructor.
      *
      * @param null $options
      */
     public function __construct($options = null)
-    { 	
-    		
+    {
         $this->getView()->addHelperPath(
             'Twitter/Bootstrap/View/Helper',
             'Twitter_Bootstrap_View_Helper'
@@ -62,8 +56,12 @@ abstract class Twitter_Bootstrap_Form extends Zend_Form
 
         $this->setDefaultDisplayGroupClass('Twitter_Bootstrap_Form_DisplayGroup');
 
+        $this->setDecorators(array(
+            'FormElements',
+            'Form'
+        ));
+
         parent::__construct($options);
-        
     }
 
     /**
@@ -126,6 +124,8 @@ abstract class Twitter_Bootstrap_Form extends Zend_Form
      */
     protected function _getClassNames(Zend_Form_Element $element = null)
     {
+    	
+    	
         if (null !== $element) {
             return explode(' ', $element->getAttrib('class'));
         }

@@ -20,15 +20,46 @@ class User {
 	 * @Column(type="string", name="email",unique=true)
 	 */
 	private $email;
+	
+	/**
+	 * @Column(type="boolean", name="email_visibility")
+	 */
+	private $emailVisibility;
+	
 	/**
 	 * @Column(type="string", name="password")
 	 */
 	private $password;
 	
+	/**
+	 * @Column(type="string", name="country", columnDefinition="CHAR(2) NOT NULL")
+	 */
+	protected $country;
 	
 	/** @Column(type="smallint",name="confirmed",nullable=true) */
 	private $confirmed;
 
+	/**
+	 * @OneToOne(targetEntity="UserInfo", mappedBy="user")
+	 */
+	private $info;
+	
+	
+	/**
+	 * @Column(type="string", name="description")
+	 */
+	private $description;
+	
+	/**
+	 * @column(type="date",name="date_of_birth")
+	 */
+	public $dateOfBirth;
+	
+	/**
+	 * @Column(type="boolean", name="date_of_birth_visibility")
+	 */
+	private $dateOfBirthVisibility;
+	
 	
 	/**
 	 *

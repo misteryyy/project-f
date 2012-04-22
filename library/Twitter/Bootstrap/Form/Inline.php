@@ -17,7 +17,7 @@
  * @subpackage Form
  * @author Christian Soronellas <csoronellas@emagister.com>
  */
-abstract class Twitter_Bootstrap_Form_Inline extends Twitter_Bootstrap_Form
+class Twitter_Bootstrap_Form_Inline extends Twitter_Bootstrap_Form
 {
     public function __construct($options = null)
     {
@@ -30,11 +30,6 @@ abstract class Twitter_Bootstrap_Form_Inline extends Twitter_Bootstrap_Form
             array('Addon')
         ));
 
-        $this->setDecorators(array(
-            'FormElements',
-            'Form'
-        ));
-        
         parent::__construct($options);
     }
 }
