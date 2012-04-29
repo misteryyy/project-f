@@ -23,6 +23,7 @@ class Twitter_Bootstrap_Form_Element_File extends Zend_Form_Element_File
      */
     public function loadDefaultDecorators()
     {
+    	
         if ($this->loadDefaultDecoratorsIsDisabled()) {
             return $this;
         }

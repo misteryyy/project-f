@@ -23,7 +23,10 @@ class Twitter_Bootstrap_Form_Element_File extends Zend_Form_Element_File
      */
     public function loadDefaultDecorators()
     {
+  
+    	
         if ($this->loadDefaultDecoratorsIsDisabled()) {
+        	
             return $this;
         }
 
@@ -39,12 +42,16 @@ class Twitter_Bootstrap_Form_Element_File extends Zend_Form_Element_File
      */
     private function _existsFileDecorator()
     {
+    	
         foreach ($this->getDecorators() as $decorator) {
             if ($decorator instanceof Zend_Form_Decorator_Marker_File_Interface) {
+            	
+            	
                 return true;
             }
         }
 
+      
         return false;
     }
 }

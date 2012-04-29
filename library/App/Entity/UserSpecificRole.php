@@ -1,21 +1,15 @@
 <?php
 namespace App\Entity;
+// User specific role, which has other atributes like tags. Its not project specific role
 
 /**
- * @Entity(repositoryClass="App\Repository\UserRole")
+ * @Entity(repositoryClass="App\Repository\UserSpecificRole")
  * @Table(name="user_role",indexes={@index(name="search_idx",columns={"type"})})
  */
-class UserRole
+class UserSpecificRole
 {
-	
-	const SYSTEM_ROLE_ADMIN = "admin";
-	const SYSTEM_ROLE_MEMBER = "member";
-	const SYSTEM_ROLE_VISITOR = "visitor";
-	
-	const TYPE_SYSTEM = "system_role";
-	const TYPE_BENEFIT = "benefit_role";
-	
-	const TYPE_MEMBER = "member_role"; // 
+		
+	const TYPE_MEMBER = "user_specific_role"; // 
 	const MEMBER_ROLE_STARTER = "starter";
 	const MEMBER_ROLE_BUILDER = "builder";
 	const MEMBER_ROLE_GROWER = "grower";

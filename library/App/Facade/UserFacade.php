@@ -38,7 +38,81 @@ class UserFacade {
 		
 		
 	}
+	/**
+	 * 
+	 * @param unknown_type $id
+	 * @param unknown_type $data
+	 */
+	public function updateSkills($id,$data = array()){
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );	
+		
+		if($user){
+// 			// delete all tags -> empty textfield
+// 			if(strlen(trim($data['fieldOfInterestTag'])) <= 0){
+// 				$userTags = $user->getUserFieldOfInterestTags();
+// 				// Delete previsou tag from the database
+// 				if(!empty($userTags)){
+// 					foreach($userTags as $tag){
+// 						//check if the tag is not the same
+// 						$user->removeUserFieldOfInterestTag($tag);
+// 						// noone else has this tag, delete it from database
+// 						if($tag->getUsers()->count() == 0){
+// 							$this->em->remove($tag); // delete entity tag
+// 						}
+// 					}
+// 				}
+// 				$this->em->flush();
+// 			}
+		
+		
+// 			// user has some tags
+// 			if(strlen(trim($data['fieldOfInterestTag'])) > 0){
+		
+// 				$tags = explode(',', $data['fieldOfInterestTag']);
+// 				$tags = trimArray($tags);
+					
+// 				// delete all tags before update them
+// 				$userTags = $user->getUserFieldOfInterestTags();
+// 				// Delete previsou tag from the database
+// 				if(!empty($userTags)){
+// 					foreach($userTags as $tag){
+		
+// 						if(!in_array($tag->getName(), $tags)){ //check if the tag is not the same
+// 							$user->removeUserFieldOfInterestTag($tag);
+// 							// noone else has this tag, delete it from database
+// 							if($tag->getUsers()->count() == 0){
+// 								//echo "Number of users for this tag " . $tag->getUsers()->Count();
+									
+// 								$this->em->remove($tag); // delete entity tag
+// 							}
+// 						}
+// 					}
+// 				}
 
+// 				// addTags
+// 				foreach ($tags as $tag_string){
+// 					$tag = $this->em->getRepository("\App\Entity\UserFieldOfInterestTag")->findOneBy(array("name"=> $tag_string));
+// 					if($tag){
+// 						echo $tag->getName();
+// 						//$user->addUserTag($tag);
+// 					}else {
+// 						$tagObj = new \App\Entity\UserFieldOfInterestTag();
+// 						$tagObj->setName($tag_string);
+// 						$user->addUserFieldOfInterestTag($tagObj);
+// 					}
+// 				}
+		
+// 				$this->em->flush();
+		
+	//		}
+		
+		} else {
+			throwException("Can't find this user.");
+		}
+		
+		
+	}
+	
 	/**
 	 * Update information about user
 	 * @param unknown_type $id

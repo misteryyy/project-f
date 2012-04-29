@@ -45,8 +45,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     	//$this->view->pageTitle = $member->name . '\'s Dashboard \ Member settings' ;
       	 $form = new \App\Form\MemberPersonalInfoForm();
     
-       
-    	
        if ($this->_request->isPost()) {
        	if ($form->isValid($this->_request->getPost())) {
        		$facadeUser = new \App\Facade\UserFacade($this->_em);	
@@ -64,7 +62,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        	}
        	// not validated properly
        	else {
-       		$this->view->messages = array('error', 'Please control your input!'); // extra message on top
+       		$this->_helper->FlashMessenger( array('error' => "Please check your input."));
        		$error = true;
        	}
        
@@ -77,9 +75,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        $values = $form->getValues();	      
        // retriving data for form
         $user = $facadeUser->findUserSettings($id);
-          
-      // pr($user->getInfo());
-       
         // if its not initialize
         ($user->getDateOfBirth() != null) ?  $dateOfBirth = $user->getDateOfBirth()->format('Y/m/d') : $dateOfBirth = '';
         
@@ -106,10 +101,47 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     }
     
     
+    /**
+     * Change profile picture
+     */
     public function memberPictureAction()
     {
-    	$member = Zend_Auth::getInstance()->getIdentity();
-    	$this->view->pageTitle = $member->name . '\'s Dashboard \ Profile Picture' ;
+    	
+    	$this->view->pageTitle = $this->_member['name'] . '\'s Dashboard \ Profile Picture' ;
+    	$form = new \App\Form\MemberChangeProfilePicture(); 	
+    	//then process your file, it's path is found by calling $upload->getFilename()
+    	$this->view->form = $form;
+    	// Checking the file
+	
+    	if($this->_request->isPost()){	
+    		
+    		if ($form->isValid($this->_request->getPost())) {	
+    			
+    			//$form->file_picture->setFile("New nazev.jpg");
+    			
+    			// uploading the picture to the dir
+     			if (!$form->file_picture->receive()) {
+     				$this->_helper->FlashMessenger( array('error' => "Can't upload image to the server."));   
+     				
+     				$message .=  'filename: '. $form->file_picture->getFileName();
+     				$this->_helper->FlashMessenger( array('success' => $message));
+     			
+     			
+     			}
+
+     			
+    		 	$this->_helper->FlashMessenger( array('success' => "Image is uploaded "));
+	
+    
+    		} else {		
+    			$this->_helper->FlashMessenger( array('error' => "Something is wrong. Please check if you really have right picture."));   
+    		
+    		}
+    	
+    	}
+    	
+    	
+    	
     }
  
     
@@ -131,6 +163,51 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
 
     	$form = new \App\Form\MemberSkill();
      	$this->view->form = $form;
+ 	
+     	$id = 1;
+     	$error = false;
+
+     	if ($this->_request->isPost()) {
+     		if ($form->isValid($this->_request->getPost())) {
+     			$facadeUser = new \App\Facade\UserFacade($this->_em);
+     			// fetch values
+     			$values = $form->getValues();
+     			// storing data
+     			try{
+     				$facadeUser->updateSkills($id,$values);
+     				$this->_helper->FlashMessenger( array('success' => "Updated successfully :D"));
+     			}
+     			catch (Exception $e){
+     				$this->_helper->FlashMessenger( array('error' => $e->getMessage()));
+     			}
+     			 
+     		}
+     		// not validated properly
+     		else {
+     			$this->view->messages = array('error', 'Please control your input!'); // extra message on top
+     			$error = true;
+     		}
+     		 
+     	}
+     	 
+     	// leave the old values, if user already sended form
+     	if(!$error){
+     		$facadeUser = new \App\Facade\UserFacade($this->_em);
+     		// fetch values
+     		$values = $form->getValues();
+     		// retriving data for form
+     		$user = $facadeUser->findUserSettings($id);
+     			
+     		// find all user settings
+     		$data = array(
+     				'emailVisibility' => $user->getEmailVisibility(),
+     				'fieldOfInterestTag' => $user->getUserFieldOfInterestTagsString()
+     		);
+     		 
+     		$form->setDefaults($data);
+     	}
+     	
+     	
     
 
     }

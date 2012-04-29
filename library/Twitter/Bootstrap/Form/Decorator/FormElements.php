@@ -47,6 +47,7 @@ class Twitter_Bootstrap_Form_Decorator_FormElements extends Zend_Form_Decorator_
                     $elementName = $item->getName();
                     $element     = $group->getElement($elementName);
                     if ($element) {
+                    
                         // Element belongs to display group; only render in that
                         // context.
                         continue 2;
@@ -68,6 +69,7 @@ class Twitter_Bootstrap_Form_Decorator_FormElements extends Zend_Form_Decorator_
 
             // Check if has errors
             if ($item instanceof Zend_Form_Element && $item->hasErrors()) {
+
                 $class = $item->getAttrib('class');
                 $item->setAttrib('class', $class . ' error');
             }
@@ -86,8 +88,11 @@ class Twitter_Bootstrap_Form_Decorator_FormElements extends Zend_Form_Decorator_
                 || (($item instanceof Zend_Form_DisplayGroup)
                     && (Zend_Form::ENCTYPE_MULTIPART == $item->getAttrib('enctype')))
             ) {
+            	
+            	
                 if ($form instanceof Zend_Form) {
                     $form->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+                    
                 } elseif ($form instanceof Zend_Form_DisplayGroup) {
                     $form->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
                 }

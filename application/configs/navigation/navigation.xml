@@ -69,28 +69,28 @@
         			</profile-setting>
             </pages>
         </member>
-         <admin>
-			<label>Admin Dashboard</label>
-			<uri>/admin/index/index</uri>
-					<pages>
-		             <admin-user>
-							<label>Admin Members</label>
-							<uri>/admin/member/index</uri>
-					</admin-user>
+<!--          <admin> -->
+<!-- 			<label>Admin Dashboard</label> -->
+<!-- 			<uri>/admin/index/index</uri> -->
+<!-- 					<pages> -->
+<!-- 		             <admin-user> -->
+<!-- 							<label>Admin Members</label> -->
+<!-- 							<uri>/admin/member/index</uri> -->
+<!-- 					</admin-user> -->
 						
-				     <admin-project>
-							<label>Admin Projects</label>
-							<uri>/admin/project/index</uri>
-					</admin-project>
+<!-- 				     <admin-project> -->
+<!-- 							<label>Admin Projects</label> -->
+<!-- 							<uri>/admin/project/index</uri> -->
+<!-- 					</admin-project> -->
 					
-				     <admin-slideshow>
-							<label>Slideshow</label>
-							<uri>/admin/slideshow/index</uri>
-					</admin-slideshow>
+<!-- 				     <admin-slideshow> -->
+<!-- 							<label>Slideshow</label> -->
+<!-- 							<uri>/admin/slideshow/index</uri> -->
+<!-- 					</admin-slideshow> -->
 									
               
-            		</pages>	
-			</admin>
+<!--             		</pages>	 -->
+<!-- 			</admin> -->
         
         
      

@@ -1,3 +1,47 @@
-<h3>Change profile picture</h3>
+
+ <div class="row">
+  <div class="span5">
+   <?php  echo $this->form;   ?>
+  
+    <div class="well">
+  DATA Test
+  <?= $this->member['name'];?>
+  <?= $this->member['email'];?>
+  </div>
+  <div class="well">
+  Files in the directory uploaded: <br/>
+  <?php
+  	
+	$dir = new DirectoryIterator(APPLICATION_PATH . '/../public/storage/users/');
+	foreach ($dir as $fileinfo) {
+	    if (!$fileinfo->isDot()) {
+	        var_dump($fileinfo->getFilename());
+	    }
+	}
+?>
+</div>
+  
+  </div>
+  <div class="span5">
+    <h4>Current Picture</h4>
+
+  
+      <img src="http://placehold.it/200x200" alt="<?= $this->member['name'];?>">
+    
+
+    
+      <img src="http://placehold.it/100x100" alt="<?= $this->member['name'];?>">
+    
+    
+
+      <img src="http://placehold.it/50x50" alt="<?= $this->member['name'];?>">
+    
+    
+    
+		  
+  </div>
+</div>
+
+
     
     
