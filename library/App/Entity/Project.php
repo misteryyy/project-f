@@ -13,7 +13,6 @@ class Project
 	const STATUS_DRAFT = 1;
 	const STATUS_PUBLISHED = 2;
 	
-	
     /**
      * @Id @Column(type="integer", name="id")
      * @GeneratedValue

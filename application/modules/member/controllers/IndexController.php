@@ -35,7 +35,6 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 	public function lostPasswordAction() {	
 		$this->view->pageTitle = 'Lost password';
 
-
 		$form = new \App\Form\PublicMemberLostPassword();
 		$this->view->form = $form;
 		
@@ -149,28 +148,16 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 				
 				// finding user
 				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );
-				
+			
 				// user doesn't exist, we can create new one
 				if (! $user) {
 					
 					try {
-						$user = new \App\Entity\User ();
 						
-						// loading data
-						$user->name = $form->getValue ( 'name' ) ;
-						$user->email = $form->getValue ( 'email' );
-						$user->password = $form->getValue ( 'password' );
-						$user->confirmed =  0 ;
-						$this->_em->persist ( $user );
-						$this->_em->flush ();
-						
-						// TODO SENDING EMAIL
-						// $mailer = new \App\Mailer\HtmlMailer();
-						// $mailer->setSubject("Welcome to FLO~ Platform")
-						// ->addTo("j.kortan@gmail.com")
-						// ->setViewParam('name',"Josef Kortan")
-						// ->sendHtmlTemplate("welcome.phtml");
-						
+						// storing the values
+						$facadeUser = new \App\Facade\UserFacade($this->_em);
+						$facadeUser->createAccount($form->getValues());
+											
 						// SUCCESS
 						$this->_helper->FlashMessenger ( array ('success' => "Account created! Congratulations. You will get email with information to your email." ) );
 						$this->_redirect('/member/index/login');

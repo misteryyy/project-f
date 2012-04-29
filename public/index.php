@@ -28,14 +28,14 @@ Zend_Loader_Autoloader::getInstance();
 
 
 // Making XDebug more chatty in Development Environment
-if (APPLICATION_ENV == 'development')
-{
-    ini_set('xdebug.collect_vars', 'on');
-    ini_set('xdebug.collect_params', '4');
-    ini_set('xdebug.dump_globals', 'on');
-    ini_set('xdebug.dump.SERVER', 'REQUEST_URI');
-    ini_set('xdebug.show_local_vars', 'on');
-}
+// if (APPLICATION_ENV == 'development')
+// {
+//     ini_set('xdebug.collect_vars', 'on');
+//     ini_set('xdebug.collect_params', '4');
+//     ini_set('xdebug.dump_globals', 'on');
+//     ini_set('xdebug.dump.SERVER', 'REQUEST_URI');
+//     ini_set('xdebug.show_local_vars', 'on');
+// }
 
 // Create application, bootstrap, and run
 //$application = new Zend_Application(

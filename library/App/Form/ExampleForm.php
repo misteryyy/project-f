@@ -14,10 +14,11 @@ class ExampleForm extends \Twitter_Bootstrap_Form_Horizontal
     			'required' => true,
     			'filters'    => array('StringTrim'),
     			//'errorMessages' => array("You have to have project title. You can use just letters and numbers"),
-    			'description' => "description",
+    			//'description' => "description",
 				'validators' => array( array('alnum',false, array("allowWhiteSpace" => true)), array('StringLength', false, array(6,20)) )			
     	));
     	
+    	$this->addElement('hidden',"id",array(	'disableLoadDefaultDecorators' => true));
     	
     	$this->addElement('text', 'pitch', array(
     			'label' => 'Sentence Pitch',

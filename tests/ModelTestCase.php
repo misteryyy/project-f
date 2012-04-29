@@ -35,7 +35,8 @@ class ModelTestCase extends PHPUnit_Framework_TestCase {
     	$this->doctrineContainer->getConnection()->close();
     	$em = $this->doctrineContainer->getEntityManager();
     	$tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-    	$tool->dropDatabase();
+    	
+    	//$tool->dropDatabase();
     	parent::tearDown();
     }
  }

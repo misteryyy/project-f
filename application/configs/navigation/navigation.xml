@@ -36,12 +36,16 @@
                  </lost-password>
                   <dashboard>
                     <label>Member Dashboard </label>
-                    <uri>/member/dashboard/index</uri>
+    				<module>member</module>
+            		<controller>dashboard</controller>
+            		<action>index</action>                   
                    	<resource>member</resource>
                  </dashboard>
                      <profile>
                		<label>My Profile</label>
-                    <uri>/member/profile/index</uri>
+                    <module>member</module>
+            		<controller>profile</controller>
+           			 <action>index</action>
                    	<resource>member</resource>   
                    	 </profile>
                    	<profile-setting> 
@@ -51,7 +55,7 @@
  					<pages>
 						<personal-info>
 							<label>Personal Info</label>
-							<uri>/member/profile-setting/personal-info</uri>
+							<uri>/member/profile-setting/member-info</uri>
 						</personal-info>
 						<member-skills>
 							<label>My skills</label>
@@ -65,6 +69,29 @@
         			</profile-setting>
             </pages>
         </member>
+         <admin>
+			<label>Admin Dashboard</label>
+			<uri>/admin/index/index</uri>
+					<pages>
+		             <admin-user>
+							<label>Admin Members</label>
+							<uri>/admin/member/index</uri>
+					</admin-user>
+						
+				     <admin-project>
+							<label>Admin Projects</label>
+							<uri>/admin/project/index</uri>
+					</admin-project>
+					
+				     <admin-slideshow>
+							<label>Slideshow</label>
+							<uri>/admin/slideshow/index</uri>
+					</admin-slideshow>
+									
+              
+            		</pages>	
+			</admin>
+        
         
      
            <playground>

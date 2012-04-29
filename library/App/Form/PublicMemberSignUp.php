@@ -35,8 +35,9 @@ class PublicMemberSignUp extends \EasyBib_Form
     	
     	$password->setLabel("Password:")
     	->setRequired(true)
-    	->setDescription('Password has to be min 5 letters long')
-    	->addValidator('StringLength',array(5,20));
+    	->addValidator('StringLength',false,array(5,20))
+    	->setDescription('Password has to be min 5 letters long');
+    	
     	
     	$password_verify->setLabel("Password verification:")
     	->setRequired(true)

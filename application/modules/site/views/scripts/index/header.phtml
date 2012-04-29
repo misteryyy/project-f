@@ -1,10 +1,26 @@
 <div class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="brand" href="/admin">Project-F</a>
-			<div class="nav-collapse">
-				<ul class="nav">
-					  <?php 
+      <div class="navbar-inner">
+        <div class="container-fluid">
+      
+          <a class="brand" href="#">Project F</a>
+          
+          <?php if(Zend_Auth::getInstance()->hasIdentity() ) {?>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> <?= $this->member['email']?>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/member/profile/index/id/<?= $this->member['id']?>">Public Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="/member/index/logout">Sign Out</a></li>
+            </ul>
+          </div>
+          <?php }?>
+          
+          <div class="nav-collapse">
+            <ul class="nav">
+       	  <?php 
 					  $subtree = $this->navigation()->findOneByLabel('Home');
 					   
 					 $options = array("ulClass"=>"nav", 			
@@ -17,9 +33,16 @@
 					  echo $this->navigation()->menu()->renderMenu(null,$options);
 
 					  ?>
-        		    </ul>
-			</div>
+            </ul>
+          
+          
+          
+          </div><!--/.nav-collapse -->
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
 
-		</div>
-	</div>
-</div>

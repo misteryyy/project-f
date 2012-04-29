@@ -3,12 +3,13 @@
  * @author   Kanstantsin A Kamkou (2ka.by)
  */
 
+
+
 $html = array('<ul class="nav nav-list">');
 foreach ($this->container as $page) {
 	
     // show only the current branch and the visible item
-    if (!$page->isVisible()
-        || ($this->menu()->getOnlyActiveBranch() && !$page->isActive(true))) {
+    if (!$page->isVisible() || ($this->menu()->getOnlyActiveBranch() && !$page->isActive(true))) {
         continue;
     }
     
@@ -36,6 +37,19 @@ foreach ($this->container as $page) {
             $html[] = $subpage->getLabel();
             $html[] = "</a>";
             $html[] = "</li>";
+
+            // 2 depht menu
+            if(!empty($subpage->pages)){
+            	foreach($subpage->pages as $subsubpage){
+            	$html[] = '<li' . ($subsubpage->isActive() ? ' class="active"' : '') . '>';
+            	$html[] = '<a href="' . $subsubpage->getHref() . '">';
+            	$html[] = "--".$subsubpage->getLabel();
+            	$html[] = "</a>";
+            	$html[] = "</li>";
+            	
+            	}
+            }
+        
         }
     }
 }

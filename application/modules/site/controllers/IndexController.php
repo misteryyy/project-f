@@ -47,6 +47,13 @@ class Site_IndexController extends Boilerplate_Controller_Action_Abstract
     {
     }
     
+    /**
+     * Learn More Page
+     */
+    public function learnMoreAction(){
+    	
+    	
+    }
     
 
     

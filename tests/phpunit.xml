@@ -20,10 +20,10 @@
         </filter>
 
 
-	<logging>
-		<log type="coverage-html" target="./log/report" charset="UTF-8"
-		yui="true" highlight = "true" lowUpperBound="50" highLowerBound="80" />
-		<log type="testdox" target="./log/testdox.html" />
-	</logging>
+<!-- 	<logging> -->
+<!-- 		<log type="coverage-html" target="./log/report" charset="UTF-8" -->
+<!-- 		yui="true" highlight = "true" lowUpperBound="50" highLowerBound="80" /> -->
+<!-- 		<log type="testdox" target="./log/testdox.html" /> -->
+<!-- 	</logging> -->
 
 </phpunit>

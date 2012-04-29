@@ -46,6 +46,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('App');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'App');
         
+        
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('Custom');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'Custom');
          
