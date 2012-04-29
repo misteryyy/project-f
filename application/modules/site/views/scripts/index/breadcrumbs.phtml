@@ -1,0 +1,8 @@
+<!-- Breadcrumbs generation -->
+		<ul class="breadcrumb">
+		<?php 
+		echo $this->navigation()->breadcrumbs()
+		->setLinkLast(true)->setMinDepth(0)
+		->setPartial(array('/index/partials/breadcrumb.phtml','site'));
+		?>
+		</ul>

@@ -1,0 +1,28 @@
+
+<h3>Welcome to you dashboard,</h3>
+<h2>
+<?php
+echo $this->member['name'];
+echo " with id:";
+echo $this->member['id'];
+echo " and email >";
+echo $this->member['email'];
+ ?>
+</h2>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a  href="#home" data-toggle="tab">Home</a></li>
+  <li><a href="#profile" data-toggle="tab">Profile</a></li>
+  <li><a href="#messages" data-toggle="tab">Messages</a></li>
+  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+</ul>
+
+<a href="#" title="Loading through JSON" class="withajaxpopover" data-load="/member/ajax/index">blabla</a>
+<script>$('.withajaxpopover').bind('hover',function(){
+        var el=$(this);
+        $.get(el.attr('data-load'),function(d){
+            el.unbind('hover').popover({content: d}).popover('show');
+        });
+});
+</script>
+

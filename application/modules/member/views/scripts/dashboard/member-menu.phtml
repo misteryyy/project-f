@@ -1,0 +1,48 @@
+	
+ <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#"><?= $this->member['name']?>'s NavBar </a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><a href="/member/dashboard/index">Dashboard</a></li>
+          </ul>
+           
+          <ul class="nav pull-right">
+            <li><a href="#">Link</a></li>
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account (<?= $this->member['email'];?>) <b class="caret"></b></a>
+              
+              <ul class="dropdown-menu">
+                <li><a href="#">Action1</a></li>
+                <li><a href="#">Action2</a></li> 
+                <li class="divider"></li>
+                <li><a href="/member/index/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div>
+    </div><!-- /navbar-inner -->
+  </div><!-- /navbar -->
+	
+	
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#">Private menu</a></li>
+		<li class="dropdown" id="menu1"><a class="dropdown-toggle"
+			data-toggle="dropdown" href="#menu1"> <?= $this->member['email']?> <b class="caret"></b>
+		</a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Action</a></li>
+				<li><a href="#">Another action</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul></li>
+	</ul>
