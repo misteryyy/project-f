@@ -31,6 +31,12 @@ $user->setEmail("j.kortan@gmail.com");
 $user->setPassword("pi2131221");
 $user->setName("Josef Kortan");
 
+$user2 = new \App\Entity\User();
+$user2->setEmail("j.ko@gmail.com");
+$user2->setPassword("pi2131221");
+$user2->setName("Josef Kortan");
+
+
 // setting roles
 $user->addRole($role_visitor);
 $user->addRole($role_member);
@@ -41,6 +47,7 @@ $user->addRole($role_admin);
 $userInfo = new \App\Entity\UserInfo();
 $user->setUserInfo($userInfo);
 $em->persist($user);
+$em->persist($user2);
 $em->flush();
 
 //$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id  );

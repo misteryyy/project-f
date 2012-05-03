@@ -1,14 +1,13 @@
 <?php
 namespace App\Entity;
-// User specific role, which has other atributes like tags. Its not project specific role
+ // User specific role, which has other atributes like tags. Its not project specific role
 
-/**
- * @Entity(repositoryClass="App\Repository\UserSpecificRole")
- * @Table(name="user_role",indexes={@index(name="search_idx",columns={"type"})})
+ /**
+  * @Entity
+  * @Table(name="user_specific_role",uniqueConstraints={@UniqueConstraint(name="search_idx", columns={"user_id", "name"})})
  */
 class UserSpecificRole
-{
-		
+{	
 	const TYPE_MEMBER = "user_specific_role"; // 
 	const MEMBER_ROLE_STARTER = "starter";
 	const MEMBER_ROLE_BUILDER = "builder";
@@ -16,46 +15,114 @@ class UserSpecificRole
 	const MEMBER_ROLE_LEADER = "leader";
 	const MEMBER_ROLE_ADVISER = "advisor";
 
-    /**
-     * @Id @Column(type="integer", name="id")
-     * @GeneratedValue
-     */
-    private $id;
-    
-    
-    /** @Column(type="string", name="type") */
-    private $type;
-    
-    
-    /** @Column(type="string", name="name",unique=true) */
-    private $name;
-    
-
-    /**
-     * 
-     * @ManyToMany(targetEntity="User",mappedBy="user", cascade={"persist"})
-     */
-    private $users;
-    
-    
-    /**
-	 * @return the $type
-	 */
-	public function getType() {
-		return $this->type;
-	}
-
 	/**
-	 * @param field_type $type
+	 * @Id @Column(type="integer", name="id")
+	 * @GeneratedValue
 	 */
-	public function setType($type) {
-		$this->type = $type;
-	}
+	private $id;
+	
+	/** @ManyToOne(targetEntity="User", inversedBy="specRoles")
+	 *	@JoinColumn(name="user_id",referencedColumnName="id") 
+	 * 
+	 */
+	private $user;
+	
 
-	public function __construct(){
-    	$this->users = new \Doctrine\Common\Collections\ArrayCollection();	
-    }
-    
+	/** @Column(type="string", name="name") */
+	private $name;
+	
+	/**
+	 * @ManyToMany(targetEntity="UserSpecificRoleTag", inversedBy="specRoles",cascade={"persist","remove"})
+	 * @JoinTable(name="user_specific_role_has_user_specific_tag",
+	 * joinColumns={@JoinColumn(name="specific_role_id", referencedColumnName="id")},
+	 * inverseJoinColumns={@JoinColumn(name="user_specific_tag_id",referencedColumnName="id")})
+	 */
+	private $tags;
+	
+	public function __construct($name, $user)
+	{
+		$this->name= $name;
+		$this->user = $user;
+		$this->tags = new \Doctrine\Common\Collections\ArrayCollection ();
+	}
+	 	
+	/*
+	 * Add tag to the SpecificRole
+	 */
+	public function addTag($tag){
+		// add tag only if doesn't exist
+		if(!$this->getTag($tag->getName())){
+			// adding role to the tag
+			$tag->addSpecificRole($this);
+			$this->tags[] = $tag;
+		}
+	}
+	
+
+	/*
+	 * Remove tag from this role
+	 */
+	public function removeTag($tag){
+		// remove role from the tag, maybe somebody will use this tag
+		$tag->removeSpecificRole($this);
+		$this->tags->removeElement($tag);
+	}
+	
+	
+	
+	/**
+	 * Return tags in string format with , divider
+	 */
+	public function getTagsString($toString = true){
+	//collecting names
+		$tagArray = array();
+		foreach($this->tags as $tag){		
+			$tagArray[] = $tag->getName();
+		}	
+		return implode(",", $tagArray);
+	}
+	
+	public function getTags(){
+		return $this->tags;
+	}
+	
+	/**
+	 * Return tags in string format with , divider
+	 */
+	public function getTag($name){
+		foreach($this->tags as $tag){
+			if($tag->getName() == $name){
+				return $tag;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Function return array of string tags
+	 * if no tags are find. Return empty array
+	 */
+	public function getTagsArray(){
+		$tagArray = array();
+		
+		if($this->tags->count() > 0){
+			foreach($this->tags as $tag){
+				$tagArray[] = $tag->getName();		
+				
+			}
+		}	
+		
+		return $tagArray;
+	}
+	
+	/**
+	 * Number of tags
+	 */
+	public function countTag(){
+		return $this->tags->count();
+	}
+	
     /**
 	 * @return the $name
 	 */
@@ -64,12 +131,13 @@ class UserSpecificRole
 	}
 
 	/**
-	 * @return the $users
+	 * @return the $user
 	 */
 	public function getUser() {
-		return $this->users;
+		
+		return $this->user;
 	}
-
+	
 	/**
 	 * @param field_type $name
 	 */
@@ -80,23 +148,8 @@ class UserSpecificRole
 	/**
 	 * @param field_type $users
 	 */
-	public function addUser($user) {
-		$this->users[] = $user;
+	public function setUser($user) {
+		$this->user = $user;
 	}
-
-	/*
-     * Reflection methods
-     * TODO in production change to real method
-     */
-    public function __get($property)
-    {
-    	return $this->$property;
-    }
-    public function __set($property,$value)
-    {
-    	$this->$property = $value;
-    }
-    
-
 
 }

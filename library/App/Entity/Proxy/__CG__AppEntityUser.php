@@ -42,6 +42,30 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     }
 
     
+    public function addSpecificRole($name)
+    {
+        $this->__load();
+        return parent::addSpecificRole($name);
+    }
+
+    public function getSpecificRole($name)
+    {
+        $this->__load();
+        return parent::getSpecificRole($name);
+    }
+
+    public function getSpecificRoles()
+    {
+        $this->__load();
+        return parent::getSpecificRoles();
+    }
+
+    public function deleteSpecificRole($role)
+    {
+        $this->__load();
+        return parent::deleteSpecificRole($role);
+    }
+
     public function getRoles()
     {
         $this->__load();
@@ -231,7 +255,7 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'email', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'dateOfBirthVisibility', 'roles', 'userInfo', 'projects', 'userFieldOfInterestTags');
+        return array('__isInitialized__', 'id', 'name', 'email', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'dateOfBirthVisibility', 'roles', 'specRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
     }
 
     public function __clone()

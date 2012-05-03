@@ -35,17 +35,22 @@ class Member_ProfileController extends  Boilerplate_Controller_Action_Abstract
     			    
     		}		 
     	
-    	//}
-    	//catch (Exception $e){
-   // 		$this->_helper->FlashMessenger( array('error' => $e->getMessage()));
-    //	}
-   
-    	//$member = Zend_Auth::getInstance()->getIdentity();
-		
-    	
-    	
-    	
     }
+    
+    /**
+     * Public Profile for Everybody
+     */
+    public function floBoxAction()
+    {    	
+    	$this->view->pageTitle = $this->_member['name'] . '\'s FloBox' ;
+    	$form = new \App\Form\MemberSkill();
+    	$this->view->form = $form;
+
+    	
+    	 
+    }
+    
+    
     
 }
 

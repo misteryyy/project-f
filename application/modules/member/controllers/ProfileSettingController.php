@@ -160,7 +160,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     {
     	
     	$this->view->pageTitle = $this->_member['name'] . '\'s Dashboard \ Member skills' ;
-
     	$form = new \App\Form\MemberSkill();
      	$this->view->form = $form;
  	
@@ -197,14 +196,30 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      		$values = $form->getValues();
      		// retriving data for form
      		$user = $facadeUser->findUserSettings($id);
-     			
-     		// find all user settings
-     		$data = array(
-     				'emailVisibility' => $user->getEmailVisibility(),
-     				'fieldOfInterestTag' => $user->getUserFieldOfInterestTagsString()
+     		// filling up form with data	
+     		$arrayRoles = array(array("name" => \App\Entity\UserRole::MEMBER_ROLE_STARTER, ),
+     				array("name" => \App\Entity\UserRole::MEMBER_ROLE_LEADER),
+     				array("name" => \App\Entity\UserRole::MEMBER_ROLE_BUILDER),
+     				array("name" => \App\Entity\UserRole::MEMBER_ROLE_GROWER),
+     				array("name" => \App\Entity\UserRole::MEMBER_ROLE_ADVISER)
      		);
-     		 
+     		
+
+     		 $data = array();
+      		 foreach($arrayRoles as $role){
+        			//if specific role is set, add it to the user
+      		 		$specRole = $user->getSpecificRole($role['name']);
+      		 	 
+         			if($specRole){
+         				// getting the value
+         				$data ["role_".$role['name']] = "1" ;
+      					$data ["role_".$role['name']."_tags"] = $specRole->getTagsString(); 
+      			}
+    		} 
+   			
      		$form->setDefaults($data);
+     	
+     	
      	}
      	
      	

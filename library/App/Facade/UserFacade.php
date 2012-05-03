@@ -38,6 +38,16 @@ class UserFacade {
 		
 		
 	}
+	
+	public function makeTagArray($str){
+		$str = trim($str);
+		$array = explode(",",$str);
+		$array = trimArray($array);
+		return $array;
+	}
+	
+	// TODO cant be , after tag list
+	
 	/**
 	 * 
 	 * @param unknown_type $id
@@ -45,66 +55,107 @@ class UserFacade {
 	 */
 	public function updateSkills($id,$data = array()){
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );	
-		
 		if($user){
-// 			// delete all tags -> empty textfield
-// 			if(strlen(trim($data['fieldOfInterestTag'])) <= 0){
-// 				$userTags = $user->getUserFieldOfInterestTags();
-// 				// Delete previsou tag from the database
-// 				if(!empty($userTags)){
-// 					foreach($userTags as $tag){
-// 						//check if the tag is not the same
-// 						$user->removeUserFieldOfInterestTag($tag);
-// 						// noone else has this tag, delete it from database
-// 						if($tag->getUsers()->count() == 0){
-// 							$this->em->remove($tag); // delete entity tag
-// 						}
-// 					}
-// 				}
-// 				$this->em->flush();
-// 			}
-		
-		
-// 			// user has some tags
-// 			if(strlen(trim($data['fieldOfInterestTag'])) > 0){
-		
-// 				$tags = explode(',', $data['fieldOfInterestTag']);
-// 				$tags = trimArray($tags);
+			
+			$arrayRoles = array(array("name" => \App\Entity\UserRole::MEMBER_ROLE_STARTER, ),
+					array("name" => \App\Entity\UserRole::MEMBER_ROLE_LEADER),
+					array("name" => \App\Entity\UserRole::MEMBER_ROLE_BUILDER),
+					array("name" => \App\Entity\UserRole::MEMBER_ROLE_GROWER),
+					array("name" => \App\Entity\UserRole::MEMBER_ROLE_ADVISER)
+			);
+	
+			foreach($arrayRoles as $role){
+				//if specific role is set, add it to the user
+				if($data ["role_".$role['name']] == "1" ){                   
+					// creating one of the 5 specific roles
+					$user->addSpecificRole($role['name']);			
+					$specRoleObj = $user->getSpecificRole($role['name']);
+							
+					// Adding tags
+					if( strlen(trim( $data["role_".$role['name']."_tags"] )) >0 ){ // if we have some tags
+						$oldTags = $specRoleObj->getTagsArray(); // true for returning array
+						$newTags = $this->makeTagArray($data["role_".$role['name']."_tags"]);
+						debug(	$newTags);
+						$tagsToAdd = array_diff($newTags,$oldTags);
+						$tagsToDelete= array_diff($oldTags, $newTags);
+						
+						//debug("to add");
+						//debug($tagsToAdd);
+						//debug($tagsToDelete);
+							
+						
+						// adding tags
+						foreach($tagsToAdd as $tagAdd){
+							
+							   $t = $this->em->getRepository("\App\Entity\UserSpecificRoleTag")->findOneBy(array("name"=> $tagAdd));
+							    if($t){
+							   	$specRoleObj->addTag($t);
+								}else{
+									// add tag
+									$newTag = new \App\Entity\UserSpecificRoleTag();
+									$newTag->setName($tagAdd);
+									$specRoleObj->addTag($newTag);	
+							   	}
+						 }
+						
+						foreach($tagsToDelete as $delTag){
+							
+							// get tag
+							$tagDelObj = $specRoleObj->getTag($delTag);
+							if($tagDelObj){
+								$specRoleObj->removeTag($tagDelObj);
+								// if the tag doesn't have any follower
+								if($tagDelObj->getCountOfSpecRolesUsingThisTag() == 0){
+									$this->em->remove($tagDelObj);
+								}
+								
+							}		
+						}
+						
+						$this->em->flush();
+						
+					} else {
+						
+						// delete all tags for the role
+						if($specRoleObj){
+						
+							// remove tags
+							$allTags = $specRoleObj->getTags();
+							foreach ($allTags as $removeTag){
+								$specRoleObj->removeTag($removeTag);
+								if($removeTag->getCountOfSpecRolesUsingThisTag() == 0){
+									$this->em->remove($removeTag);
+								}
+							}
+						}
+						
+						
+					}
+				
+				}else {
 					
-// 				// delete all tags before update them
-// 				$userTags = $user->getUserFieldOfInterestTags();
-// 				// Delete previsou tag from the database
-// 				if(!empty($userTags)){
-// 					foreach($userTags as $tag){
-		
-// 						if(!in_array($tag->getName(), $tags)){ //check if the tag is not the same
-// 							$user->removeUserFieldOfInterestTag($tag);
-// 							// noone else has this tag, delete it from database
-// 							if($tag->getUsers()->count() == 0){
-// 								//echo "Number of users for this tag " . $tag->getUsers()->Count();
-									
-// 								$this->em->remove($tag); // delete entity tag
-// 							}
-// 						}
-// 					}
-// 				}
+					$roleObj = $user->getSpecificRole($role['name']);
+					if($roleObj){
+						
+						// remove tags
+						$allTags = $roleObj->getTags();	
+						foreach ($allTags as $removeTag){
+							$roleObj->removeTag($removeTag);
+							if($removeTag->getCountOfSpecRolesUsingThisTag() == 0){
+									$this->em->remove($removeTag);
+							}	
+						}
 
-// 				// addTags
-// 				foreach ($tags as $tag_string){
-// 					$tag = $this->em->getRepository("\App\Entity\UserFieldOfInterestTag")->findOneBy(array("name"=> $tag_string));
-// 					if($tag){
-// 						echo $tag->getName();
-// 						//$user->addUserTag($tag);
-// 					}else {
-// 						$tagObj = new \App\Entity\UserFieldOfInterestTag();
-// 						$tagObj->setName($tag_string);
-// 						$user->addUserFieldOfInterestTag($tagObj);
-// 					}
-// 				}
-		
-// 				$this->em->flush();
-		
-	//		}
+						// remove role
+						$user->deleteSpecificRole($roleObj);
+						$this->em->remove($roleObj);	
+					}			
+				}
+			
+			
+			}
+			
+			$this->em->flush();
 		
 		} else {
 			throwException("Can't find this user.");

@@ -3,6 +3,7 @@
 abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Action {
 
    protected $_member = array(); 
+   protected $_member_id = 1;
 	
  public function init(){
  	
@@ -21,6 +22,7 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
     }
     	
    $this->view->member = $this->_member;
+   
  	
   $uri = $this->_request->getPathInfo();           
   $activeNav = $this->view->navigation()->findByUri($uri);

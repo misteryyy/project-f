@@ -11,6 +11,7 @@ class User {
 	 * @GeneratedValue
 	 */
 	private $id;
+	
 	/**
 	 * @ManyToMany(targetEntity="UserRole", inversedBy="user_role",cascade={"persist","remove"})
 	 * @JoinTable(name="user_has_user_role",
@@ -18,6 +19,59 @@ class User {
 	 * inverseJoinColumns={@JoinColumn(name="user_role_id",referencedColumnName="id")})
 	 */
 	private $roles; // every user is in role / System Roles, Benefit roles
+		
+	
+	/**
+	 * @OneToMany(targetEntity="UserSpecificRole", mappedBy="user", cascade={"ALL"})
+	 */
+	private $specRoles;
+	
+	/**
+	 * Add new Specific Role
+	 * 
+	 */
+	public function addSpecificRole($name)
+	{		
+		// add only if don't have this role
+		if(!$this->getSpecificRole($name)){
+			$this->specRoles[] = new \App\Entity\UserSpecificRole($name, $this);
+			}
+	}
+	
+	/**
+	 * Return specific role on key index
+	 */
+	public function getSpecificRole($name){
+			
+			if($this->specRoles->count() > 0){
+				foreach($this->specRoles as $role){
+					if($role->getName() == $name){
+						return $role;
+					}	
+				}	
+			}	
+			return false;
+		
+	}
+	
+	/**
+	 * Return all specific roles
+	 */
+	public function getSpecificRoles(){
+			return $this->specRoles;
+	}
+	
+	/**
+	 * Delete specific role with all their tags
+	 * @param unknown_type $name
+	 */
+	public function deleteSpecificRole($role){
+		
+				$role->setUser(null);
+				$this->specRoles->removeElement($role);
+	}
+	
+	
 	/**
 	 * @Column(type="string", name="name")
 	 */
@@ -64,6 +118,7 @@ class User {
 	 *        	cascade={"persist","remove"})
 	 */
 	private $projects;
+	
 	/**
 	 * @ManyToMany(targetEntity="UserFieldOfInterestTag", inversedBy="users",cascade={"persist","remove"})
 	 * @JoinTable(name="user_has_user_field_of_interest_tag",
@@ -76,15 +131,15 @@ class User {
 	public function __construct() {
 		$this->userFieldOfInterestTags = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->roles = new \Doctrine\Common\Collections\ArrayCollection ();
+		$this->specRoles = new \Doctrine\Common\Collections\ArrayCollection ();
+		$this->floMessages = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->emailVisibility = false;
 		$this->dateOfBirthVisibility = false;
 		$this->confirmed = true;
 		$this->dateOfBirth = new \DateTime();
 		$this->info = new \App\Entity\UserInfo();
 	}
-	
-	
-	
+
 	/**
 	 * @return the $role
 	 */
@@ -98,7 +153,7 @@ class User {
 		$role->addUser($this);
 		$this->roles[] = $role;
 	}
-
+	
 	public function getId(){
 		return $this->id;
 	}
@@ -125,18 +180,11 @@ class User {
 		
 		if(!empty( $this->userFieldOfInterestTags)){
 			
-			foreach ($this->userFieldOfInterestTags as $tag){
-				
+			foreach ($this->userFieldOfInterestTags as $tag){	
 				$tags [] = $tag->getName();
 			}
-					
+				
 			$implode = implode(',', $tags);
-
-			//$tags = explode(',', $tags);
-			//$tags = trimArray($tags);
-			//debug($tags);
-			//pr( $this->userTags[0]->getName() );
-		//	exit;
 			return $implode;
 		}
 		

@@ -40,6 +40,14 @@
             		<controller>dashboard</controller>
             		<action>index</action>                   
                    	<resource>member</resource>
+                   	
+                   	<pages>
+						<flobox>
+							<label>Flo Box Admin</label>
+							<uri>/member/dashboard/flo-box</uri>
+						</flobox>
+						</pages>
+ 	
                  </dashboard>
                      <profile>
                		<label>My Profile</label>
@@ -47,8 +55,17 @@
             		<controller>profile</controller>
            			 <action>index</action>
                    	<resource>member</resource>   
+                   			<pages>
+						<flobox>
+							<label>Flo Box</label>
+							<uri>/member/profile/flo-box</uri>
+						</flobox>
+						</pages>
+ 	
+                   	
                    	 </profile>
                    	<profile-setting> 
+                   	
                    	<label>Profile Settings</label>
                     <uri>/member/profile-setting/index</uri>
                    	<resource>member</resource>   
