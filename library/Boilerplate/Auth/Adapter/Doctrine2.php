@@ -42,6 +42,8 @@ class Boilerplate_Auth_Adapter_Doctrine2 implements Zend_Auth_Adapter_Interface 
 			$userArray["email"] =$user->getEmail();
 			$userArray["id"] =$user->getId();
 			$userArray["roles"] =$user->getRoles();
+			$userArray["profile_picture_200"] =$user->getProfilePicture();
+				
 	
 			$code = Zend_Auth_Result::SUCCESS;
 			$identity = $userArray;

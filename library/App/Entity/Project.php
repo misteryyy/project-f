@@ -51,7 +51,7 @@ class Project
     }
 
     /**
-     * @manyToOne(targetEntity="Category", inversedBy="project")
+     * @manyToOne(targetEntity="Category", inversedBy="projects")
      * @joinColumn(name="category_id")
      */
     private $category;

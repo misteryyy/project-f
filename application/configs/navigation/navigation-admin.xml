@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <nav>
+     
+         <admin>
+			<label>Admin Dashboard</label>
+			<uri>/admin/index/index</uri>
+					<pages>
+		             <admin-user>
+							<label>Admin Members</label>
+							<uri>/admin/member/index</uri>
+					</admin-user>
+						
+				     <admin-project>
+							<label>Admin Projects</label>
+							<uri>/admin/project/index</uri>
+					</admin-project>
+					
+				     <admin-slideshow>
+							<label>Slideshow</label>
+							<uri>/admin/slideshow/index</uri>
+					</admin-slideshow>
+									
+              
+            		</pages>	
+			</admin>
+        
+        
+     
+           <playground>
+			<label>Playground</label>
+			<uri>/site/playground/index</uri>
+					<pages>
+		              <server-info>
+							<label>Server info</label>
+							<uri>/site/index/php-info</uri>
+						</server-info>
+						
+						<rack-test>
+								<label>Rack Test</label>
+								<uri>/check-env.php</uri>
+						</rack-test>
+							
+              
+            		</pages>	
+			</playground>
+     
+ 
+    </nav>
+</config>
+

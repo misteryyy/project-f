@@ -48,6 +48,18 @@ class UserFloBoxMessage extends \App\Entity\UserFloBoxMessage implements \Doctri
         return parent::setUser($user);
     }
 
+    public function __get($property)
+    {
+        $this->__load();
+        return parent::__get($property);
+    }
+
+    public function __set($property, $value)
+    {
+        $this->__load();
+        return parent::__set($property, $value);
+    }
+
 
     public function __sleep()
     {

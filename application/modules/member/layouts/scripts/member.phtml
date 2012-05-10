@@ -7,12 +7,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
    <!-- JavaScript at the bottom for fast page loading -->
    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
- 
 	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
 </head>
 
 <body>
-    
  <div class="row-fluid" style="margin-left:10px">
   <div class="span11" >
    
@@ -27,15 +25,10 @@
    
    <?= $this->action('breadcrumbs', 'index', 'site');  ?>
    
-  
-    
     <div class="row-fluid"> 
        <div class="span2" >
       	   <?= $this->action('left-menu', 'index', 'site');  ?>
       </div>
-          
-     
-      
       <div class="span10">
       	<!-- Bootstrap messaging generator -->
       	<?php echo $this->flashMessenger() ; ?>
@@ -46,12 +39,9 @@
     <footer>
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>
-    
-    
   </div>
 </div>
-    
-
+   
   <!-- scripts concatenated and minified via ant build script-->
   <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>

@@ -7,6 +7,7 @@ namespace App\Entity;
  */
 class UserInfo {
 
+	
 	/**
 	 * @Id @Column(type="integer", name="id")
 	 * @GeneratedValue

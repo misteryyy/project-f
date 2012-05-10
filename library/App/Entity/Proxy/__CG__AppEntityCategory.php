@@ -44,8 +44,17 @@ class Category extends \App\Entity\Category implements \Doctrine\ORM\Proxy\Proxy
     
     public function getId()
     {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
         $this->__load();
         return parent::getId();
+    }
+
+    public function getName()
+    {
+        $this->__load();
+        return parent::getName();
     }
 
     public function getProjects()
@@ -75,7 +84,7 @@ class Category extends \App\Entity\Category implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_name', 'projects');
+        return array('__isInitialized__', 'id', 'name', 'projects');
     }
 
     public function __clone()

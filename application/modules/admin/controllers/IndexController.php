@@ -1,21 +1,11 @@
 <?php
 
 class Admin_IndexController extends Boilerplate_Controller_Action_Abstract {
-	/**
-	 *
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $_em = null;
 	
-	/**
-	 *
-	 * @var \sfServiceContainer
-	 */
-	protected $_sc = null;
-
-
-	public function init() {
-		$this->_em = Zend_Registry::get ( 'em' );
+	public function adminMenuAction(){
+		
+		
+		
 	}
 	
 	/*

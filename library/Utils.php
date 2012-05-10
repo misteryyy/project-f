@@ -8,6 +8,19 @@ function logger($message, $type = Zend_Log::INFO) {
     Boilerplate_Controller_Plugin_Debug::logger($message, $type);
 }
 
+/**
+ * Return extension of the file name
+ * @param unknown_type $filename
+ */
+function findexts($filename)
+{
+	$filename = strtolower($filename) ;
+	$exts = split('[/\\.]', $filename) ;
+	$n = count($exts)-1;
+	$exts = $exts[$n];
+	return $exts;
+}
+
  /*
   * Function creates random hash, which is used for password recovery
   */

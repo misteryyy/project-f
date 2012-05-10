@@ -2,45 +2,41 @@
 <head>
   <meta charset="utf-8">
   <title>Project-F Beta / Admin / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-  <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
+
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
+  
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
    <!-- JavaScript at the bottom for fast page loading -->
    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
  
 	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
-</head>
+ 	   
+ </head>
 
 <body>
-    
- <div class="row-fluid" style="margin-left:10px">
-  <div class="span11" >
-   
-   <?= $this->action('header', 'index', 'site');  ?>
-     
-   <?php 
+ 		<?= $this->action('header', 'index', 'site');  ?>
+ 			<?php 
 		// if the user has identity
     	if(Zend_Auth::getInstance()->hasIdentity()){
-    		echo $this->action('member-menu', 'dashboard', 'member');  
+    		echo $this->action('admin-menu', 'index', 'admin');  
     	}
-   ?>
-   
-   <?= $this->action('breadcrumbs', 'index', 'site');  ?>
-   
-  
-    
-    <div class="row-fluid"> 
-       <div class="span2" >
-      	   <?= $this->action('left-menu', 'index', 'site');  ?>
-      </div>
-          
-     
-      
-      <div class="span10">
-      	<!-- Bootstrap messaging generator -->
-      	<?php echo $this->flashMessenger() ; ?>
-        <?php echo $this->layout()->content; ?>
-      </div>
+    	 	
+  		 ?>
+  		 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+  		 
+  	<div class="row"> 
+	       <div class="span3" >
+	      	   <?= $this->action('left-menu', 'index', 'site');  ?>
+	      </div>
+	      <div class="span9">
+	      	<!-- Bootstrap messaging generator -->
+	      	<?php echo $this->flashMessenger() ; ?>
+	        <?php echo $this->layout()->content; ?>
+	      </div>
+	       
+	     
+	      
     </div>
     
     <footer>
@@ -48,10 +44,6 @@
     </footer>
     
     
-  </div>
-</div>
-    
-
   <!-- scripts concatenated and minified via ant build script-->
   <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>

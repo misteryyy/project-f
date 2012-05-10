@@ -46,6 +46,28 @@
 							<label>Flo Box Admin</label>
 							<uri>/member/dashboard/flo-box</uri>
 						</flobox>
+						<create-project-one>
+						      <label>Create Project</label>
+    							<module>member</module>
+            					<controller>project</controller>
+            					<action>create-project-step-one</action>                   			                 
+               			<pages>
+	               			<create-project-two>
+							      <label>Create Project / Picture</label>
+	    							<module>member</module>
+	            					<controller>project</controller>
+	            					<action>create-project-step-two</action>                   			                 
+	               			</create-project-two>
+	               			<create-project-three>
+							      <label>Create Project / Staff</label>
+	    							<module>member</module>
+	            					<controller>project</controller>
+	            					<action>create-project-step-three</action>                   			                 
+	               			</create-project-three>
+               			</pages>
+               			</create-project-one>
+               			
+               			
 						</pages>
  	
                  </dashboard>
@@ -55,14 +77,13 @@
             		<controller>profile</controller>
            			 <action>index</action>
                    	<resource>member</resource>   
+                   	<params_id>ID_USER</params_id>
                    			<pages>
 						<flobox>
 							<label>Flo Box</label>
 							<uri>/member/profile/flo-box</uri>
 						</flobox>
 						</pages>
- 	
-                   	
                    	 </profile>
                    	<profile-setting> 
                    	
@@ -86,28 +107,28 @@
         			</profile-setting>
             </pages>
         </member>
-<!--          <admin> -->
-<!-- 			<label>Admin Dashboard</label> -->
-<!-- 			<uri>/admin/index/index</uri> -->
-<!-- 					<pages> -->
-<!-- 		             <admin-user> -->
-<!-- 							<label>Admin Members</label> -->
-<!-- 							<uri>/admin/member/index</uri> -->
-<!-- 					</admin-user> -->
+         <admin>
+			<label>Admin Dashboard</label>
+			<uri>/admin/index/index</uri>
+					<pages>
+		             <admin-user>
+							<label>Admin Members</label>
+							<uri>/admin/member/index</uri>
+					</admin-user>
 						
-<!-- 				     <admin-project> -->
-<!-- 							<label>Admin Projects</label> -->
-<!-- 							<uri>/admin/project/index</uri> -->
-<!-- 					</admin-project> -->
+				     <admin-project>
+							<label>Admin Projects</label>
+							<uri>/admin/project/index</uri>
+					</admin-project>
 					
-<!-- 				     <admin-slideshow> -->
-<!-- 							<label>Slideshow</label> -->
-<!-- 							<uri>/admin/slideshow/index</uri> -->
-<!-- 					</admin-slideshow> -->
+				     <admin-slideshow>
+							<label>Slideshow</label>
+							<uri>/admin/slideshow/index</uri>
+					</admin-slideshow>
 									
               
-<!--             		</pages>	 -->
-<!-- 			</admin> -->
+            		</pages>	
+			</admin>
         
         
      

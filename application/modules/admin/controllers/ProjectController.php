@@ -1,23 +1,7 @@
 <?php
 
 class Admin_ProjectController extends Boilerplate_Controller_Action_Abstract {
-	/**
-	 *
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $_em = null;
-	
-	/**
-	 *
-	 * @var \sfServiceContainer
-	 */
-	protected $_sc = null;
 
-
-	public function init() {
-		$this->_em = Zend_Registry::get ( 'em' );
-	}
-	
 	/*
 	 * Sign up process, validation of form
 	 */

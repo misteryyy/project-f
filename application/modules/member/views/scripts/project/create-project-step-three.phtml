@@ -1,0 +1,31 @@
+<?php 
+echo $this->partial('project/create-project-navigation.phtml',array("step" => $this->step));
+?>
+
+<div id="alert-area"></div>
+
+<?php  echo $this->form;   ?>
+
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{	// disable cache
+	 $.ajaxSetup ({cache: false });  
+
+	// check at init	
+	displayVals();
+	$('#role_widget_disable').change(displayVals);
+		 function displayVals() {
+			// if the widget is disable, hide questions
+			if($('#role_widget_disable').is(':checked')){
+			 $('#fieldset-role_widget_survey').hide();
+			}else{
+				 $('#fieldset-role_widget_survey').show();
+			}
+			
+ }
+				    
+	   		
+});
+</script>

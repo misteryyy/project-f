@@ -1,0 +1,30 @@
+<div class="well">
+   <?php  
+	$percentage = 20;
+	$allow[1] = true;
+	switch ($this->step){
+		case 1 : 
+				 break; 
+		case 2 : $percentage = 40; $allow[2] = true;
+				 break;
+		case 3 : $percentage = 60; $allow[3] = true;
+				 break;
+		case 4 :$percentage = 80; $allow[4] = true;
+				break;
+		case 5 : $percentage = 100; $allow[5] = true;
+				 break;	 
+	}
+  ?>
+  
+  <a class="btn btn-large btn-primary <?php echo($allow[1] == true ? "active" : "disable" );?>" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-one'),null,true)?>">Step 1 / General Info</a>
+  <a class="btn btn-large btn-primary <?php echo($allow[2] == true ? "active" : "disable" );?>" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-two'),null,true)?>">Step 2 / Project Picture</a>
+  <a class="btn btn-large btn-primary <?php echo($allow[3] == true ? "active" : "disable" );?>" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-three'),null,true)?>">Step 3 / Staff </a>
+  <a class="btn btn-large btn-primary <?php echo($allow[4] == true ? "active" : "disable" );?>" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-four'),null,true)?>">Step 4 / Survey </a>
+  <a class="btn btn-large btn-primary <?php echo($allow[5] == true ? "active" : "disable" );?>" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-five'),null,true)?>">Step 5  / Publishing </a>
+  
+  <hr />
+    <div class="progress ">
+    <div class="bar" style="width: <?php echo $percentage;?>%;"></div>
+    </div>
+    
+ </div>

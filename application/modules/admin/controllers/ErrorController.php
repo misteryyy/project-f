@@ -16,7 +16,6 @@ class Admin_ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-        
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $this->view->message = 'Page not found';
@@ -41,6 +40,7 @@ class Admin_ErrorController extends Zend_Controller_Action
         $this->view->request   = $errors->request;
     }
 
+    
     public function getLog()
     {
         $bootstrap = $this->getInvokeArg('bootstrap');

@@ -17,6 +17,14 @@ class Member_ProfileController extends  Boilerplate_Controller_Action_Abstract
 	{
 		parent::init();
 		$this->_em = Zend_Registry::get('em');
+		
+		// controlling the id
+		//TODO currently logged user
+		
+		// check if the user exists
+		
+		
+		
 	}
     /**
      * Public Profile for Everybody
@@ -43,9 +51,15 @@ class Member_ProfileController extends  Boilerplate_Controller_Action_Abstract
     public function floBoxAction()
     {    	
     	$this->view->pageTitle = $this->_member['name'] . '\'s FloBox' ;
-    	$form = new \App\Form\MemberSkill();
-    	$this->view->form = $form;
+    	
+    	
+    	$facade = new \App\Facade\FloBoxFacade($this->_em);
 
+    	
+    	$facade->findFloMessages($this->_member_id);
+    	
+    	
+    	
     	
     	 
     }

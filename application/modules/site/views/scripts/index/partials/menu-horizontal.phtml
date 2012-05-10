@@ -3,10 +3,20 @@
  * @author   Kanstantsin A Kamkou (2ka.by)
  */
 
+// Looks for any navigation pages requiring user information and injects it
 
+// Looks for any navigation pages requiring user information and injects it
+$pages = $this->container->findAllBy('params_id', 'ID_USER');
+foreach($pages as &$page){
+	$page->setParams(array(
+			'id'=> 1,
+	));
+}
 
 $html = array('<ul class="nav nav-list">');
 foreach ($this->container as $page) {
+	
+	
 	
     // show only the current branch and the visible item
     if (!$page->isVisible() || ($this->menu()->getOnlyActiveBranch() && !$page->isActive(true))) {

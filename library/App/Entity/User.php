@@ -6,6 +6,11 @@ namespace App\Entity;
  * @Table(name="user",indexes={@index(name="search_idx",columns={"email"})})
  */
 class User {
+	
+	const PROFILE_PHOTO_RESOLUTION_50 = 50;
+	const PROFILE_PHOTO_RESOLUTION_100 = 100;
+	const PROFILE_PHOTO_RESOLUTION_200 = 200;
+	
 	/**
 	 * @Id @Column(type="integer", name="id")
 	 * @GeneratedValue
@@ -80,6 +85,12 @@ class User {
 	 * @Column(type="string", name="email",unique=true)
 	 */
 	private $email;
+	
+	/**
+	 * @Column(type="string", name="profile_picture",unique=true,nullable=true)
+	 */
+	private $profilePicture;
+		
 	/**
 	 * @Column(type="boolean", name="email_visibility",nullable=true)
 	 */
@@ -107,10 +118,23 @@ class User {
 	 * @column(type="date",name="date_of_birth",nullable=true)
 	 */
 	public $dateOfBirth;
+	
+	/**
+	 * @column(type="datetime",name="created",nullable=true)
+	 */
+	public $created;
+	
 	/**
 	 * @Column(type="boolean", name="date_of_birth_visibility",nullable=true)
 	 */
 	private $dateOfBirthVisibility;
+	
+	/**
+	 * @Column(type="boolean", name="ban")
+	 */
+	private $ban;
+	
+	
 	/**
 	 *
 	 * @param $property \Doctrine\Common\Collections\Collection
@@ -127,6 +151,34 @@ class User {
 	 */
 	private $userFieldOfInterestTags;
 	
+	public function setProfilePicture($path){
+		
+		$this->profilePicture = $path;
+	}
+	
+	public function getProfilePicture($resolution = 200){
+		
+		if($this->profilePicture == null){
+			return "no_image_".$resolution.".jpg";
+		}
+		
+		// Return different resolutions
+		if($resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_100 || 
+		   $resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_50 )
+		{
+			
+			$ext = substr(strrchr($this->profilePicture, '.'), 1);
+			$pre = substr($this->profilePicture,0,strrpos($this->profilePicture, '_'));
+			
+				return $pre.'_'.$resolution.'.'.$ext;
+			
+		  }
+		
+		
+		return $this->profilePicture;
+	}
+	
+	
 	
 	public function __construct() {
 		$this->userFieldOfInterestTags = new \Doctrine\Common\Collections\ArrayCollection ();
@@ -137,6 +189,8 @@ class User {
 		$this->dateOfBirthVisibility = false;
 		$this->confirmed = true;
 		$this->dateOfBirth = new \DateTime();
+		$this->created = new \DateTime("now");
+		$this->ban = false; 
 		$this->info = new \App\Entity\UserInfo();
 	}
 
@@ -145,6 +199,14 @@ class User {
 	 */
 	public function getRoles() {
 		return $this->roles;
+	}
+	
+	public function getRolesArray(){
+		$r = array();
+		foreach ($this->roles as $role){
+			$r[] = $role->getName();
+		}		
+		return $r;
 	}
 	/**
 	 * @param number $role

@@ -31,7 +31,13 @@
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
 	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
 	     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
+	   
+	   
+	   </head>
 
 <body>
   <div class="row-fluid" style="margin-left:10px">
@@ -61,11 +67,7 @@
 
     
   <!-- JavaScript at the bottom for fast page loading -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-      <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
-  <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
+    <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/script.js')?>"></script>
 
   <!-- end scripts-->

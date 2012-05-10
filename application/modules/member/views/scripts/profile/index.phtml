@@ -1,21 +1,15 @@
 
  <?php if (count($this->user) != 0) { ?>   
-    
-    <h1>Member / Public Page </h1>
-    
-    <ul class="thumbnails">
-  <li class="span3">
-    <div class="thumbnail">
-      <img src="http://placehold.it/260x180" alt="">
-      <h5>  <?= $this->user->name; ?></h5>
-      
-    </div>
-	</ul>
-    
-    
-    <div class="well">
-    
-  
+ 
+ <div class="row">
+  <div class="span3">
+	<h1> <?php echo $this->user->getName(); ?> </h1>
+    <img src="<?php echo $this->member["profile_picture_200"]?>" alt="<?= $this->member['name'];?>">
+   </div>
+   
+   
+   <div class="span5">
+   
     <?= $this->user->email; ?>
     <?= $this->user->emailVisibility; ?>
     <?= $this->user->dateOfBirth->format('Y/m/d'); ?> 
@@ -30,22 +24,11 @@
     <?= $this->user->getUserInfo()->getSkype(); ?>
     <?= $this->user->getUserInfo()->getWebsite(); ?>
     <?= $this->user->getUserInfo()->getPhone(); ?>
+   
+   
+   </div>
     
+  </div>
     
-    </div>
-    
-    <table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+
 <?php };?>

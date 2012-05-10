@@ -1,33 +1,11 @@
 <?php
 
 class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
-	/**
-	 *
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $_em = null;
-	
-	/**
-	 *
-	 * @var \sfServiceContainer
-	 */
-	protected $_sc = null;
-	
-	/**
-	 *
-	 * @var \App\Service\RandomQuote @InjectService RandomQuote
-	 */
-	protected $_randomQuote = null;
-	
-	public function init() {
-		$this->_em = Zend_Registry::get ( 'em' );
-	}
+
 	
 	public function indexAction() {
 	
 	}
-	
-	
 	
 	/*
 	 * Lost password 

@@ -4,7 +4,7 @@ namespace App\Entity;
 
  /**
   * @Entity
-  * @Table(name="user_specific_role",uniqueConstraints={@UniqueConstraint(name="search_idx", columns={"user_id", "name"})})
+  * @Table(name="user_specific_role",uniqueConstraints={@UniqueConstraint(name="search_name", columns={"user_id", "name"})})
  */
 class UserSpecificRole
 {	

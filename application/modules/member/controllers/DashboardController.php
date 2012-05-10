@@ -1,24 +1,15 @@
 <?php
+use Doctrine\ORM\Tools\Pagination as Paginator; // goes at top of file
 
 class Member_DashboardController extends  Boilerplate_Controller_Action_Abstract
 {
-	
-	
-		/**
-		 * @var Doctrine\ORM\EntityManager
-		 */
-		protected $_em = null;
-	
-		public function init()
-		{
-			parent::init();
-			$this->_em = Zend_Registry::get('em');
-		}
 
     public function indexAction()
     {
     	$member = Zend_Auth::getInstance()->getIdentity();
     	$this->view->pageTitle = $member['name'] . '\'s Dashboard ' ;
+    	
+    
     }
     
     /*
@@ -49,7 +40,7 @@ class Member_DashboardController extends  Boilerplate_Controller_Action_Abstract
     	$this->view->pageTitle = $this->_member['name'] . '\'s FLO~ Box / Administration' ;	
     	$form = new \App\Form\MemberFloBoxAdmin();
     	$this->view->form = $form;
-    	    	
+ 	
     	if ($this->_request->isPost()) {
     		if ($form->isValid($this->_request->getPost())) {
     			// storing data
@@ -58,6 +49,7 @@ class Member_DashboardController extends  Boilerplate_Controller_Action_Abstract
     				$values = $form->getValues();
     				$facade->createFloMessage($this->_member_id,$values);
     				$this->_helper->FlashMessenger( array('success' => "Updated successfully :D"));
+    				$form->setDefaults(array());
     			}
     			catch (Exception $e){
     				$this->_helper->FlashMessenger( array('error' => $e->getMessage()));
@@ -69,6 +61,29 @@ class Member_DashboardController extends  Boilerplate_Controller_Action_Abstract
     		}
     	
     	}
+    	
+    	
+    	
+    	$stmt = 'SELECT m FROM App\Entity\UserFloBoxMessage m ORDER BY m.created DESC';
+    	
+    	$pagi = new \Doctrine\ORM\Tools\Pagination\Paginator($this->_em->createQuery($stmt));
+    	$iterator = $pagi->getIterator();
+    	
+    	$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+    	$zend_paginator = new \Zend_Paginator($adapter);
+    	 
+    	//nastaveni poctu stranek list
+    	$zend_paginator->setItemCountPerPage(3);
+    	$page = $this->_request->getParam('page', 1);
+    	 
+    	$zend_paginator->setCurrentPageNumber($page);
+    	$this->view->paginator = $zend_paginator;
+    	 
+    	//debug($user[0]);
+    	   
+    	
+    	
+    	
     	    	
     }
    

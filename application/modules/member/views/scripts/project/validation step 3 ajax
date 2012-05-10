@@ -1,0 +1,38 @@
+<!-- Load jQuery build -->
+<script type="text/javascript" src="<?=$this->baseUrl('/media/tools/jquery.form.js')?>"></script>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	
+	// disable cache
+	 $.ajaxSetup ({cache: false });  
+	 $("#button-continue").hide();
+
+		// prepare Options Object 
+	 var options = { 
+	     url:        '/member/project/create-project-step-four', // must be set to continue and send data 
+	     beforeSubmit: validate ,
+	    
+	 }; 
+	 
+	 $('#form-step-3').ajaxForm( options ); 
+		function newAlert (type, message) {
+		    $("#alert-area").html($("<div class='alert alert-" + type + " '><a class='close' data-dismiss='alert' href='#'>×</a><p>" + message + " </p></div>"));
+		}
+		
+	 // validate form function
+	 function validate(formData, jqForm, options) { 
+		 	// value will hold the checkbox value even if it's not checked: 
+		    if( $('#role_starter').fieldValue().length == 0
+                && $('#role_leader').fieldValue().length == 0
+                && $('#role_builder').fieldValue().length == 0
+                && $('#role_advisor').fieldValue().length == 0
+                && $('#role_grower').fieldValue().length == 0 ){
+		    	newAlert('error', "You should choose at least one role.");
+				return false;
+            }     
+	 }
+	   		
+});
+</script>

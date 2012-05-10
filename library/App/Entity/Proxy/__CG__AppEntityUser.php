@@ -66,10 +66,28 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::deleteSpecificRole($role);
     }
 
+    public function setProfilePicture($path)
+    {
+        $this->__load();
+        return parent::setProfilePicture($path);
+    }
+
+    public function getProfilePicture($resolution = 200)
+    {
+        $this->__load();
+        return parent::getProfilePicture($resolution);
+    }
+
     public function getRoles()
     {
         $this->__load();
         return parent::getRoles();
+    }
+
+    public function getRolesArray()
+    {
+        $this->__load();
+        return parent::getRolesArray();
     }
 
     public function addRole($role)
@@ -255,7 +273,7 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'email', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'dateOfBirthVisibility', 'roles', 'specRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
+        return array('__isInitialized__', 'id', 'name', 'email', 'profilePicture', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'created', 'dateOfBirthVisibility', 'ban', 'roles', 'specRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
     }
 
     public function __clone()

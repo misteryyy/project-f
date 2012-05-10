@@ -1,19 +1,30 @@
 
-    <button class="btn btn-danger" data-toggle="collapse" data-target="#form-admin-flobox">
-    Add New Idea
-    
-    </button>
-     
-    <div id="form-admin-flobox" class="collapse">
-		<?php 
-		echo $this->form;
+<button class="btn btn-danger" data-toggle="collapse"
+	data-target="#form-admin-flobox">Add New Idea</button>
+
+<div id="form-admin-flobox" class="collapse in">
+		<?php
+		 echo $this->form;
 		?>
     </div>
+
+
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?>
+
     
+    <?php if (count($this->paginator)) {?>
+    	
+    	<?= count($this->paginator) ?> number of flo messages
     
-    
+			<ul>
+			<?php foreach ($this->paginator as $item): ?>
+  				<li><?php echo $item->message ?></li>
+			<?php endforeach; ?>
+			
+			
+			</ul>
 
-<hr />
-
-
-
+    	
+    	
+   		 <?php echo $this->partialLoop('dashboard/flo-box-row.phtml', $this->paginator); ?>
+    <?php }?>

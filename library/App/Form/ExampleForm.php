@@ -39,9 +39,6 @@ class ExampleForm extends \Twitter_Bootstrap_Form_Horizontal
 
 		));
 
-
-		 
-
 		$this->addDisplayGroup(
 				array('title','pitch','content','email','password'), 'Create Project', array('legend' => 'Playground')
 		);

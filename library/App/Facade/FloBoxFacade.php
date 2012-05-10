@@ -1,5 +1,6 @@
 <?php
 namespace App\Facade;
+use Doctrine\ORM\Tools\Pagination as Paginator;
 
 class FloBoxFacade {
 	

@@ -1,6 +1,8 @@
 <?php
 namespace App\Facade;
 
+use Doctrine\DBAL\Schema\Visitor\RemoveNamespacedAssets;
+
 class UserFacade {
 	
 	/** @var Doctrine\Orm\EntityManager */
@@ -11,6 +13,15 @@ class UserFacade {
 		$this->em = $em;
 	}
 	
+	/**
+	 * Return all users 
+	 */
+	public function findAllUsers(){
+		$users = $this->em->getRepository ('\App\Entity\User')->findThemAll();
+		return $users;
+		
+	}
+		
 	/*
 	 * Creates new account
 	 */
@@ -158,10 +169,9 @@ class UserFacade {
 			$this->em->flush();
 		
 		} else {
-			throwException("Can't find this user.");
+			throw new \Exception("Can't find this user.");
 		}
-		
-		
+	
 	}
 	
 	/**
@@ -256,6 +266,74 @@ class UserFacade {
 		} else {
 			throwException("Can't find this user.");
 		}
+		
+	}
+	
+	/**
+	 * Update picture and create new resolution for picture thumnail
+	 * @param unknown_type $id
+	 * @param unknown_type $path
+	 */
+	public function updateProfilePicture($id,$path){
+		$resolutions = array(200,100,50);
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );
+		if($user){
+	
+		
+		$config = new \Zend_Config(\Zend_Registry::get('config'));
+		$uploadDir = $config->app->storage->profile;
+		
+			
+		// delete previous picture
+		$current =$user->getProfilePicture();
+		if($current != null){
+			// delete this file
+			if( is_file($uploadDir.$current)){
+				$ext = substr(strrchr($current, '.'), 1);
+				$pre = substr($current,0,strrpos($current, '_'));
+				foreach($resolutions as $resolution){	
+					//debug($uploadDir.$pre.'_'.$resolution.'.'.$ext);
+					unlink($uploadDir.$pre.'_'.$resolution.'.'.$ext);
+				}
+			}
+			
+		};	
+			
+		// Generate profile pictures
+		$imageManager = new \Boilerplate_Util_ImageManager($path);
+		
+		$ext = substr(strrchr($path, '.'), 1);
+		$pre = substr($path,0,strrpos($path, '.'));
+
+		
+		if(is_array($resolutions)){
+			
+			foreach($resolutions as $resolution){	
+				$fName = $pre."_".$resolution.".".$ext;
+				$imageManager->resizeImage($resolution, $resolution, 'crop');
+				$imageManager->saveImage($fName, 100);	
+			}
+			
+			// save the name for the file to user profile
+			$absolutPath = $pre."_".$resolutions[0].".".$ext;
+			$user->setProfilePicture(basename($absolutPath));
+			$this->em->flush();
+			
+			// delete original file
+			unlink($path);		
+		}
+		
+		}
+		
+		else {
+			
+			throw new \Exception("Can't find this user.");
+		}
+		    
+		
+		
+		
+		
 		
 	}
 	

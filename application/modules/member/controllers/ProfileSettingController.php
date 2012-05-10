@@ -3,31 +3,6 @@
 class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abstract
 {
 
-	/**
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $_em = null;
-	
-	/**
-	 * @var \sfServiceContainer
-	 */
-	protected $_sc = null;
-	
-	/**
-	 * @var \App\Service\RandomQuote
-	 * @InjectService RandomQuote
-	 */
-	protected $_randomQuote = null;
-	
-	
-	
-	public function init()
-	{
-		parent::init();
-		$this->_em = Zend_Registry::get('em');
-	}
-	
-
     public function indexAction()
     {
     	//$member = Zend_Auth::getInstance()->getIdentity();
@@ -65,7 +40,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        		$this->_helper->FlashMessenger( array('error' => "Please check your input."));
        		$error = true;
        	}
-       
        }
     	
        // leave the old values, if user already sended form
@@ -100,7 +74,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        
     }
     
-    
     /**
      * Change profile picture
      */
@@ -112,36 +85,73 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     	//then process your file, it's path is found by calling $upload->getFilename()
     	$this->view->form = $form;
     	// Checking the file
-	
+    	
     	if($this->_request->isPost()){	
     		
-    		if ($form->isValid($this->_request->getPost())) {	
+    			$adapter = new Zend_File_Transfer_Adapter_Http();
+    			$config = new Zend_Config(Zend_Registry::get('config'));
+    			$uploadDir = $config->app->storage->profile;
     			
-    			//$form->file_picture->setFile("New nazev.jpg");
     			
-    			// uploading the picture to the dir
-     			if (!$form->file_picture->receive()) {
-     				$this->_helper->FlashMessenger( array('error' => "Can't upload image to the server."));   
-     				
-     				$message .=  'filename: '. $form->file_picture->getFileName();
-     				$this->_helper->FlashMessenger( array('success' => $message));
-     			
-     			
-     			}
+    			// setting upload file
+    			$adapter->setDestination($uploadDir);
+    			$adapter->addValidator('Size', false, 4*10*102400)
+    			->addValidator('Count', false, 1)
+    			->addValidator('Extension', false, 'jpg,jpeg,png')
+    			->addValidator('IsImage', false);
 
-     			
-    		 	$this->_helper->FlashMessenger( array('success' => "Image is uploaded "));
-	
+    			$i= 1;
+    			foreach ($adapter->getFileInfo() as $file => $info) {
+    				
+    				// check if uploaded
+    				if (!$adapter->isUploaded($file)) {
+    					$errorMessage = "You haven't choose the file. Try it again :D.";
+    					$this->_helper->FlashMessenger($errorMessage);
+    					break;
+    				}
+		
+    				// validators are ok ?
+    				if (!$adapter->isValid($file)) {
+    					$errorMessage = "Please check the file: ".$info["name"] . ". \n<br />";
+    					$errorMessage .= implode("\n<br\>", $adapter->getMessages());
+    					$this->_helper->FlashMessenger( array('error' =>  $errorMessage));
+    					break;
+    				}
+    			
+    			// rename the file	
+    			$ext = findexts($info['name']);
+    			$fileName = 'profile'.sha1("s@4d".$this->_member_id);
+    			
+    			// resolution path
+    			$path = $uploadDir.$fileName.'.'.$ext;	 
+    			$web_path = $this->_users_web_folder_path.$fileName.'.'.$ext;
+    			
+    			
+    			$adapter->addFilter('Rename', 
+     								array('target' => $path,	
+    										'overwrite' => true));				
+    			
+    			// receiving files
+    			if(!$adapter->receive($file)){
+     					debug($adapter->getMessages());	
+    					$this->_helper->FlashMessenger( array('error' => "Can't upload image to the server."));   
+    					break;
+    				}	
+    				
+     			$i++;	
+     		
+    			// Add Profile Picture and process picture
+    			$facadeUser = new \App\Facade\UserFacade($this->_em);
+    			$facadeUser->updateProfilePicture($this->_member_id,$path); // default 3 resolution
+
+    			$this->_helper->FlashMessenger( array('success' => "Profile picture has been changed."));
+    			$this->_redirect('/member/profile-setting/member-picture');
+    			
+    			
+    	} // end foreach through all files
+	    
+    	}// end if post
     
-    		} else {		
-    			$this->_helper->FlashMessenger( array('error' => "Something is wrong. Please check if you really have right picture."));   
-    		
-    		}
-    	
-    	}
-    	
-    	
-    	
     }
  
     

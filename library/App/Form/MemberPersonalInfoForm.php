@@ -98,8 +98,8 @@ class MemberPersonalInfoForm extends \Twitter_Bootstrap_Form_Horizontal
     			'rows' => 5, 'cols' => 60,
     			'dimension' => 6,
     			//	'errorMessages' => array("The date should be in format"),
-    			'description' => "Who are you? Describe yourself in max 250 letters.",
-    			'validators' => array( array('StringLength', false, array(0,250) ))
+    			'description' => "Who are you? Describe yourself in max 1000 letters.",
+    			'validators' => array( array('StringLength', false, array(0,1000) ))
     	));
     	 
     	$this->addElement('text', 'fieldOfInterestTag', array(
