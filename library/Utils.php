@@ -8,18 +8,7 @@ function logger($message, $type = Zend_Log::INFO) {
     Boilerplate_Controller_Plugin_Debug::logger($message, $type);
 }
 
-/**
- * Return extension of the file name
- * @param unknown_type $filename
- */
-function findexts($filename)
-{
-	$filename = strtolower($filename) ;
-	$exts = split('[/\\.]', $filename) ;
-	$n = count($exts)-1;
-	$exts = $exts[$n];
-	return $exts;
-}
+
 
  /*
   * Function creates random hash, which is used for password recovery
@@ -30,7 +19,6 @@ function findexts($filename)
 	$seeds = 'abcdefghijklmnopqrstuvwqyz0123456789';
 	$code = '';
 	$count = strlen($seeds);
-
 	for ($i = 0; $i < $length; $i++)
 	{
 	$code .= $seeds[mt_rand(0, $count - 1)];
@@ -166,6 +154,16 @@ function debug_redirect($url) {
    }
  }
 
+
+function parseTagsToArray($string){
+	if(strlen($string) > 0){
+	   $array = explode(',', $string);
+	   $array = trimArray($array);
+	   $array = array_filter($array);
+	   return    array_unique($array);
+	}
+	return array(); // empty array have to be return, because of work in facade with this
+}
 
  /*
   * Get current url adress

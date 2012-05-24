@@ -1,3 +1,8 @@
+  <?php
+  $this->step = 2;
+  echo $this->partial('profile-setting/profile-setting-navigation.phtml',array("step" => $this->step));
+  ?>
+
 <div class="row">
   <div class="span6">
    <div class="alert alert-info">
@@ -18,9 +23,9 @@
   </div>
   <div class="span5">
     <h4>Current Picture</h4>
-	 <img src="<?php echo $this->member["profile_picture_200"]?>" alt="<?= $this->member['name'];?>">
-     <img src="<?php echo $this->member["profile_picture_100"]?>" alt="<?= $this->member['name'];?>">
-     <img src="<?php echo $this->member["profile_picture_50"]?>" alt="<?= $this->member['name'];?>">	  
+	 <img src="<?php echo $this->member["profile_picture_200"].'?foo='.time()?>" alt="<?= $this->member['name'];?>">
+     <img src="<?php echo $this->member["profile_picture_100"].'?foo='.time()?>" alt="<?= $this->member['name'];?>">
+     <img src="<?php echo $this->member["profile_picture_50"].'?foo='.time()?>" alt="<?= $this->member['name'];?>">	  
   </div>
 </div>
 

@@ -7,51 +7,35 @@ class Admin_ProjectController extends Boilerplate_Controller_Action_Abstract {
 	 */
 	public function indexAction() {
 		
-		$this->view->pageTitle = 'Admin Dashboard';
-		
-// 		$form = new \App\Form\PublicMemberSignUp ();
-// 		$this->view->form = $form;
-		
-// 		if ($this->_request->isPost ()) {
-			
-// 			if ($form->isValid ( $this->_request->getPost () )) {
-				
-// 				// finding user
-// 				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );
-			
-// 				// user doesn't exist, we can create new one
-// 				if (! $user) {
-					
-// 					try {
-						
-// 						// storing the values
-// 						$facadeUser = new \App\Facade\UserFacade($this->_em);
-// 						$facadeUser->createAccount($form->getValues());
-											
-// 						// SUCCESS
-// 						$this->_helper->FlashMessenger ( array ('success' => "Account created! Congratulations. You will get email with information to your email." ) );
-// 						$this->_redirect('/member/index/login');
-						
-// 						// something bad happen with Doctrine
-// 					} catch ( Exception $e ) {
-// 						$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
-// 					}
-				
-// 				} 				// user already exists
-// 				else {
-// 					$this->_helper->FlashMessenger ( array ('error' => "The provided e-mail address is already associated with a registered user." ) );
-// 				}
-			
-// 			} 			// print error
-// 			else {
-// 				pr ( $form->getValues () );
-// 				pr ( $this->_request );
-// 				$this->_helper->FlashMessenger ( array ('error' => "Please take a look at the form again." ) );
-// 			}
-// 		}
+		$this->view->pageTitle = 'Project Administration';
+		$facadeProject = new \App\Facade\ProjectFacade($this->_em);
+		$this->view->projects = $facadeProject->findAllProjects(); // default 3 resolution
+
 	
 	}
 	
+	public function logAction(){
+	
+		$this->view->pageTitle = "My Projects Logs" ;
+			
+		$id = $this->_request->getParam("id");
+		if(is_numeric($id)){
+			// get categories for form
+			try{
+				$facadeProject = new \App\Facade\ProjectFacade($this->_em);
+				$this->view->logs = $facadeProject->findLogForProject($id);
+				$this->view->project = $facadeProject->findOneProject($id);
+			}catch(\Exception $e){
+				$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
+			}
+				
+		} else {
+			$this->_helper->FlashMessenger( array('error' =>  "This project is not found, are you trying to hack us? :D "));
+				
+		}
+	
+	
+	}
 
 
 

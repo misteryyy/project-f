@@ -1,0 +1,34 @@
+ <?php  
+	
+	$allow[1] = false;
+	$allow[2] = false;
+	$allow[3] = false;
+	$allow[4] = false;
+	$allow[5] = false;
+	$allow[6] = false;
+	
+	switch ($this->step){
+		case 1 : $allow[1] = true;
+		break;
+		case 2 : $allow[2] = true;
+		break;
+		case 3 : $allow[3] = true;
+		break;
+		case 4 : $allow[4] = true;
+		break;
+		case 5 : $allow[5] = true;
+		break;
+		case 6 : $allow[6] = true;
+		break;
+	}
+  ?>
+  <h3><?php echo $this->project->title?> ~  <a class="btn btn-success" href="/project/index/index/id/<?php echo $this->project->id?>">Public profile</a> </h3>
+  <hr/>
+  <ul class="nav nav-tabs">
+  <li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/my-project/edit-project/id/<?php echo $this->project->id?>">Edit general information</a></li>
+  <li class="<?php echo($allow[2] == true ? "active" : "disable" );?>"><a href="/member/my-project/edit-project-picture/id/<?php echo $this->project->id?>">Edit Project Picture</a></li>
+  <li class="<?php echo($allow[3] == true ? "active" : "disable" );?>"><a href="/member/my-project/survey/id/<?php echo $this->project->id?>">Project Survey</a></li>
+  <li class="<?php echo($allow[4] == true ? "active" : "disable" );?>"><a href="/member/my-project/comment-creator/id/<?php echo $this->project->id?>">Comments for Creator</a></li>
+  <li class="<?php echo($allow[5] == true ? "active" : "disable" );?>"><a href="/member/my-project/update/id/<?php echo $this->project->id?>">Updates</a></li>
+  <li class="<?php echo($allow[6] == true ? "active" : "disable" );?>"><a href="/member/my-project/team/id/<?php echo $this->project->id?>">Team</a></li>
+  </ul>

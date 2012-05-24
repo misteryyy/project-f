@@ -7,7 +7,6 @@ namespace App\Entity;
  */
 class UserRole
 {
-	
 	const SYSTEM_ROLE_ADMIN = "admin";
 	const SYSTEM_ROLE_MEMBER = "member";
 	const SYSTEM_ROLE_VISITOR = "visitor";

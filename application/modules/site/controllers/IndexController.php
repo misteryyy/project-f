@@ -2,32 +2,18 @@
 
 class Site_IndexController extends Boilerplate_Controller_Action_Abstract
 {
-
-    /**
-     * @var Doctrine\ORM\EntityManager
-     */
-    protected $_em = null;
-
-    /**
-     * @var \sfServiceContainer
-     */
-    protected $_sc = null;
-
-    /**
-     * @var \App\Service\RandomQuote
-     * @InjectService RandomQuote
-     */
-    protected $_randomQuote = null;
-
-    public function init()
-    {
-    	parent::init();
-        $this->_em = Zend_Registry::get('em');
-    }
  
     public function indexAction()
-    {
-        
+    {    
+    	$this->view->pageTitle = 'FLO~ Grow.Lead...';
+    	
+    	try{
+    		$slideshowFacade = new \App\Facade\Admin\SlideshowFacade($this->_em);
+    		$this->view->slideshow = $slideshowFacade->findSlideshow();
+    	}
+    	catch(\Exception $e){
+			$this->_helper->FlashMessenger( array('error' =>  "Oops. Functionality of FLO is not good..."));				
+		}
     }
       
     public function phpInfoAction(){

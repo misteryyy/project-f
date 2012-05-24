@@ -1,0 +1,93 @@
+<?php 
+if(count ($this->project) > 0){ ?>
+
+<?php 
+$this->step = 2;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+  
+<h3>Project edit picture</h3>
+<hr />
+ <div class="alert alert-info">
+ <span class="label label-info">Info</span>
+ 	Image will be automatically cropped. Try to upload image which has resolution 480x320 to have the best image quality and proportion.
+</div>
+		
+		<div id="alert-area"></div>
+		
+		<form id="imageform" enctype="multipart/form-data" class="form-horizontal well" action="/member/ajax/update-project-thumbnail" method="post">
+					<fieldset id="fieldset-CreateProjectChooseProfilePhoto">
+					  <legend>Change Project Picture</legend>
+					  <div id="preview">
+					  <?php 
+					   echo '<div class="well">'; 
+					   ?>	
+					   <img src="/storage/projects/<?php echo $this->project->dir?>/<?php echo $this->project->getPicture("large")."?foo=".time();?>" />	
+							<?php echo '</div>'; ?> 
+					  </div> 
+					 <div class="control-group">
+					  <label for="project_picture" class="control-label optional">Choose Picture</label>
+					 <div class="controls">
+					<input type="file" name="photoimg" id="photoimg" class="input-file">
+					<p class="help-block">Max size 4MB (jpg,jpeg,png)</p></div>
+					</div>
+					<input type="hidden" name="id" value="<?php echo $this->project->id;?>"/>
+					</fieldset>
+		</form>
+
+		
+	
+<!-- Load jQuery build -->
+<script type="text/javascript" src="<?=$this->baseUrl('/media/tools/jquery.form.js')?>"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	// disable cache
+	 $.ajaxSetup ({cache: false });  
+
+	function newAlert (type, message) {
+	    $("#alert-area").html($("<div class='alert alert-" + type + " '><a class='close' data-dismiss='alert' href='#'>×</a><p>" + message + " </p></div>"));
+	   // $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+	}
+	   var options = { 
+		        target: '#preview',   // target element(s) to be updated with server response 
+		        success: showResponse,  // post-submit callback 
+		        error: showError,  // post-submit callback 
+		        dataType: 'json'        // 'xml', 'script', or 'json' (expected server response type) 
+	  }; 
+
+		$('#photoimg').live('change', function()
+		{
+			$("#preview").html('');
+			$("#preview").html('<img src="/img/loader.gif" alt="Processing picture..."/>');
+			$("#imageform").ajaxForm(options).submit();
+		});
+ 
+		// post-submit callback 
+		function showResponse(responseText, statusText, xhr, $form)  { 
+			if(responseText.error){
+				newAlert('error', "Please check if you are uploading image and size is lower than 4MB.");
+				$("#preview").html('');
+			}else{
+				$("#preview").html('');
+				$("#preview").html('<div class="well"> <img src="'+responseText.web_url+'?foo=' + new Date().getTime()+'" alt="Profile Picture"/> </div> <hr />');
+				$("#button-continue").show();
+				newAlert('success', responseText.success);
+			} 
+		} 
+		
+		// post-submit callback 
+		function showError(responseText, statusText, xhr, $form)  { 
+		    alert('status: ' + statusText + '\n\nresponseText: \n' + xhr.toSource() + 
+		        'We are sorry, but something is wrong. Try to check if your image is allright.'); 
+		} 		
+});
+</script>	
+	 
+<?php } else {
+	
+	echo "No projects";
+	
+}?>
+
+

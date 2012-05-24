@@ -54,6 +54,12 @@ class UserLog extends \App\Entity\UserLog implements \Doctrine\ORM\Proxy\Proxy
         return parent::setType($type);
     }
 
+    public function setUser($user)
+    {
+        $this->__load();
+        return parent::setUser($user);
+    }
+
     public function __get($property)
     {
         $this->__load();

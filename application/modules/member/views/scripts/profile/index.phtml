@@ -1,25 +1,24 @@
+<?php if (count($this->user) != 0) { ?>
 
- <?php if (count($this->user) != 0) { ?>   
- 
- <div class="row">
-  <div class="span3">
-	<h1> <?php echo $this->user->getName(); ?> </h1>
-    <img src="<?php echo $this->member["profile_picture_200"]?>" alt="<?= $this->member['name'];?>">
-   </div>
-   
-   
-   <div class="span5">
-   
+<div class="row">
+	<div class="span3">
+		<h1> <?php echo $this->user->getName(); ?> </h1>
+		<img src="/storage/users/<?php echo $this->user->getProfilePicture()?>"
+			alt="<?= $this->member['name'];?>">
+	</div>
+
+
+	<div class="span5">
     <?= $this->user->email; ?>
     <?= $this->user->emailVisibility; ?>
     <?= $this->user->dateOfBirth->format('Y/m/d'); ?> 
     <?= $this->user->dateOfBirthVisibility; ?>
     <?= $this->user->description; ?>
 
-   <?php 
-   	//pr($this->user->getUserInfo());
-   
-   ?>
+   <?php
+		// pr($this->user->getUserInfo());
+		
+		?>
     <?= $this->user->userInfo->im; ?>
     <?= $this->user->getUserInfo()->getSkype(); ?>
     <?= $this->user->getUserInfo()->getWebsite(); ?>
@@ -27,8 +26,8 @@
    
    
    </div>
-    
-  </div>
-    
+
+</div>
+
 
 <?php };?>

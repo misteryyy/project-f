@@ -2,12 +2,10 @@
 namespace App\Repository;
 
 
-use App\Entity\Project;
+namespace App\Repository;
 
 use Doctrine\ORM\Mapping\Entity;
-
 use Doctrine\ORM\EntityRepository;
-use App\Entity;
  
 class Project extends EntityRepository
 {
@@ -17,6 +15,8 @@ class Project extends EntityRepository
         return $this->_em->createQuery($stmt)->getResult();
     }
 
+
+    
     /*
      * Return the most popular project in application
      */

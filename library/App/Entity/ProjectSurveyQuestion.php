@@ -15,18 +15,31 @@ class ProjectSurveyQuestion
     /** @Column(type="string", name="name") */
     private $question;
     
-   
- 
+    /**
+     * @OneToMany(targetEntity="ProjectSurveyAnswer", mappedBy="question",cascade={"persist","remove"})
+     **/
+    private $answers;
+    
+    
     /**
      * Initialization of Collections
      */
     public function __construct($question){
-		$this->question = $question;	   
+		$this->question = $question;	
+		$this->answers = new \Doctrine\Common\Collections\ArrayCollection ();   
     }
     
     public function getId()
     {
     	return $this->id;
+    }
+    
+    /**
+     * Addin answer to the collection
+     * @param unknown_type $ans
+     */
+    public function addAnswer($ans){
+    	$this->answers[] = $ans;
     }
     
     public function getQuestion(){

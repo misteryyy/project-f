@@ -21,6 +21,16 @@ class UserFacade {
 		return $users;
 		
 	}
+	
+	public function findOneUser($id){
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );
+		if($user){
+			return $user;
+		}else {
+			throw new \Exception("This user doesn't exists");	
+		}
+	
+	}
 		
 	/*
 	 * Creates new account
@@ -37,6 +47,13 @@ class UserFacade {
 		$userInfo = new \App\Entity\UserInfo();
 		$user->setUserInfo($userInfo);
 		
+		// find role
+		$member  = $this->em->getRepository ('\App\Entity\UserRole')->findOneBy(array("name" => \App\Entity\UserRole::SYSTEM_ROLE_MEMBER));
+		$visitor  = $this->em->getRepository ('\App\Entity\UserRole')->findOneBy(array("name" => \App\Entity\UserRole::SYSTEM_ROLE_VISITOR));
+		
+		$user->addRole($member);
+		$user->addRole($visitor);
+		
 		$this->em->persist($user);
 		$this->em->flush();
 
@@ -46,6 +63,9 @@ class UserFacade {
 		// ->addTo($data['email'])
 		// ->setViewParam('name',"Josef Kortan")
 		// ->sendHtmlTemplate("welcome.phtml");
+		
+		// log
+		$this->addLogMessage($user, "Account created.");
 		
 		
 	}
@@ -58,6 +78,37 @@ class UserFacade {
 	}
 	
 	// TODO cant be , after tag list
+	
+	/**
+	 * Adds log message to the user activity
+	 * @param unknown_type $user
+	 * @param unknown_type $message
+	 */
+	public function addLogMessage($user,$message){
+		
+			$lm = new \App\Entity\UserLog($message);
+			$lm->setUser($user);
+			$this->em->persist($lm);
+			$this->em->flush();
+
+	}
+	
+	/**
+	 * Return all log information for user
+	 * @param unknown_type $user_id
+	 * @throws \Exception
+	 */
+	public function findLogForUser($user_id){
+		
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ($user_id);
+		if($user){
+			 return $this->em->getRepository ('\App\Entity\UserLog')->findByUser($user);
+		}
+		else{
+			throw new \Exception("Can't find this user.");
+		}
+		
+	}
 	
 	/**
 	 * 
@@ -166,6 +217,8 @@ class UserFacade {
 			
 			}
 			
+			// log
+			$this->addLogMessage($user, "Updated his skills.");	
 			$this->em->flush();
 		
 		} else {
@@ -217,6 +270,10 @@ class UserFacade {
 						}
 					}
 					$this->em->flush();
+					
+					// log
+					$this->addLogMessage($user, "Updated profile info.");
+					
 				}
 				
 				
@@ -301,7 +358,6 @@ class UserFacade {
 			
 		// Generate profile pictures
 		$imageManager = new \Boilerplate_Util_ImageManager($path);
-		
 		$ext = substr(strrchr($path, '.'), 1);
 		$pre = substr($path,0,strrpos($path, '.'));
 
@@ -319,22 +375,17 @@ class UserFacade {
 			$user->setProfilePicture(basename($absolutPath));
 			$this->em->flush();
 			
+			// log
+			$this->addLogMessage($user, "Updated profile picture.");
+			
 			// delete original file
 			unlink($path);		
 		}
-		
 		}
 		
-		else {
-			
+		else {	
 			throw new \Exception("Can't find this user.");
-		}
-		    
-		
-		
-		
-		
-		
+		}	
 	}
 	
 	/**

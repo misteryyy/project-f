@@ -137,7 +137,7 @@ $this->addElement('hidden', 'warning_survey', array(
 					'label' => 'Question '.$i,
 					'required' => false,
 					'filters' => array('StringTrim'),
-					'validators' => array( array('alnum',false, array("allowWhiteSpace" => true)), array('StringLength', false, array(1,100)) )
+					'validators' => array(array('StringLength', false, array(1,100)) )
 			));
 		}
 			

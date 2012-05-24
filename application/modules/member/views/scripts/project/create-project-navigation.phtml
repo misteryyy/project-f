@@ -1,9 +1,10 @@
 <div class="well">
    <?php  
 	$percentage = 20;
-	$allow[1] = true;
+	$allow[1] = false;
+	$allow[2] = false;	$allow[3] = false;	$allow[4] = false;$allow[5] = false;
 	switch ($this->step){
-		case 1 : 
+		case 1 : $allow[1] = true;
 				 break; 
 		case 2 : $percentage = 40; $allow[2] = true;
 				 break;

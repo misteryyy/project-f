@@ -42,16 +42,16 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     }
 
     
-    public function addSpecificRole($name)
+    public function setProfilePicture($path)
     {
         $this->__load();
-        return parent::addSpecificRole($name);
+        return parent::setProfilePicture($path);
     }
 
-    public function getSpecificRole($name)
+    public function getProfilePicture($resolution = 200)
     {
         $this->__load();
-        return parent::getSpecificRole($name);
+        return parent::getProfilePicture($resolution);
     }
 
     public function getSpecificRoles()
@@ -64,18 +64,6 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     {
         $this->__load();
         return parent::deleteSpecificRole($role);
-    }
-
-    public function setProfilePicture($path)
-    {
-        $this->__load();
-        return parent::setProfilePicture($path);
-    }
-
-    public function getProfilePicture($resolution = 200)
-    {
-        $this->__load();
-        return parent::getProfilePicture($resolution);
     }
 
     public function getRoles()
@@ -96,10 +84,28 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::addRole($role);
     }
 
+    public function addProjectRole($role)
+    {
+        $this->__load();
+        return parent::addProjectRole($role);
+    }
+
     public function getId()
     {
         $this->__load();
         return parent::getId();
+    }
+
+    public function addSpecificRole($name)
+    {
+        $this->__load();
+        return parent::addSpecificRole($name);
+    }
+
+    public function getSpecificRole($name)
+    {
+        $this->__load();
+        return parent::getSpecificRole($name);
     }
 
     public function addUserFieldOfInterestTag($tag)
@@ -273,7 +279,7 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'email', 'profilePicture', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'created', 'dateOfBirthVisibility', 'ban', 'roles', 'specRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
+        return array('__isInitialized__', 'id', 'name', 'email', 'profilePicture', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'created', 'dateOfBirthVisibility', 'ban', 'roles', 'specRoles', 'projectRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
     }
 
     public function __clone()

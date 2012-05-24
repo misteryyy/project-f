@@ -1,0 +1,46 @@
+<?php if(count($this->project) > 0) {?>
+<?php 
+	$this->step = 4;
+	echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+<p>Total number of unanswered comments <?php echo $this->paginator->getTotalItemCount();?> </p>
+<hr/>
+
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator) > 0) {?>
+    	<?php foreach ($this->paginator as $comment){ ?>
+
+    		<div class="well">
+		 		<img src="/storage/users/<?php echo $comment->user->getProfilePicture(100) ; ?>" />
+				<?php echo $comment->user->name ; ?>
+				<?php echo $comment->user->id ; ?>
+				<?php echo $comment->created->format('d-m-y') ; ?>
+				<?php echo $comment->content ; ?>
+				<?php 
+				// display children
+				foreach($comment->children as $commentChild){
+					?>		
+				 <div class="alert alert-info">
+				 	<img src="/storage/users/<?php echo $commentChild->user->getProfilePicture(100) ; ?>" />
+   					<?php echo $commentChild->user->name ; ?>
+					<?php echo $commentChild->user->id ; ?>
+					<?php echo $commentChild->created->format('d-m-y') ; ?>
+					<?php echo $commentChild->content ; ?>
+					</div>
+				<?php }?>
+			</div>
+			
+			 <?php  $this->form->getElement('comment_id')->setValue($comment->id); // set target comment
+					echo $this->form; 
+			 ?>
+
+    	<?php } 
+ 	}
+ 	else {
+	echo "No Comments for this project";
+} ?>
+<?php } else {
+		echo "This project doesn't exists.";
+	
+}?>

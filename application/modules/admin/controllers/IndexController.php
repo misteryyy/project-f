@@ -3,9 +3,7 @@
 class Admin_IndexController extends Boilerplate_Controller_Action_Abstract {
 	
 	public function adminMenuAction(){
-		
-		
-		
+			
 	}
 	
 	/*

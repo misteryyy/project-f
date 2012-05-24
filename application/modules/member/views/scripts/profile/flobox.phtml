@@ -1,0 +1,43 @@
+<h3>FloBox</h3>		
+
+
+
+
+
+
+<!-- FloBox Table Ideas -->
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator)) {?>
+   <ul class="thumbnails">
+    <?php foreach ($this->paginator as $message){ ?>
+    	
+    	<?php
+    	$typeClass=""; 
+    	if($message->type == \App\Entity\UserFloBox::MESSAGE_TYPE_CHOICE) $typeClass = "alert-info";
+    	if($message->type == \App\Entity\UserFloBox::MESSAGE_TYPE_INTEREST) $typeClass =  "alert-warning"; 
+    	?>
+    	
+        <li class="span3">
+          <div class="thumbnail">
+            <div class="caption">
+       		<div class="alert <?php echo $typeClass;?>"><strong><?php echo $message->type; ?></strong>
+             <h5><?php echo $message->title; ?></h5>
+
+              <?php echo $message->created->format('Y/m/d'); ?>
+              <p> <?php echo $message->message; ?></p>
+              <p>Comments: <?php echo count($message->comments) ?></p>
+              <p><a class="btn btn-info" href="/member/profile/flobox-detail/member_id/<?php echo $this->member['id']?>/message_id/<?php echo $message->id ?>">Detail</a></p>
+            </div>
+          </div>
+        </li>
+    	
+    	 		
+    <?php } ?>
+  </ul>
+    	
+    		
+    <?php } else echo "No FloBox Messages."?>
+   
+
+
+    

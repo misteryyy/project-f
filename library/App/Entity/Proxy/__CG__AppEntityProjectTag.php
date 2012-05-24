@@ -42,6 +42,30 @@ class ProjectTag extends \App\Entity\ProjectTag implements \Doctrine\ORM\Proxy\P
     }
 
     
+    public function getName()
+    {
+        $this->__load();
+        return parent::getName();
+    }
+
+    public function addProject($project)
+    {
+        $this->__load();
+        return parent::addProject($project);
+    }
+
+    public function removeProject($project)
+    {
+        $this->__load();
+        return parent::removeProject($project);
+    }
+
+    public function getCountOfProjects()
+    {
+        $this->__load();
+        return parent::getCountOfProjects();
+    }
+
     public function __get($property)
     {
         $this->__load();

@@ -47,6 +47,31 @@ class Admin_AjaxController extends  Boilerplate_Controller_Action_Abstract
     	}    	
     }
     
+    
+    /**
+     * Ban Project
+     */
+    public function banProjectAction(){
+    	//pr($this->_getAllParams());
+    	$id = $this->_getParam("id");
+    	if(is_numeric($id)){
+    		$project = $this->_em->getRepository ('\App\Entity\Project')->findOneById ( $id );
+    		if($project){
+    
+    			$project->ban = ! $project->ban;
+    			$this->_em->flush();
+    			$this->_response->setHttpResponseCode(200);
+    			$this->_response->setBody(json_encode(array("ban" => $project->ban)));
+    		} else{
+    			$this->_response->setHttpResponseCode(503);
+    		}
+    	}else {
+    		$this->_response->setHttpResponseCode(503);
+    		 
+    	}
+    }
+    
+    
  
    
 

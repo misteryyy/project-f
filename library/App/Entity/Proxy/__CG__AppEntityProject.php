@@ -54,10 +54,109 @@ class Project extends \App\Entity\Project implements \Doctrine\ORM\Proxy\Proxy
         return parent::getCreated();
     }
 
-    public function getId()
+    public function getCreatorRolesArray()
     {
         $this->__load();
+        return parent::getCreatorRolesArray();
+    }
+
+    public function setDir($dir)
+    {
+        $this->__load();
+        return parent::setDir($dir);
+    }
+
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
         return parent::getId();
+    }
+
+    public function getUser()
+    {
+        $this->__load();
+        return parent::getUser();
+    }
+
+    public function getTitle()
+    {
+        $this->__load();
+        return parent::getTitle();
+    }
+
+    public function addTag($tag)
+    {
+        $this->__load();
+        return parent::addTag($tag);
+    }
+
+    public function addProjectRole($role)
+    {
+        $this->__load();
+        return parent::addProjectRole($role);
+    }
+
+    public function addProjectUpdate($update)
+    {
+        $this->__load();
+        return parent::addProjectUpdate($update);
+    }
+
+    public function addRoleWidgetQuestion($q)
+    {
+        $this->__load();
+        return parent::addRoleWidgetQuestion($q);
+    }
+
+    public function getTag($name)
+    {
+        $this->__load();
+        return parent::getTag($name);
+    }
+
+    public function removeTag($tag)
+    {
+        $this->__load();
+        return parent::removeTag($tag);
+    }
+
+    public function getTagsString($toString = true)
+    {
+        $this->__load();
+        return parent::getTagsString($toString);
+    }
+
+    public function getTagsArray()
+    {
+        $this->__load();
+        return parent::getTagsArray();
+    }
+
+    public function getTags()
+    {
+        $this->__load();
+        return parent::getTags();
+    }
+
+    public function setDisableRoleWidget($value)
+    {
+        $this->__load();
+        return parent::setDisableRoleWidget($value);
+    }
+
+    public function setPicture($picture)
+    {
+        $this->__load();
+        return parent::setPicture($picture);
+    }
+
+    public function getPicture($size = 'large')
+    {
+        $this->__load();
+        return parent::getPicture($size);
     }
 
     public function getCategory()
@@ -66,10 +165,94 @@ class Project extends \App\Entity\Project implements \Doctrine\ORM\Proxy\Proxy
         return parent::getCategory();
     }
 
-    public function setCategory(\App\Entity\Category $category)
+    public function getIssue()
+    {
+        $this->__load();
+        return parent::getIssue();
+    }
+
+    public function getLesson()
+    {
+        $this->__load();
+        return parent::getLesson();
+    }
+
+    public function getPlan()
+    {
+        $this->__load();
+        return parent::getPlan();
+    }
+
+    public function setIssue($issue)
+    {
+        $this->__load();
+        return parent::setIssue($issue);
+    }
+
+    public function getContent()
+    {
+        $this->__load();
+        return parent::getContent();
+    }
+
+    public function getPitchSentence()
+    {
+        $this->__load();
+        return parent::getPitchSentence();
+    }
+
+    public function getModified()
+    {
+        $this->__load();
+        return parent::getModified();
+    }
+
+    public function setTitle($title)
+    {
+        $this->__load();
+        return parent::setTitle($title);
+    }
+
+    public function setContent($content)
+    {
+        $this->__load();
+        return parent::setContent($content);
+    }
+
+    public function setPitchSentence($pitchSentence)
+    {
+        $this->__load();
+        return parent::setPitchSentence($pitchSentence);
+    }
+
+    public function setModified()
+    {
+        $this->__load();
+        return parent::setModified();
+    }
+
+    public function setLesson($lesson)
+    {
+        $this->__load();
+        return parent::setLesson($lesson);
+    }
+
+    public function setPlan($plan)
+    {
+        $this->__load();
+        return parent::setPlan($plan);
+    }
+
+    public function setCategory($category)
     {
         $this->__load();
         return parent::setCategory($category);
+    }
+
+    public function setPriority($priority)
+    {
+        $this->__load();
+        return parent::setPriority($priority);
     }
 
     public function __get($property)
@@ -87,7 +270,7 @@ class Project extends \App\Entity\Project implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_name', '_pitch_sentence', 'created', 'viewCount', 'status', 'modified', 'category', 'user', 'tags');
+        return array('__isInitialized__', 'id', 'title', 'content', 'pitchSentence', 'disableRoleWidget', 'dir', 'issue', 'lesson', 'plan', 'created', 'viewCount', 'picture', 'ban', 'priority', 'level', 'modified', 'roles', 'roleWidgetQuestions', 'category', 'user', 'tags');
     }
 
     public function __clone()

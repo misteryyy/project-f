@@ -30,14 +30,17 @@ echo $this->partial('project/create-project-navigation.phtml',array("step" => $t
  <div class="controls">
 <input type="file" name="photoimg" id="photoimg" class="input-file">
 <p class="help-block">Max size 4MB (jpg,jpeg,png)</p></div>
-</div></fieldset>
-</form>
+</div>
+</fieldset>
+<div class="form-actions">
 
-
-<div class="well">
 <a class="btn btn-large btn-primary" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-one'),null,true)?>">Previous</a>
 <a class="btn btn-large btn-primary" id="button-continue" href="<?php echo $this->url(array('module' => "member",'controller'=>'project','action'=>'create-project-step-three'),null,true)?>">Next</a>
 </div>
+</form>
+
+
+
 
 <?php // echo $this->form;   ?>
 

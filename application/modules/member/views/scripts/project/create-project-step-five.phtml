@@ -1,0 +1,37 @@
+<?php 
+echo $this->partial('project/create-project-navigation.phtml',array("step" => $this->step));
+?>
+
+ <div class="alert alert-info">
+ <span class="label label-info">Info</span>
+  Description text,Description text,Description text,Description text,Description text,Description text,
+  Description text,Description text,Description text,Description text,Description text,Description text,
+  Description text,Description text,Description text,Description text,Description text,Description text.
+</div>
+
+<?php 
+
+//pr($this->firstStep);
+//pr($this->secondStep);
+pr($this->thirdStep);
+pr($this->fourthStep);
+
+// if(!$this->thirdStep['role_widget_disable']){
+// for($i=1;$i < 6; $i++){
+// 	echo "Question for visitors ".$i." <br />";
+// 	echo $this->thirdStep['question_'.$i]." <br />";
+// }
+// }else {
+// 	echo "Widget is DISABLE. No questions.";
+// }
+?>
+
+<div id="preview">
+<?php
+// display picture from the previous
+		echo '<div class="well"> <img src="'.$this->secondStep['webUrl'].'?foo='.time().'" alt="Profile Picture"/> </div> <hr />';
+?>
+ </div>
+ 
+ 
+ <?php echo $this->form;?>

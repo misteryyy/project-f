@@ -6,7 +6,29 @@
  * Time: 
  */
 
-// SETTING BASIC ROLES
+// // PROJECT ROLES
+// const MEMBER_ROLE_STARTER = "starter";
+// const MEMBER_ROLE_BUILDER = "builder";
+// const MEMBER_ROLE_GROWER = "grower";
+// const MEMBER_ROLE_LEADER = "leader";
+// const MEMBER_ROLE_ADVISER = "advisor";
+
+// $arrayRoles = array(array("name" => MEMBER_ROLE_STARTER, ),
+// 		array("name" => MEMBER_ROLE_LEADER),
+// 		array("name" => MEMBER_ROLE_BUILDER),
+// 		array("name" => MEMBER_ROLE_GROWER),
+// 		array("name" => MEMBER_ROLE_ADVISER)
+// );
+
+// foreach($arrayRoles as $role){
+// 	$rObj = new \App\Entity\ProjectRole($role['name']);
+// 	$em->persist($rObj);	
+// }
+
+// $em->flush();
+
+
+// SETTING BASIC SYSTEM ROLES
 $role_visitor = new \App\Entity\UserRole();
 $role_visitor->setName(\App\Entity\UserRole::SYSTEM_ROLE_VISITOR);
 $role_visitor->setType(\App\Entity\UserRole::TYPE_SYSTEM);
@@ -46,22 +68,30 @@ foreach ($categories as $category){
 'What is the most basic version you can get out in 60 days?',
 'In 90 days?',
 'What message are you looking to convey with your product?',
-'Have you focussed in on your value proposition? If so, what is it?''
+'Have you focussed in on your value proposition? If so, what is it?'
 );
 
 foreach($question as $q){
-	$qObj = new \App\Entity\Category($q);
-	$em->persist($q);	
+	$qObj = new \App\Entity\ProjectSurveyQuestion($q);
+	$em->persist($qObj);	
 }
+
+
+// Creating Slideshow
+$slideshow = new \App\Entity\Slideshow();
+$em->persist($slideshow);
+$em->flush();
+
+
 
 //////////////////////////////////////////////////////////
 //Creating Admins
 
 // adding people to account
-$user = new \App\Entity\User();
-$user->setEmail("j.kortan@gmail.com");
-$user->setPassword("pi2131221");
-$user->setName("Josef Kortan");
+$project = new \App\Entity\User();
+$project->setEmail("j.kortan@gmail.com");
+$project->setPassword("pi2131221");
+$project->setName("Josef Kortan");
 
 $user2 = new \App\Entity\User();
 $user2->setEmail("visitor@gmail.com");
@@ -69,9 +99,9 @@ $user2->setPassword("visitor");
 $user2->setName("Visitor Jean");
 
 // setting roles
-$user->addRole($role_visitor);
-$user->addRole($role_member);
-$user->addRole($role_admin);
+$project->addRole($role_visitor);
+$project->addRole($role_member);
+$project->addRole($role_admin);
 
 // setting roles
 $user2->addRole($role_visitor);
@@ -79,10 +109,10 @@ $user2->addRole($role_member);
 
 // adding userInfo / skype, phone, ...
 $userInfo = new \App\Entity\UserInfo();
-$user->setUserInfo($userInfo);
+$project->setUserInfo($userInfo);
 
 
-$em->persist($user);
+$em->persist($project);
 $em->persist($user2);
 $em->flush();
 

@@ -44,9 +44,12 @@ class Category
     	return $this->projects;
     }
     
-    public function addProject(Project $project){
-    	$this->projects->add($project);
-    	$project->setCategory($this);
+    /**
+     * Add project to category
+     * @param unknown_type $project
+     */
+    public function addProject($project){
+    	$this->projects[] = $project;
     }
     
     

@@ -1,0 +1,28 @@
+ <?php  
+	
+	$allow[1] = false;
+	$allow[2] = false;
+	$allow[3] = false;
+	$allow[4] = false;
+	$allow[5] = false;
+	
+	switch ($this->step){
+		case 1 : $allow[1] = true;
+		break;
+		case 2 : $allow[2] = true;
+		break;
+		case 3 : $allow[3] = true;
+		break;
+		case 4 : $allow[4] = true;
+		break;
+		case 5 : $allow[5] = true;
+		break;
+	}
+  ?>
+  <ul class="nav nav-tabs">
+  <li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/profile-setting/member-info">Basic Info</a></li>
+  <li class="<?php echo($allow[2] == true ? "active" : "disable" );?>"> <a href="/member/profile-setting/member-picture">Profile Picture</a></li>
+  <li class="<?php echo($allow[3] == true ? "active" : "disable" );?>"> <a href="/member/profile-setting/member-skills">My skills</a></li>
+  <li class="<?php echo($allow[4] == true ? "active" : "disable" );?>"> <a href="/member/profile-setting/member-notification">Notification</a></li>
+  <li class="<?php echo($allow[5] == true ? "active" : "disable" );?>"> <a href="/member/profile-setting/change-password">Change Password</a></li>
+  </ul>

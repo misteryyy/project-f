@@ -1,44 +1,12 @@
 <?php 
 echo $this->partial('project/create-project-navigation.phtml',array("step" => $this->step));
 ?>
-<div id="alert-area"></div>
-<h2>SURVEY PAGE</h2>
 
-    <form class="form-horizontal" id="step">
-    <fieldset title="Step 1">
-   		 <legend>First Q</legend>
-    		<div class="control-group">
-    
-    			<label class="control-label" for="input01">Text input</label>
-   			 <div class="controls">
-   			 <input type="text" class="input-xlarge" id="input01">
-    		<p class="help-block">Supporting help text</p>
-    		</div>
-    
-    		</div>
-    </fieldset>
-    
-    <fieldset title="Step 2">
-   		 <legend>First 2</legend>
-    		<div class="control-group">
-    
-    	<label class="control-label" for="input01">Text input</label>
-   			 <div class="controls">
-   			 <input type="text" class="input-xlarge" id="input01">
-    		<p class="help-block">Supporting help text</p>
-    		</div>
-    
-    		</div>
-    </fieldset>
-    
-    
-    		<input type="submit" class="finish"/>
-    
-    </form>
-    
- 
+<div class="well">
+		<div id="title-target"></div>
+</div>   
 
-<?php // echo $this->form;   ?>
+<?php  echo $this->form;   ?>
 
 
 <!-- Load jQuery build -->
@@ -47,18 +15,24 @@ echo $this->partial('project/create-project-navigation.phtml',array("step" => $t
 <script type="text/javascript">
 $(document).ready(function()
 		{	// disable cache
-			 $.ajaxSetup ({cache: false });  
-
+			 $.ajaxSetup ({cache: false });  	
+			// $("#submit").hide();
 			 $('#step').stepy({
+				 next: function(index) {
+				    if(index==16){
+					   	// $("#submit").show();	
+					}
+					}
+				 ,
+				  finishButton:	false,
+				  nextLabel:      'Next question',
+				  backLabel:      'Previous question',
+				  titleClick: true,
 				  description:  false,
 				  legend:       true,
 				  titleClick:   true,
-				  titleTarget:   'empty'
-				  
-				});		
-
-		
-			 
+				  titleTarget:  '#title-target'
+				}); 
 				    
 
 });

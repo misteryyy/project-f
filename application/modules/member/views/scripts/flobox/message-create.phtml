@@ -1,0 +1,17 @@
+
+<div class="well">
+	<a class="btn btn-success" href="/member/flobox">Back to list of flobox messages</a>
+</div>
+<hr/>
+
+<!-- Other way how to display forms -->
+<form id="flo-box" class="form-horizontal" action="<?= $this->form->getAction(); ?>" method="<?= $this->form->getMethod(); ?>">
+	<fieldset id="fieldset-FLOBoxIdea"><legend>Create New FloBox Message</legend>
+	<?= $this->form->type; ?>
+	<?= $this->form->typeDetail; ?>
+	<?= $this->form->title ?>
+	<?= $this->form->message ?>
+	</fieldset>
+	<?= $this->form->submit ?>
+</form>
+

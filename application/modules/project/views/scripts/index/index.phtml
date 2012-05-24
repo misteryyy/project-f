@@ -1,1 +1,57 @@
-Admin Content
+<?php 
+if(count ($this->project) > 0){ ?>
+
+<?php if($this->project->ban){?>
+    <div class="alert">
+    <button class="close" data-dismiss="alert">×</button>
+    <strong>Warning!</strong> This project is banned.
+    </div>				
+<?php } ?>
+			
+<h3><?php echo $this->project->title?></h3>
+<div class="well">
+Created by <i><?php echo $this->project->user->name?></i> ~ <?php echo $this->project->created->format('Y/m/d');?>
+</div>
+
+<?php
+$this->step = 1;
+echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+	<p>
+	<img alt="<?php echo $this->project->title; ?> - main picture" src="/storage/projects/<?php echo $this->project->dir."/".$this->project->getPicture('large'); ?> " />
+	</p>
+	<hr/>
+	<p>	
+	<?php echo $this->project->id?>
+	<?php echo $this->project->user->name?>
+	<?php echo $this->project->created->format('Y/m/d');?>
+	<?php echo $this->project->category->name?>		
+	<?php echo $this->project->content;?>	
+	<?php echo $this->project->pitchSentence;?>
+	<?php echo $this->project->viewCount;?>		
+	</p>
+	<hr/>
+	<p>
+	<?php echo $this->project->lesson;?>		
+	<?php echo $this->project->issue;?>		
+	<?php echo $this->project->plan;?>		
+	</p>			
+	
+	
+	<?php 
+		// displaying of tags for this project
+		$tags = $this->project->getTagsArray();
+		foreach($tags as $tag){
+			echo $tag;
+		}
+	?>
+
+	
+<?php } else {
+	
+	echo "This project doesn't exists.";
+	
+}?>
+
+

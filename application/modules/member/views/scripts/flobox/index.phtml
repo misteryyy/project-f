@@ -1,0 +1,38 @@
+<div class="well">
+	<a class="btn btn-info" href="/member/flobox/message-create">Create Flo Message</a>
+</div>
+<hr/>
+
+<!-- FloBox Table Ideas -->
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator)) {?>
+        <table class="table table-striped">
+        <thead>
+    		<tr>
+    			<th>Title</th>
+    			<th>Type</th>
+    			<th>Type detail</th>
+    			<th>Created</th>
+    			<th>Comments</th>
+    			<th>Actions</th>
+    		</tr>
+    	</thead>
+    <tbody>
+    <?php foreach ($this->paginator as $message){ ?>
+    	<tr>
+    	<td><?php echo $message->title; ?></td>
+    	<td><?php echo $message->type; ?></td>
+		<td><?php echo $message->typeDetail; ?></td>
+		<td><?php echo $message->created->format('Y/m/d'); ?></td>		
+    	<td><?php echo count($message->comments) ?></td>		
+    	<td>
+    		<a class="btn btn-info" href="/member/profile/flobox-detail/member_id/<?php echo $this->member['id']?>/message_id/<?php echo $message->id ?>">Detail</a> ~
+    		<a class="btn btn-danger" href="/member/flobox/message-delete/message_id/<?php echo $message->id ?>">Delete</a>
+    	</td>			
+    	</tr>	 		
+    <?php } ?>
+    </tbody>
+    </table>
+    	
+    		
+    <?php } else echo "No FloBox Messages."?>

@@ -4,10 +4,9 @@
   <title>Project-F Beta / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
   <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-   <!-- JavaScript at the bottom for fast page loading -->
-   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
+    <link rel="stylesheet" href="<?=$this->baseUrl('/media/jquery.stepy-1.1.0/css/jquery.stepy.css')?>">
+     <script src="<?=$this->baseUrl('media/tools/jquery-1.7.1.min.js')?>"></script>
+   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
 </head>
 
 <body>
@@ -41,8 +40,8 @@
     </footer>
   </div>
 </div>
-   
   <!-- scripts concatenated and minified via ant build script-->
+
   <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
   <script defer src="<?=$this->baseUrl('js/script.js')?>"></script>

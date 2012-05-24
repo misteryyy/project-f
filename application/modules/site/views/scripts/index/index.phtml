@@ -1,9 +1,26 @@
 <div id="myCarousel" class="carousel">
   <!-- Carousel items -->
   <div class="carousel-inner">
-    <div class="active item">
-             <img alt="" src="http://placehold.it/480x320">		      
-    </div>
+  
+   
+   <?php 
+    $active = true;
+   	for($i=1;$i<6;$i++){
+   		$project = $this->slideshow->getProject($i);
+		
+   		if($project){ ?>
+
+		<div class="item <?php if($active == true) {echo "active";$active = false;} // first project is set to be active?>">   		
+   			<p>
+				<img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " />
+			</p>	
+   			<?php echo $project->title; ?>
+   	
+		</div>	
+   	<?php
+   		}
+   	}
+   ?>
    
     <div class="item hero-unit">
     

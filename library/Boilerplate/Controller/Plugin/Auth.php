@@ -19,7 +19,7 @@ class Boilerplate_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             return $this->_redirect($request, 'index', 'login', 'member');
         }
     }
-
+    
     protected function _redirect($request, $controller, $action, $module) {
 
     	if ($request->getControllerName() == $controller &&

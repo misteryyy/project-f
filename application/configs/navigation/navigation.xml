@@ -12,6 +12,21 @@
 								<label>Sitemap</label>
 								<uri>/site/index/sitemap</uri>
 						</sitemap>
+						  <login>
+                  			  <label>Member Login</label>
+                    		 <uri>/member/index/login</uri>
+                    		<resource>guest</resource>    
+                		</login>
+                		<signup>
+                    		<label>Member Sign Up</label>
+                    		<uri>/member/index/sign-up</uri>
+                   			<resource>guest</resource>
+                 		</signup>
+                 		<lost-password>
+                    		<label>Member Lost Password</label>
+                    		<uri>/member/index/lost-password</uri>
+                   			<resource>guest</resource>
+                 		</lost-password>
         	</pages>
         </home>
         
@@ -19,33 +34,29 @@
             <label>Member</label>
             <uri>/member/</uri>
             <pages>
-                <login>
-                    <label>Member Login</label>
-                    <uri>/member/index/login</uri>
-                    <resource>guest</resource>    
-                </login>
-                <signup>
-                    <label>Member Sign Up</label>
-                    <uri>/member/index/sign-up</uri>
-                   	<resource>guest</resource>
-                 </signup>
-                 <lost-password>
-                    <label>Member Lost Password</label>
-                    <uri>/member/index/lost-password</uri>
-                   	<resource>guest</resource>
-                 </lost-password>
+              
                   <dashboard>
                     <label>Member Dashboard </label>
     				<module>member</module>
             		<controller>dashboard</controller>
             		<action>index</action>                   
                    	<resource>member</resource>
-                   	
                    	<pages>
 						<flobox>
 							<label>Flo Box Admin</label>
-							<uri>/member/dashboard/flo-box</uri>
+							<uri>/member/flobox/index</uri>
+							<pages>
+								<flobox-create>
+								<label>Create New</label>
+								<uri>/member/flobox/message-create</uri>
+								</flobox-create>
+							</pages>
 						</flobox>
+						<my-project>
+							<label>My Projects</label>
+							<uri>/member/my-project/index</uri>
+						</my-project>
+						
 						<create-project-one>
 						      <label>Create Project</label>
     							<module>member</module>
@@ -64,6 +75,18 @@
 	            					<controller>project</controller>
 	            					<action>create-project-step-three</action>                   			                 
 	               			</create-project-three>
+	               			<create-project-four>
+							      <label>Create Project / Survey</label>
+	    							<module>member</module>
+	            					<controller>project</controller>
+	            					<action>create-project-step-four</action>                   			                 
+	               			</create-project-four>
+	               			<create-project-five>
+							      <label>Create Project / Publishing</label>
+	    							<module>member</module>
+	            					<controller>project</controller>
+	            					<action>create-project-step-five</action>                   			                 
+	               			</create-project-five>
                			</pages>
                			</create-project-one>
                			
@@ -81,7 +104,10 @@
                    			<pages>
 						<flobox>
 							<label>Flo Box</label>
-							<uri>/member/profile/flo-box</uri>
+							    <module>member</module>
+            					<controller>profile</controller>
+           			 			<action>flobox</action> 
+							<params_id>ID_USER</params_id>
 						</flobox>
 						</pages>
                    	 </profile>

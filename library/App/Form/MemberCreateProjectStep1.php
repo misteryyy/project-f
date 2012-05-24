@@ -105,9 +105,8 @@ class MemberCreateProjectStep1 extends \Twitter_Bootstrap_Form_Horizontal
 		$this->addDisplayGroup(
 				array('title','category','priority','pitch','content','plan','issue','lesson','project_tags'), 'Create Project - General Information', array('legend' => 'Step 1')
 		);
-	
-		 
-		 
+
+		
 		// submit button
 		$this->addElement('submit','submit',array(
 				'buttonType' => \Twitter_Bootstrap_Form_Element_Submit::BUTTON_PRIMARY,
@@ -131,9 +130,6 @@ class MemberCreateProjectStep1 extends \Twitter_Bootstrap_Form_Horizontal
 						'decorators' => array('Actions')
 				)
 		);
-
-
-
 
 	}
 }

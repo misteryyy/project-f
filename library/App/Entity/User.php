@@ -3,7 +3,7 @@ namespace App\Entity;
 
 /**
  * @Entity(repositoryClass="App\Repository\User")
- * @Table(name="user",indexes={@index(name="search_idx",columns={"email"})})
+ * @Table(name="user",indexes={@index(name="search_user_email",columns={"email"})})
  */
 class User {
 	
@@ -24,7 +24,6 @@ class User {
 	 * inverseJoinColumns={@JoinColumn(name="user_role_id",referencedColumnName="id")})
 	 */
 	private $roles; // every user is in role / System Roles, Benefit roles
-		
 	
 	/**
 	 * @OneToMany(targetEntity="UserSpecificRole", mappedBy="user", cascade={"ALL"})
@@ -32,51 +31,11 @@ class User {
 	private $specRoles;
 	
 	/**
-	 * Add new Specific Role
-	 * 
+	 * @OneToMany(targetEntity="ProjectRole", mappedBy="user", cascade={"ALL"})
 	 */
-	public function addSpecificRole($name)
-	{		
-		// add only if don't have this role
-		if(!$this->getSpecificRole($name)){
-			$this->specRoles[] = new \App\Entity\UserSpecificRole($name, $this);
-			}
-	}
+	private $projectRoles;
 	
-	/**
-	 * Return specific role on key index
-	 */
-	public function getSpecificRole($name){
-			
-			if($this->specRoles->count() > 0){
-				foreach($this->specRoles as $role){
-					if($role->getName() == $name){
-						return $role;
-					}	
-				}	
-			}	
-			return false;
-		
-	}
-	
-	/**
-	 * Return all specific roles
-	 */
-	public function getSpecificRoles(){
-			return $this->specRoles;
-	}
-	
-	/**
-	 * Delete specific role with all their tags
-	 * @param unknown_type $name
-	 */
-	public function deleteSpecificRole($role){
-		
-				$role->setUser(null);
-				$this->specRoles->removeElement($role);
-	}
-	
-	
+
 	/**
 	 * @Column(type="string", name="name")
 	 */
@@ -151,47 +110,63 @@ class User {
 	 */
 	private $userFieldOfInterestTags;
 	
-	public function setProfilePicture($path){
-		
-		$this->profilePicture = $path;
-	}
-	
-	public function getProfilePicture($resolution = 200){
-		
-		if($this->profilePicture == null){
-			return "no_image_".$resolution.".jpg";
-		}
-		
-		// Return different resolutions
-		if($resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_100 || 
-		   $resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_50 )
-		{
-			
-			$ext = substr(strrchr($this->profilePicture, '.'), 1);
-			$pre = substr($this->profilePicture,0,strrpos($this->profilePicture, '_'));
-			
-				return $pre.'_'.$resolution.'.'.$ext;
-			
-		  }
-		
-		
-		return $this->profilePicture;
-	}
-	
-	
-	
+
 	public function __construct() {
 		$this->userFieldOfInterestTags = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->roles = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->specRoles = new \Doctrine\Common\Collections\ArrayCollection ();
+		$this->projectRoles = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->floMessages = new \Doctrine\Common\Collections\ArrayCollection ();
 		$this->emailVisibility = false;
 		$this->dateOfBirthVisibility = false;
 		$this->confirmed = true;
 		$this->dateOfBirth = new \DateTime();
 		$this->created = new \DateTime("now");
-		$this->ban = false; 
+		$this->ban = false;
 		$this->info = new \App\Entity\UserInfo();
+	}
+	
+	public function setProfilePicture($path){
+	
+		$this->profilePicture = $path;
+	}
+	
+	
+	public function getProfilePicture($resolution = 200){
+	
+		if($this->profilePicture == null){
+			return "no_image_".$resolution.".jpg";
+		}
+		
+		// Return different resolutions
+		if($resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_100 ||
+				$resolution == \App\Entity\User::PROFILE_PHOTO_RESOLUTION_50 )
+		{
+			$ext = substr(strrchr($this->profilePicture, '.'), 1);
+			$pre = substr($this->profilePicture,0,strrpos($this->profilePicture, '_'));
+				
+			return $pre.'_'.$resolution.'.'.$ext;
+				
+		}
+	
+		return $this->profilePicture;
+	}
+	
+	/**
+	 * Return all specific roles
+	 */
+	public function getSpecificRoles(){
+		return $this->specRoles;
+	}
+	
+	/**
+	 * Delete specific role with all their tags
+	 * @param unknown_type $name
+	 */
+	public function deleteSpecificRole($role){
+	
+		$role->setUser(null);
+		$this->specRoles->removeElement($role);
 	}
 
 	/**
@@ -208,6 +183,7 @@ class User {
 		}		
 		return $r;
 	}
+	
 	/**
 	 * @param number $role
 	 */
@@ -216,11 +192,41 @@ class User {
 		$this->roles[] = $role;
 	}
 	
+	public function addProjectRole($role){
+		$role->setUser($this);
+		$this->projectRoles[] = $role;
+	}
+	
 	public function getId(){
 		return $this->id;
 	}
 
-
+	/**
+	 * Add new Specific Role
+	 *
+	 */
+	public function addSpecificRole($name)
+	{
+		// add only if don't have this role
+		if(!$this->getSpecificRole($name)){
+			$this->specRoles[] = new \App\Entity\UserSpecificRole($name, $this);
+		}
+	}
+	/**
+	 * Return specific role on key index
+	 */
+	public function getSpecificRole($name){
+			
+		if($this->specRoles->count() > 0){
+			foreach($this->specRoles as $role){
+				if($role->getName() == $name){
+					return $role;
+				}
+			}
+		}
+		return false;
+	
+	}
 	/**
 	 * @param \Doctrine\Common\Collections\ArrayCollection $user_tags
 	 */
@@ -244,19 +250,11 @@ class User {
 			
 			foreach ($this->userFieldOfInterestTags as $tag){	
 				$tags [] = $tag->getName();
-			}
-				
+			}	
 			$implode = implode(',', $tags);
 			return $implode;
 		}
-		
-	
-	
-		
-	//	return $this->userTags->toArray();
 	}
-	
-	
 	
 	/**
 	 * @return the $user_tags

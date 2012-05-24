@@ -1,70 +1,55 @@
 <?php
 
 class Admin_SlideshowController extends Boilerplate_Controller_Action_Abstract {
-	/**
-	 *
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $_em = null;
-	
-	/**
-	 *
-	 * @var \sfServiceContainer
-	 */
-	protected $_sc = null;
-
-
-	public function init() {
-		$this->_em = Zend_Registry::get ( 'em' );
-	}
 	
 	/*
 	 * Sign up process, validation of form
 	 */
 	public function indexAction() {
 		
-		$this->view->pageTitle = 'Admin Dashboard';
+		$this->view->pageTitle = 'Admin Slideshow Settings';
+	
+		$slideshowFacade = new \App\Facade\Admin\SlideshowFacade($this->_em);
 		
-// 		$form = new \App\Form\PublicMemberSignUp ();
-// 		$this->view->form = $form;
 		
-// 		if ($this->_request->isPost ()) {
+		$slideshow = $slideshowFacade->findSlideshow();
+
+		$form1 = new \App\Form\Admin\SlideshowForm($slideshow->getProject(1),1);
+		$form2 = new \App\Form\Admin\SlideshowForm($slideshow->getProject(2),2);
+		$form3 = new \App\Form\Admin\SlideshowForm($slideshow->getProject(3),3);
+		$form4 = new \App\Form\Admin\SlideshowForm($slideshow->getProject(4),4);
+		$form5 = new \App\Form\Admin\SlideshowForm($slideshow->getProject(5),5);
+	
+		if ($this->_request->isPost()) {
 			
-// 			if ($form->isValid ( $this->_request->getPost () )) {
-				
-// 				// finding user
-// 				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );
+			// select which form will be validated and updated
+			$slot_position = $this->_request->getParam('slot_position');
+			$formvar = "form".$slot_position;
 			
-// 				// user doesn't exist, we can create new one
-// 				if (! $user) {
-					
-// 					try {
+			if ($$formvar->isValid($this->_request->getPost())) {
+				try{
+					$slideshowFacade->updateProject($this->_member_id,$this->_request->getParam('project_id'),$slot_position);
+					$this->_helper->FlashMessenger( array('success' =>  "SLOT ".$slot_position.' has been updated.' ));
+					$this->_redirect($this->view->url());
+							
+				}catch(\Exception $e){
+					$this->_helper->FlashMessenger( array('error' =>  "Please check SLOT ".$slot_position ));
+					$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
 						
-// 						// storing the values
-// 						$facadeUser = new \App\Facade\UserFacade($this->_em);
-// 						$facadeUser->createAccount($form->getValues());
-											
-// 						// SUCCESS
-// 						$this->_helper->FlashMessenger ( array ('success' => "Account created! Congratulations. You will get email with information to your email." ) );
-// 						$this->_redirect('/member/index/login');
-						
-// 						// something bad happen with Doctrine
-// 					} catch ( Exception $e ) {
-// 						$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
-// 					}
-				
-// 				} 				// user already exists
-// 				else {
-// 					$this->_helper->FlashMessenger ( array ('error' => "The provided e-mail address is already associated with a registered user." ) );
-// 				}
+				}	
+			}
 			
-// 			} 			// print error
-// 			else {
-// 				pr ( $form->getValues () );
-// 				pr ( $this->_request );
-// 				$this->_helper->FlashMessenger ( array ('error' => "Please take a look at the form again." ) );
-// 			}
-// 		}
+			// not validated properly
+			else {
+				$this->_helper->FlashMessenger( array('error' => "Please check your input."));
+			}
+		}
+		
+		$this->view->form_slot_1 = $form1;
+		$this->view->form_slot_2 = $form2;
+		$this->view->form_slot_3 = $form3;
+		$this->view->form_slot_4 = $form4;
+		$this->view->form_slot_5 = $form5;
 	
 	}
 	

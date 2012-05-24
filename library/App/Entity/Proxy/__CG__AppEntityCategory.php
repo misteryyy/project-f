@@ -63,7 +63,7 @@ class Category extends \App\Entity\Category implements \Doctrine\ORM\Proxy\Proxy
         return parent::getProjects();
     }
 
-    public function addProject(\App\Entity\Project $project)
+    public function addProject($project)
     {
         $this->__load();
         return parent::addProject($project);

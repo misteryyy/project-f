@@ -1,0 +1,42 @@
+<h3>FloBox</h3>		
+<?php 
+// if current user is owner, he will have link to his administration of 
+if ($this->message->user->id == $this->member['id']) { ?>
+	<a class="btn btn-success" href="/member/flobox">Back to all FloBox messages</a>
+<?php 
+} else {?>
+	<a class="btn btn-success" href="/member/profile/flobox">Back to all FloBox messages</a>
+<?php }?>
+
+<hr/>
+
+    <div class="well">	 
+    	<?php
+    	$typeClass=""; 
+    	if($this->message->type == \App\Entity\UserFloBox::MESSAGE_TYPE_CHOICE) $typeClass = "alert-info";
+    	if($this->message->type == \App\Entity\UserFloBox::MESSAGE_TYPE_INTEREST) $typeClass =  "alert-danger"; 
+    	?>
+    	<h4><?php echo $this->message->title; ?></h4>
+    	
+		<?php echo $this->message->created->format('Y/m/d'); ?>
+    	<div class="alert <?php echo $typeClass;?>"><strong><?php echo $this->message->type; ?></strong> ~ 
+    	<?php echo $this->message->typeDetail; ?>
+		</div>
+		<?php echo $this->message->message; ?>			
+    	<?php echo count($this->message->comments) ?>
+    </div>
+    <?php 
+    		if(count($this->message->comments) > 0) echo "<hr/> <h3>Responses</h3>";
+  			// display comments
+			foreach($this->message->comments as $comment){
+					?>		
+				 <div class="alert alert-success">
+				 	<img src="/storage/users/<?php echo $comment->user->getProfilePicture(50) ; ?>" />
+   					<?php echo $comment->user->name ; ?>
+					<?php echo $comment->user->id ; ?>
+					<?php echo $comment->created->format('d-m-y') ; ?>
+					<?php echo $comment->content ; ?>
+					</div>
+	<?php }?>
+	
+	<?php echo $this->form ;?>

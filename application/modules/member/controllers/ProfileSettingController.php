@@ -5,20 +5,18 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
 
     public function indexAction()
     {
-    	//$member = Zend_Auth::getInstance()->getIdentity();
-    	//$this->view->pageTitle = $member->name . '\'s Dashboard \  ' ;
+  			$this->_helper->redirector('member-info', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());	
     }
     
     /**
-     * 
+     *  Member info Settings
      */
     public function memberInfoAction()
     {
-    	$id = 1;
-    	$error = false;
-    	//$member = Zend_Auth::getInstance()->getIdentity();
-    	//$this->view->pageTitle = $member->name . '\'s Dashboard \ Member settings' ;
-      	 $form = new \App\Form\MemberPersonalInfoForm();
+  
+     $error = false;
+      $this->view->pageTitle = "Info Setting" ;
+      $form = new \App\Form\MemberPersonalInfoForm();
     
        if ($this->_request->isPost()) {
        	if ($form->isValid($this->_request->getPost())) {
@@ -27,7 +25,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        		$values = $form->getValues();
        		// storing data
        		try{
-       			$facadeUser->updateInfo($id,$values);
+       			$facadeUser->updateInfo($this->_member_id,$values);
        			$this->_helper->FlashMessenger( array('success' => "Updated successfully :D"));
        		}
        		catch (Exception $e){
@@ -48,7 +46,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
        // fetch values
        $values = $form->getValues();	      
        // retriving data for form
-        $user = $facadeUser->findUserSettings($id);
+        $user = $facadeUser->findUserSettings($this->_member_id);
         // if its not initialize
         ($user->getDateOfBirth() != null) ?  $dateOfBirth = $user->getDateOfBirth()->format('Y/m/d') : $dateOfBirth = '';
         
@@ -69,9 +67,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
       	$form->setDefaults($data);
        }
       $this->view->form = $form;
-       
-    
-       
+         
     }
     
     /**
@@ -79,7 +75,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      */
     public function memberPictureAction()
     {
-    	
     	$this->view->pageTitle = $this->_member['name'] . '\'s Dashboard \ Profile Picture' ;
     	$form = new \App\Form\MemberChangeProfilePicture(); 	
     	//then process your file, it's path is found by calling $upload->getFilename()
@@ -119,7 +114,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     				}
     			
     			// rename the file	
-    			$ext = findexts($info['name']);
+    			$ext = substr(strrchr($info['name'],'.'), 1);
     			$fileName = 'profile'.sha1("s@4d".$this->_member_id);
     			
     			// resolution path
@@ -153,29 +148,27 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     	}// end if post
     
     }
- 
+   
     
-    public function memberPasswordAction()
+    /**
+     * Change Password Settings
+     */
+    public function changePasswordAction()
     {
-    	$member = Zend_Auth::getInstance()->getIdentity();
-    	$this->view->pageTitle = $member->name . '\'s Dashboard \ Change password' ;
+    	$this->view->pageTitle = "Change password" ;
+    	
+    	
     }
-    
-    
     
     /**
      * Administration of Member Skills
      */
     public function memberSkillsAction()
     {
-    	
-    	$this->view->pageTitle = $this->_member['name'] . '\'s Dashboard \ Member skills' ;
+    	$this->view->pageTitle = "Member skills" ;
     	$form = new \App\Form\MemberSkill();
      	$this->view->form = $form;
- 	
-     	$id = 1;
      	$error = false;
-
      	if ($this->_request->isPost()) {
      		if ($form->isValid($this->_request->getPost())) {
      			$facadeUser = new \App\Facade\UserFacade($this->_em);
@@ -183,7 +176,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      			$values = $form->getValues();
      			// storing data
      			try{
-     				$facadeUser->updateSkills($id,$values);
+     				$facadeUser->updateSkills($this->_member_id,$values);
      				$this->_helper->FlashMessenger( array('success' => "Updated successfully :D"));
      			}
      			catch (Exception $e){
@@ -205,7 +198,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      		// fetch values
      		$values = $form->getValues();
      		// retriving data for form
-     		$user = $facadeUser->findUserSettings($id);
+     		$user = $facadeUser->findUserSettings($this->_member_id);
      		// filling up form with data	
      		$arrayRoles = array(array("name" => \App\Entity\UserRole::MEMBER_ROLE_STARTER, ),
      				array("name" => \App\Entity\UserRole::MEMBER_ROLE_LEADER),

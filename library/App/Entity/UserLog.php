@@ -3,7 +3,7 @@ namespace App\Entity;
 
 /**
  * @Entity(repositoryClass="App\Repository\UserLog")
- * @Table(name="user_log",indexes={@index(name="search_idx_type",columns={"type"})})
+ * @Table(name="user_log",indexes={@index(name="search_idx_type",columns={"user_id"})})
  */
 class UserLog
 {
@@ -56,8 +56,11 @@ class UserLog
     	$this->type = $type;
 		$this->created = new \DateTime("now");	
     }
-
     
+    public function setUser($user){
+    	$this->user = $user;
+    }
+
 	/*
      * Reflection methods
      * TODO in production change to real method

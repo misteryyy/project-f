@@ -1,29 +1,19 @@
-
-<h3>Welcome to your dashboard,</h3>
+<h3>Welcome to your dashboard, <strong><?php echo $this->member['name']?></strong></h3>
 
 <div class="well">
-DATA 1
-<?php
-echo $this->member['name'];
-echo " with id:";
-echo $this->member['id'];
-echo " and email >";
-echo $this->member['email'];
- ?>
+<ul class="nav">
+  <li> <a class="btn " href="/member/flobox/index">FloBox</a></li>
+  <li> <a class="btn " href="/member/my-project/">My Projects</a></li>
+    <li> <a class="btn " href="/member/profile-setting/">My Settings</a></li>
+</ul>
+
 </div>
 
-<!-- <ul class="nav nav-tabs"> -->
-<!--   <li class="active"><a  href="#home" data-toggle="tab">Home</a></li> -->
-<!--   <li><a href="#profile" data-toggle="tab">Profile</a></li> -->
-<!--   <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
-<!-- </ul> -->
 
-<!-- <a href="#" title="Loading through JSON" class="withajaxpopover" data-load="/member/ajax/index">blabla</a> -->
-<script>$('.withajaxpopover').bind('hover',function(){
-        var el=$(this);
-        $.get(el.attr('data-load'),function(d){
-            el.unbind('hover').popover({content: d}).popover('show');
-        });
-});
- </script> 
+<div class="well">
+<?php
+pr($this->member);
+?>
+</div>
+
 
