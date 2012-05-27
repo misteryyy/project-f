@@ -7,15 +7,24 @@ class Site_IndexController extends Boilerplate_Controller_Action_Abstract
     {    
     	$this->view->pageTitle = 'FLO~ Grow.Lead...';
     	
-    	try{
-    		$slideshowFacade = new \App\Facade\Admin\SlideshowFacade($this->_em);
-    		$this->view->slideshow = $slideshowFacade->findSlideshow();
-    	}
-    	catch(\Exception $e){
-			$this->_helper->FlashMessenger( array('error' =>  "Oops. Functionality of FLO is not good..."));				
-		}
+    		// Feeding Slideshow
+    		$facadeSlideshow = new \App\Facade\Admin\SlideshowFacade($this->_em);
+    		$this->view->slideshow = $facadeSlideshow->findSlideshow();
+    		
+    		// Feeding projects
+    		$facadeProject = new \App\Facade\Site\ProjectFacade($this->_em);
+    		$paginator = $facadeProject->findAllProjectsPaginator();
+    		$paginator->setItemCountPerPage(8); // items per page
+    		$page = $this->_request->getParam('page', 1);
+    		$paginator->setCurrentPageNumber($page);
+    		$this->view->paginator = $paginator;
+	
+    
     }
       
+    
+    
+    
     public function phpInfoAction(){
     			
     }

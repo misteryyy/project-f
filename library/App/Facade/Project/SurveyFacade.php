@@ -12,6 +12,33 @@ class SurveyFacade {
 		$this->em = $em;
 	}
 	
+	
+	/**
+	 * Get answers for project survey Paginator
+	 */
+	public function findProjectSurveyAnswersPaginator($project_id){
+			
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+
+		$stmt = 'SELECT a FROM App\Entity\ProjectSurveyAnswer a WHERE a.project = ?1';
+		$stmt .= 'ORDER BY a.id ASC';
+	
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+			
+		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
+	
+		$iterator = $paginator->getIterator();
+	
+		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+		return new \Zend_Paginator($adapter);
+			
+	}
+	
+	
 	/**
 	 * Get answers for project survey
 	 */

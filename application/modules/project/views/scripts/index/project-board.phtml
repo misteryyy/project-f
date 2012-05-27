@@ -1,0 +1,66 @@
+<h3><?php echo $this->project->title?></h3>
+<?php
+// basic project navigation
+$this->step = 6;
+echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+<h2>Project</h2>
+<p>Total number of messages <?php echo $this->paginator->getTotalItemCount();?> </p>
+<?php echo $this->form;?>
+
+<script>
+$(function(){
+   var file0 = $("#file_0").closest("div").parent();
+   var file1 = $("#file_1").closest("div").parent();
+   var file2 = $("#file_2").closest("div").parent();
+   var file3 = $("#file_3").closest("div").parent();
+   var file4 = $("#file_4").closest("div").parent();
+   file1.hide();
+   file2.hide();
+   file3.hide();
+   file4.hide();
+   
+   $("#file_0").change(function(){if ($("#file_0").val() != ""){file1.show();}});
+   $("#file_1").change(function(){if ($("#file_1").val() != ""){file2.show();}});
+   $("#file_2").change(function(){if ($("#file_2").val() != ""){file3.show();}});
+   $("#file_3").change(function(){if ($("#file_3").val() != ""){file4.show();}});   
+});
+</script>
+
+
+<hr/>
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator) > 0) {?>
+    	<?php foreach ($this->paginator as $comment){ ?>
+
+    		<div class="well">
+		 		<img src="/storage/users/<?php echo $comment->user->getProfilePicture(100) ; ?>" />
+				<?php echo $comment->user->name ; ?>
+				<?php echo $comment->user->id ; ?>
+				<?php echo $comment->created->format('d-m-y') ; ?>
+				<?php echo $comment->content ; ?>
+				
+				<?php if(count($comment->files) > 0){?>
+						<div class="well">	
+							<?php 
+						// display children
+						foreach($comment->files as $file){
+							?>		
+						   <div class="alert alert-info">
+							<a href="/storage/projects/<?php echo $comment->project->dir;?>/<?php echo $file->name ;?>">
+							<?php echo $file->name ;?> </a>
+							<em>
+								{<?php echo $file->getSizeFormat(); ?>,	<?php echo $file->type ; ?>}
+							</em>
+							</div>
+						<?php }?>
+						</div>
+				<?php }?>
+			</div>
+		
+    	
+    	<?php } 
+ 	}
+ 	else {
+	echo "No Comments for this project";
+} ?>

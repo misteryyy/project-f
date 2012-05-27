@@ -162,6 +162,8 @@ class Project {
 	public function getTitle() {
 		return $this->title;
 	}
+	
+	
 	/*
 	 * Add tag to the SpecificRole
 	 */

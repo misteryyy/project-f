@@ -1,0 +1,28 @@
+<h3><?php echo $this->project->title?></h3>
+<?php
+// basic project navigation
+$this->step = 2;
+echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+<h2>Updates</h2>
+<p>Total number of updates <?php echo $this->paginator->getTotalItemCount();?> </p>
+<hr/>
+
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator) > 0) {?>
+    	<?php foreach ($this->paginator as $update){ ?>
+
+    		<div class="well">
+		 	<h3><?php echo $update->title;?>
+		 	</h3>
+		 	<?php echo $update->content;?>
+		 	<?php echo $update->created->format('d-m-y') ;?>
+			</div>
+		
+    	
+    	<?php } 
+ 	}
+ 	else {
+	echo "No Updates for this project";
+} ?>

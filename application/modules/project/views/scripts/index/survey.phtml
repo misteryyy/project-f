@@ -1,0 +1,26 @@
+<h3><?php echo $this->project->title?></h3>
+<?php
+// basic project navigation
+$this->step = 4;
+echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+<h2>Survey</h2>
+<p>Total number of answered question <?php echo $this->paginator->getTotalItemCount();?> </p>
+
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator) > 0) {?>
+    	<?php foreach ($this->paginator as $answer){ ?>
+
+    		<div class="well">
+		 		<?php echo $answer->question->id;?>. <?php echo $answer->question->question;?>
+		 		<hr>
+		 		<?php echo $answer->answer;?>
+		 		
+			</div>
+		
+    	
+    	<?php } 
+ 	}
+ 	else {
+	echo "No survey for this project";
+} ?>

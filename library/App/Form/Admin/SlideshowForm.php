@@ -25,7 +25,7 @@ class SlideshowForm extends \Twitter_Bootstrap_Form_Horizontal
 		}
 		
 		// Description of roles
-		 $this->addElement('hidden', 'logged_member', array(
+		 $this->addElement('hidden', 'info', array(
 		 					'description' => $message,
 		 					'ignore' => true,
 		 					'decorators' => array(
@@ -37,6 +37,7 @@ class SlideshowForm extends \Twitter_Bootstrap_Form_Horizontal
 		 $this->addElement('text', 'project_id', array(
 		 		'label' => 'Project ID',
 		 		'value' => $value,
+		 		'dimension' => 1,
 		 		'required' => true,
 		 		'filters' => array('StringTrim'),
 		 		'description' => "id",
@@ -45,7 +46,7 @@ class SlideshowForm extends \Twitter_Bootstrap_Form_Horizontal
  	
 		// Form section
 		$this->addDisplayGroup(
-				array('logged_member','slot_position','project_id'),
+				array('info','slot_position','project_id'),
 				'main',
 				array( 'legend' => 'SLOT '.$this->slot)
 		);
@@ -56,7 +57,7 @@ class SlideshowForm extends \Twitter_Bootstrap_Form_Horizontal
 				'label' => "Update Slot ".$this->slot,
 				'escape' => false,
 		));
-		  
+		
 		// Action Section
 		$this->addDisplayGroup(
 				array('submit'),

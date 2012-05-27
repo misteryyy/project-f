@@ -50,9 +50,15 @@ class ProjectSurveyAdminForm extends \Twitter_Bootstrap_Form_Horizontal
 				'label' => "Save",
 				'escape' => false,
 		));
+		$this->addElement('button', 'reset', array(
+				'buttonType' => \Twitter_Bootstrap_Form_Element_Submit::BUTTON_PRIMARY,
+				'label' => 'Reset',
+				'type' => 'reset'
+		));
+		 
 		// Action Section
 		$this->addDisplayGroup(
-				array('submit',),
+				array('submit','reset'),
 				'actions',
 				array(
 						'disableLoadDefaultDecorators' => true,

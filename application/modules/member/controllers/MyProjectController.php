@@ -23,8 +23,7 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 	public function teamAction()
 	{
 		$this->checkProjectAndUser();
-		$this->view->pageTitle = "Team" ;
-		 
+		$this->view->pageTitle = "Team" ;	 
 		$form = new \App\Form\Project\AddUpdateForm();
 		 
 		// update project survey

@@ -3,7 +3,7 @@ namespace App\Entity;
 
 /**
  * @Entity(repositoryClass="App\Repository\ProjectComment")
- * @Table(name="project_comment",indexes={@index(name="search_project_role",columns={"project_id"})})
+ * @Table(name="project_comment",indexes={@index(name="search_project_board_message",columns={"project_id"})})
  */
 class ProjectComment {
 	

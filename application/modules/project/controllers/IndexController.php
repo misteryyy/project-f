@@ -2,23 +2,41 @@
 class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 {
 	private $project_id = null;
+	private $project = null;
+	
+	private $facadeProject;
+	
+	/*
+	 * Check all neccessary things
+	*/
+	public function checkProject(){
+		$id = $this->_request->getParam("id");
+		// check id param for project
+		if(!is_numeric($id)){
+			$this->_helper->FlashMessenger(array('error' => 'This project is not found, are you trying to hack us? :D '));
+			$this->_redirect('/member/error/');
+		}
+		try{
+			// init basic things
+			$this->project = $this->facadeProject->findOneProject($id);
+			$this->project_id = $id;
+			$this->view->pageTitle = $this->project->title;
+			$this->view->project = $this->project;
+	
+		} catch (\Exception $e){
+			$this->_helper->FlashMessenger(array('error' => 'This project is not found, are you trying to hack us? :D '));
+			$this->_helper->FlashMessenger(array('error' => $e->getMessage()));
+			$this->_redirect('/member/error/');
+		}
+	}
+	
+	
 	public function init(){
 		parent::init();
-		$id = $this->_request->getParam("id");
-		if(!is_numeric($id)){
-			$this->_helper->FlashMessenger(array('error', 'This project is not found, are you trying to hack us? :D '));
-			$this->_redirect('/project/error/');
-		}
-		// getting project
-		try{
-			$project = $this->_em->getRepository ('\App\Entity\Project')->findOneById($id );
-			$this->view->pageTitle = $project->getTitle() ;
-			$this->view->project = $project;		
-			$this->project_id = $id; 
-			
-		}catch (\Exception $e){
-			$this->_helper->FlashMessenger( array('error' =>  "This project doesn't exists."));
-		}	
+		$this->facadeProject = new \App\Facade\ProjectFacade($this->_em);
+		
+		$this->checkProject();
+		
 	}
 	
 	/**
@@ -28,6 +46,78 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
     	$this->view->pageTitle .=  "~ Main ";  
     }
  
+    /**
+     * Update Section in Project Page
+     */
+    public function updateAction(){
+    	
+    	$facadeUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
+    	$paginator = $facadeUpdate->findUpdatesForProjectPaginator($this->project_id);
+    	$paginator->setItemCountPerPage(10);
+    	$paginator->setCurrentPageNumber($this->_request->getParam('page', 1));
+    	$this->view->paginator = $paginator;
+    	
+    }
+    
+    /**
+     * Survey Section in Project Page
+     */
+    public function surveyAction(){
+    	 
+    	$facadeSurvey = new \App\Facade\Project\SurveyFacade($this->_em);
+    	$paginator = $facadeSurvey->findProjectSurveyAnswersPaginator($this->project_id);
+    	$paginator->setItemCountPerPage(50);
+    	$paginator->setCurrentPageNumber($this->_request->getParam('page', 1));
+    	$this->view->paginator = $paginator;
+    	 
+    }
+    
+    /**
+     * Project Section
+     */
+    public function projectBoardAction(){
+    	 // TODO check if in the team 
+    	$this->view->pageTitle .=  "Project Board";
+ 
+    	$facadeProjectBoard = new \App\Facade\Project\ProjectBoardFacade($this->_em);
+    	 
+    	$form = new \App\Form\Project\ProjectBoardForm($this->_member, $this->project_id);
+
+    	// validation
+    	if ($this->_request->isPost()) {
+    		if ($form->isValid($this->_request->getPost())) {				
+     			try{
+     					$fileManager = new Boilerplate_Util_FileManager($this->project,"storage/projects/".$this->project->dir, "filename.jpg");
+     					// uploading all files to the server
+     					$files = $fileManager->uploadFileFromPost();	
+     					$facadeProjectBoard->addComment($this->_member_id, $this->project_id,$form->getValues(),$files);
+     				$this->_helper->FlashMessenger( array('success' =>  "Comment has been added."));
+     			
+     			} catch (\Exception $e){
+     				$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
+     			}
+    		}
+    		else {
+    			$this->_helper->FlashMessenger( array('error' => "Please check your input."));
+    		}
+    	}
+    
+    	$this->view->form = $form;
+    	
+    	// Displaying of comments
+    	try{
+    		// receiving comments for this project
+    		$zendPaginator = $facadeProjectBoard->findCommentsForProject($this->project_id);
+    		$zendPaginator->setItemCountPerPage(10);
+    		$zendPaginator->setCurrentPageNumber($this->_request->getParam('page', 1));
+    		$this->view->paginator = $zendPaginator;
+    	}catch(\Exception $e){
+    		$this->_helper->FlashMessenger( array('error' => "Error with receiving comments."));
+    	}
+    }
+    
+    
+    
     /**
      * Comments Section
      */

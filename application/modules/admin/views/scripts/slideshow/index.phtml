@@ -1,12 +1,9 @@
 <h3>Slideshow Administration</h3>
+<hr />
 
-<hr />
-<?php echo $this->form_slot_1; ?>
-<hr />
-<?php echo $this->form_slot_2; ?>
-<hr />
-<?php echo $this->form_slot_3; ?>
-<hr />
-<?php echo $this->form_slot_4; ?>
-<hr />
-<?php echo $this->form_slot_5; ?>
+<?php for($i=1;$i < 6;$i++) {
+	$f = "form_slot_".$i; ?>
+	<?php 
+	echo $this->$f;
+	?>
+<?php }?>

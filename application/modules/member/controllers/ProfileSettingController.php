@@ -161,6 +161,16 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
     }
     
     /**
+     * Notification Settings
+     */
+    public function notificationAction()
+    {
+    	$this->view->pageTitle = "Notification" ;
+    	 
+    	 
+    }
+    
+    /**
      * Administration of Member Skills
      */
     public function memberSkillsAction()

@@ -10,6 +10,30 @@ class UpdateFacade {
 	public function __construct(\Doctrine\ORM\EntityManager $em){	
 		$this->em = $em;
 	}
+	
+	/*
+	 * Return the first layer of commments
+	*/
+	public function findUpdatesForProjectPaginator($project_id){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+	
+		$stmt = 'SELECT u FROM App\Entity\ProjectUpdate u WHERE u.project = ?1';
+		$stmt .= 'ORDER BY u.created DESC  ';
+	
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+			
+		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
+	
+		$iterator = $paginator->getIterator();
+	
+		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+		return new \Zend_Paginator($adapter);
+	}
+	
 
 	/*
 	 * Returns one update by id
