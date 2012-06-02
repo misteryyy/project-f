@@ -1,0 +1,32 @@
+<div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+
+          <div class="nav-collapse">
+            <ul class="nav">
+       	  <?php 
+					  $subtree = $this->navigation()->findOneByLabel('Home');
+					   
+					 $options = array("ulClass"=>"nav", 			
+					  				"intent"=>"333",
+					  				"minDepth" => 0,
+					  				"maxDepth" => 0,
+					 				"onlyActiveBranch" => false,
+					 				"renderParents" => true);
+					  
+					  echo $this->navigation()->menu()->renderMenu(null,$options);
+
+					  ?>
+            </ul>
+          
+          
+          
+          </div><!--/.nav-collapse -->
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+

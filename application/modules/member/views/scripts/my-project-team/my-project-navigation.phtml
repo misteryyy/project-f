@@ -1,0 +1,19 @@
+ <?php  
+	$allow[1] = false;
+	$allow[2] = false;
+	$allow[3] = false;
+	
+	switch ($this->step){
+		case 1 : $allow[1] = true;
+		break;
+		case 2 : $allow[2] = true;
+		break;
+		case 3 : $allow[3] = true;
+		break;
+	}
+  ?>
+  <ul class="nav nav-pills">
+  <li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/my-project-team/index/id/<?php echo $this->project->id?>">My team</a></li>
+  <li class="<?php echo($allow[2] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/request/id/<?php echo $this->project->id?>">Requests for roles</a></li>
+  <li class="<?php echo($allow[3] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/survey/id/<?php echo $this->project->id?>">Questions for new members</a></li>
+   </ul>

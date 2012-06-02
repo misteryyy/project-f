@@ -12,7 +12,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$this->bootstrap('layout');
     	$layout = $this->getResource('layout');
     	$view = $layout->getView();
-    	$config = new Zend_Config_Xml(APPLICATION_PATH. '/configs/navigation/navigation.xml','nav');
+    	$config = new Zend_Config_Xml(APPLICATION_PATH. '/configs/navigation/navigation-launch.xml','nav');
     	$navigation_container = new Zend_Navigation($config);
     	$view->navigation($navigation_container);
     	$view->navigation_container = $navigation_container;
@@ -45,8 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('App');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'App');
-        
-        
+             
         $fmmAutoloader = new \Doctrine\Common\ClassLoader('Custom');
         $autoloader->pushAutoloader(array($fmmAutoloader, 'loadClass'), 'Custom');
          

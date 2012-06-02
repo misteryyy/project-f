@@ -12,6 +12,28 @@ class ProjectFacade {
 		$this->em = $em;
 		$this->userFacade = new \App\Facade\UserFacade($em);
 	}
+	
+	public function disableProjectWidget($user_id,$project_id,$data){
+		// checking errors
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
+		if(!$user){
+			throw new \Exception("Member doesn't exists");
+		}
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+		
+		if($project->user == $user){
+			$project->setDisableRoleWidget($data['role_widget_disable']);
+			$this->em->flush();
+		} else {
+			throw new \Exception("You are not allowed to change this property.");
+		}
+		
+		
+	}
+	
 	/*
 	 * Returns one project by id
 	 */

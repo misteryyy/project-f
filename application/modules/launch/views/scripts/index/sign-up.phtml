@@ -1,0 +1,22 @@
+<?php echo $this->form; ?>
+
+
+<hr>
+Other version how to work with the same form  <br />
+
+<!-- Other way how to display forms -->
+<form id="sign-up" class="form-horizontal" action="<?= $this->form->getAction(); ?>" method="<?= $this->form->getMethod(); ?>">
+	<fieldset id="fieldset-FLOBoxIdea"><legend>Create New FloBox Message</legend>
+	<?= $this->form->name; ?>
+	<?= $this->form->surname; ?>
+	<?= $this->form->email; ?>
+	<?= $this->form->email_verification; ?>
+	
+	<?= $this->form->location; ?>
+	<?= $this->form->accept; ?>
+	</fieldset>
+	
+	<?= $this->form->submit ?>
+</form>
+
+

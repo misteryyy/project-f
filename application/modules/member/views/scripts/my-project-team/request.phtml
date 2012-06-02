@@ -1,0 +1,20 @@
+<?php 
+// The main project navigation
+$this->step = 6;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+
+<?php 
+// The main project navigation
+$this->sub_step = 2;
+echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" => $this->sub_step,"project" => $this->project));
+?>
+
+<?php 
+	echo $this->formDisableRoleWidget;
+?>
+
+<div class="well">
+	<a class="btn btn-info" href="/member/project/create-project-step-one">Create New Project</a>
+</div>

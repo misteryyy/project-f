@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>
+		<home>
+			<label>Home</label>
+			<order>0</order>
+			<module>launch</module>
+			<controller>index</controller>
+			<action>index</action>
+		</home>
+		<faq>
+			<label>FAQ</label>
+			<module>launch</module>
+			<controller>index</controller>
+			<action>faq</action>
+		</faq>
+		<rules>
+			<label>Rules</label>
+			<module>launch</module>
+			<controller>index</controller>
+			<action>rules</action>
+		</rules>
+		<sign-up>
+			<label>Sign up for BETA!</label>
+			<module>launch</module>
+			<controller>index</controller>
+			<action>sign-up</action>
+		</sign-up>
+
+
+	</nav>
+</config>
+
