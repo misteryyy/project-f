@@ -1,0 +1,108 @@
+/* FLO~ platform CSS Document */
+
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+img{
+  border: 0px;
+}
+
+@font-face{
+  font-family: Futura;
+  src: url('ftrabk.ttf');
+}
+
+body{
+  font-family: Futura, Helvetica, "Trebuchet MS";
+  background: #e2e3e4 url('bcg_launchpage2.png') no-repeat center top;
+  width: 100%;
+  color: black;
+}
+
+/* h1{ */
+/*   width: 243px; */
+/*   height: 69px; */
+/*   float: left; */
+/*   margin: 0px; */
+/*   background: url('flow_white.png') top left no-repeat; */
+/* } */
+
+/* h1 span{ */
+/*   display: none; */
+/* } */
+
+/* #box{ */
+/*    width: 650px; */
+/*    margin: 230px auto; */
+/* } */
+
+/* #right{ */
+/*   width: 377px; */
+/*   float: right; */
+/* } */
+
+/* #platform{ */
+/*   margin: 15px 0 10px; */
+/*   display: block; */
+/*   float: left; */
+/* } */
+
+/* p, p#subscribed{ */
+/*   font-size: 0.8em; */
+/*   width: 100%; */
+/*   float: left; */
+/*   margin: 5px 0 25px 0; */
+/*   color: #58585a; */
+/* } */
+
+/* p#subscribed{ */
+/*   font-size: 1em; */
+/* } */
+
+/* form{ */
+/*   float: left; */
+/*   width: 100%; */
+/* } */
+
+/* form label{ */
+/*   display: none; */
+/* } */
+
+/* form input[type="text"]{ */
+/*   border: 1px #a7a9a0 solid; */
+/*   padding: 5px; */
+/*   width: 265px; */
+/* } */
+
+/* form input[type="submit"]{ */
+/*   border: 0px; */
+/*   padding: 5px; */
+/*   border: 1px #a7a9a0 solid; */
+/* } */
+
+
+/* #icons{ */
+/*   width: 50%; */
+/*   float: left; */
+/*   margin: 15px 0 0 0; */
+/* } */
+
+/* #social{ */
+/*   width: 45%; */
+/*   float: right; */
+/*   margin: 15px 0 0 0; */
+/* } */
+
+/* #errors{ */
+/*   width: 265px; */
+/*   border: 1px solid red; */
+/*   background: #ffc7c7; */
+/*   font-weight: bold; */
+/*   color: red; */
+/*   float: left; */
+/*   padding: 5px; */
+/*   font-size: 0.8em; */
+/*   margin: 5px 0; */
+/* } */
