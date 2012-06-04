@@ -10,12 +10,10 @@ class Member_AjaxController extends  Boilerplate_Controller_Action_Abstract
 		$this->_helper->viewRenderer->setNoRender(true);
 		parent::init();
 	}
-
     public function indexAction()
     { 
     		
     }
-
     /**
      * Updates Project Picture
      */

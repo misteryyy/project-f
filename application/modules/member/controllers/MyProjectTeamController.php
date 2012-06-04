@@ -1,7 +1,6 @@
 <?php
 class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abstract
 {
-	
 	private $project_id; // int id
 	private $project;  // project object
 	private $facadeComment;
@@ -15,8 +14,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 		$this->facadeComment = new \App\Facade\Project\CommentFacade($this->_em);
 		$this->facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
 	}
-	
-	
+
 	/**
 	 * Modul for Team
 	 */
@@ -52,27 +50,74 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 	/**
 	 * Display Creators project for sign user
 	 */
-    public function surveyAction()
+    public function questionAction()
     {
     	$this->checkProjectAndUser();
-    	$this->view->pageTitle = "My Projects Survey Admin" ;
-    	// get categories for form
-    	$facadeProjectSurvey = new \App\Facade\Project\SurveyFacade($this->_em);
-    	$answers = $facadeProjectSurvey->findProjectSurveyAnswers($this->_member_id, $this->project_id);
-    	$questions = $facadeProjectSurvey->findAllProjectSurveyQuestionsArray();		 
-    	$form = new \App\Form\Member\TeamDisableRoleWidget();
-
-    	// switch project widget
-    	if ($this->_request->isPost()) { 		
-    		if ($form->isValid($this->_request->getPost())) {
-    			pr($this->_request->getPost()); 			
-    			$this->_helper->FlashMessenger( array('success' => "Your answers has been updated"));	 
-    		}
-    	}
-    	
-    	//display form
-    	$this->view->formDisableRoleWidget = $form;
+    	$this->view->pageTitle = "Questions for new Members" ;
     	$this->view->project = $this->project;
+    }
+    /**
+     * Ajax Handling for Question
+     */
+    public function ajaxQuestionAction(){
+    	$this->ajaxify();
+    	$this->checkProjectAndUser();
+    	$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+    	 
+    	if($this->_request->isPost() || $this->_request->isGet()){
+    		switch ($this->_request->getParam("_method")){
+    			case 'findAll' :
+    				$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);	
+    				$data = array(); // data for sending to the script
+    				foreach($questions as $q){
+    					$data[] = $q->toArray();
+    				}
+    				$respond = array("respond" => "success",
+    								 "message" => "Data loaded successfully.",
+    								 "data" => $data);
+    				$this->_response->setBody(json_encode($respond));
+    				break;
+    			
+    			//  create new question
+    			case 'create' :
+    					try{
+    						$facadeTeam->createProjectWidgetQuestion($this->_member_id,$this->project_id, $this->_request->getParams());
+    						$respond = array("respond" => "success",'message' => "Question was added.");
+    						$this->_response->setBody(json_encode($respond));
+    					}catch(Exception $e){
+    						$respond = array("respond" => "error","message" => $e->getMessage());
+    						$this->_response->setBody(json_encode($respond));
+    					}
+    				
+    					break;
+                case 'update' :
+                        try{
+                            $facadeTeam->updateProjectWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'),$this->_request->getParams());
+                            $respond = array("respond" => "success",'message' => "Question was updated.");
+                            $this->_response->setBody(json_encode($respond));
+                        }catch(Exception $e){
+                            $respond = array("respond" => "error","message" => $e->getMessage());
+                            $this->_response->setBody(json_encode($respond));
+                        }
+                    
+                        break;
+    				
+    			case 'delete' :
+    					try{
+                            $facadeTeam->deleteProjectRoleWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'));
+                            $respond = array("respond" => "success",'message' => "Question was deleleted.");
+                            $this->_response->setBody(json_encode($respond));
+                        }catch(Exception $e){
+                            $respond = array("respond" => "error","message" => $e->getMessage());
+                            $this->_response->setBody(json_encode($respond));
+                        }
+    					break;
+    		} 	
+    	} else {
+    		$this->_response->setHttpResponseCode(503); // echo error
+    		
+    	}
+  
     }
     
     /**
@@ -82,13 +127,14 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     {
     	$this->checkProjectAndUser();
     	$this->view->pageTitle = "My Projects Request" ;
-    	$form = new \App\Form\Member\TeamDisableRoleWidget($this->project);
+    	$form = new \App\Form\Project\TeamDisableRoleWidget($this->project);
     	
     	
     	// update project survey
     	if ($this->_request->isPost()) {
     		if ($form->isValid($this->_request->getPost())) {
     			pr($this->_request->getPost());
+                
    				$this->facadeProject->disableProjectWidget($this->_member_id, $this->project_id, $this->_request->getPost());		
     			$this->_helper->FlashMessenger( array('success' => "Saved successfuly."));
     		}
@@ -137,6 +183,10 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     		$this->_redirect('/member/error/');	
     	}	
     }
+    
+
+    
+  
 
     
 }

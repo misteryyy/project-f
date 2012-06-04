@@ -42,6 +42,12 @@ class ProjectBoardFile extends \App\Entity\ProjectBoardFile implements \Doctrine
     }
 
     
+    public function getSizeFormat($precision = 2)
+    {
+        $this->__load();
+        return parent::getSizeFormat($precision);
+    }
+
     public function addProjectBoardComment($c)
     {
         $this->__load();

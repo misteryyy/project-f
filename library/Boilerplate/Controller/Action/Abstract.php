@@ -21,6 +21,17 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
     */
    protected $_randomQuote = null;
       
+ /**
+  * Disable layout, prepare for Ajax
+  */ 
+ public function ajaxify(){
+ 	
+ 	if (Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
+ 		$this->_helper->layout->disableLayout();
+ 	}
+ 	$this->_helper->viewRenderer->setNoRender(true);
+ }  
+   
  public function init(){
 
   // Setting up the instance for user who is logged or not

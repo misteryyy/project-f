@@ -42,6 +42,27 @@ class ProjectRoleWidgetQuestion extends \App\Entity\ProjectRoleWidgetQuestion im
     }
 
     
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->__load();
+        return parent::setId($id);
+    }
+
+    public function setQuestion($question)
+    {
+        $this->__load();
+        return parent::setQuestion($question);
+    }
+
     public function setProject($project)
     {
         $this->__load();
@@ -52,6 +73,24 @@ class ProjectRoleWidgetQuestion extends \App\Entity\ProjectRoleWidgetQuestion im
     {
         $this->__load();
         return parent::getQuestion();
+    }
+
+    public function __get($property)
+    {
+        $this->__load();
+        return parent::__get($property);
+    }
+
+    public function __set($property, $value)
+    {
+        $this->__load();
+        return parent::__set($property, $value);
+    }
+
+    public function toArray()
+    {
+        $this->__load();
+        return parent::toArray();
     }
 
 

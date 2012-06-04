@@ -232,9 +232,9 @@ class UserFacade {
 	 * @param unknown_type $id
 	 * @param unknown_type $data
 	 */
-	public function updateInfo($id,$data = array()){
+	public function updateInfo($user_id,$data = array()){
 		
-		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 			
 		if($user){
 			//$user = new \App\Entity\User();

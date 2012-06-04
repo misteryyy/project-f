@@ -7,18 +7,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	Zend_Registry::set('config', $this->getOptions());
     }
     
-    public function _initNavigation(){
-    	
-    	$this->bootstrap('layout');
-    	$layout = $this->getResource('layout');
-    	$view = $layout->getView();
-    	$config = new Zend_Config_Xml(APPLICATION_PATH. '/configs/navigation/navigation-launch.xml','nav');
-    	$navigation_container = new Zend_Navigation($config);
-    	$view->navigation($navigation_container);
-    	$view->navigation_container = $navigation_container;
-    }
-    
-    
     /*
      * Registering of better Twitter UI FlashMessenger 
      */
@@ -160,28 +148,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //     	);
 //     }
     
-    
-    /**
-     * Initialisation of the ACL singleton class with injected dependencies.
-     *
-     * @return void
-     */
-    protected function _initAcl()
-    {
-    	$roleConfigPath = APPLICATION_PATH . '/configs/acl/roles.xml';
-    	$resourceConfigPath = APPLICATION_PATH . '/configs/acl/resources.xml';
-    
-    	//$acl = Default_Model_Acl::getInstance();
-    	//$acl->setRoles(new Zend_Config_Xml($roleConfigPath,
-    		//	Default_Model_Acl::ROLES_CONFIG_CHILDROLES_IDENTIFIER))
-    		//	->setResources(new Zend_Config_Xml($resourceConfigPath,
-    		//			Default_Model_Acl::RESOURCES_CONFIG_CHILDRESOURCES_IDENTIFIER));
-    
-    	//		$this->registerPluginResource(new Default_Model_Acl_Plugin());
+    protected  function _initNavigationPlugin(){
+    	Zend_Controller_Front::getInstance()->registerPlugin(new Boilerplate_Controller_Plugin_Navigation());
+    	
     }
-    
-    
-    
     
     //adding routes to the application
     protected function _initRewrite() {

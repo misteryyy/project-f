@@ -25,17 +25,12 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     	 * Sign up process, validation of form
     	*/
     	public function signUpAction() {
-    	
     		$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - SignUp';
-    	
-    	
     		$form = new \App\Form\Launch\SignupForm();
     		$this->view->form = $form;
     	
-    		if ($this->_request->isPost ()) {
-    				
+    		if ($this->_request->isPost ()) {		
     			if ($form->isValid ( $this->_request->getPost () )) {
-    	
     				// finding user
     				$user = $this->_em->getRepository ('\App\Entity\User')->findOneByEmail ( $form->getValue ( 'email' ) );
     					
