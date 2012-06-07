@@ -32,6 +32,7 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
  	$this->_helper->viewRenderer->setNoRender(true);
  }  
    
+ 
  public function init(){
 
   // Setting up the instance for user who is logged or not

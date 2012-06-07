@@ -22,34 +22,60 @@ class ProjectApplication {
 	private $id;
 	
 	/**
-	 * @Column(type="string", name="name",nullable=false)
+	 * @Column(type="string", name="role_name",nullable=false)
 	 */
-	private $name;
+	private $roleName;
 	
 	/**
-	 * @Column(type="string", name="type",nullable=false)
+	 * @Column(type="datetime",name="created")
 	 */
-	private $type;
+	private $created;
+	
+	/**
+	 * @column(type="datetime",nullable=true)
+	 */
+	public $modified;
+	
+	
+	/**
+	 * @Column(type="string", name="content",nullable=false)
+	 */
+	private $content;
+
+	/**
+	 * @Column(type="string", name="result",nullable=false)
+	 */
+	private $result; // result from Creator
+	
+	// STATE 0 -> new application
+	// STATE 1 -> accepted application
+	// STATE 2 -> declined application
+	/**
+	 * @Column(type="integer", name="state",nullable=false)
+	 */
+	private $state;
+	
 
 	/**
 	 * @Column(type="integer", name="level")
 	 */
-	private $level;
+	private $level; // level when was applying
 	
 	/**
-	 * @ManyToOne(targetEntity="Project", inversedBy="roles")
+	 * @ManyToOne(targetEntity="Project")
 	 * @JoinColumn(name="project_id", referencedColumnName="id")
 	 */
 	private $project;
 	
+	
 	/**
-	 * @ManyToOne(targetEntity="ProjectRole", inversedBy="applications")
+	 * @ManyToOne(targetEntity="ProjectRole")
 	 * @JoinColumn(name="project_role_id", referencedColumnName="id")
 	 */
 	private $projectRole; // if empty, we are in the first level
 	
 	/**
-	 * @ManyToOne(targetEntity="User", inversedBy="projectRoles")
+	 * @ManyToOne(targetEntity="User")
 	 * @JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	private $user;
@@ -63,29 +89,125 @@ class ProjectApplication {
 	}
 	
 	/**
-	 *
-	 * @param $name unknown_type       	
+	 * Constructor for new application
+	 * @param unknown_type $user
+	 * @param unknown_type $project
+	 * @param unknown_type $level
+	 * @param unknown_type $content
+	 * @param unknown_type $roleName
 	 */
-	public function __construct($name, $type) {
-		$this->name = $name;
-		$this->level = 1;
-		$this->type = $type;
+	public function __construct($user,$project,$level,$content,$roleName){
+		$this->level = $level;
+		$this->user = $user;
+		$this->project = $project;
+		$this->content = $content;
+		$this->roleName = $roleName;
+		$this->state = 0; // created state
+		$this->created = new \DateTime ( "now" );
+		$this->modified = new \DateTime ( "now" ); // the date when the application were modified
+
+	}
 	
-	}
-	/**
-	 *
-	 * @return the $name
-	 */
-	public function getName() {
-		return $this->name;
-	}
+
 	
 	/**
-	 *
-	 * @param $name field_type       	
+	 * @return the $roleName
 	 */
-	public function setName($name) {
-		$this->name = $name;
+	public function getRoleName() {
+		return $this->roleName;
 	}
+
+	/**
+	 * @return the $content
+	 */
+	public function getContent() {
+		return $this->content;
+	}
+
+	/**
+	 * @return the $result
+	 */
+	public function getResult() {
+		return $this->result;
+	}
+
+	/**
+	 * @return the $state
+	 */
+	public function getState() {
+		return $this->state;
+	}
+
+	/**
+	 * @return the $level
+	 */
+	public function getLevel() {
+		return $this->level;
+	}
+
+	/**
+	 * @return the $project
+	 */
+	public function getProject() {
+		return $this->project;
+	}
+
+	/**
+	 * @return the $projectRole
+	 */
+	public function getProjectRole() {
+		return $this->projectRole;
+	}
+
+	/**
+	 * @return the $user
+	 */
+	public function getUser() {
+		return $this->user;
+	}
+
+	/**
+	 * @param field_type $roleName
+	 */
+	public function setRoleName($roleName) {
+		$this->roleName = $roleName;
+	}
+
+	/**
+	 * @param field_type $content
+	 */
+	public function setContent($content) {
+		$this->content = $content;
+	}
+
+	/**
+	 * @param field_type $result
+	 */
+	public function setResult($result) {
+		$this->result = $result;
+	}
+
+	/**
+	 * @param field_type $state
+	 */
+	public function setState($state) {
+		$this->state = $state;
+	}
+
+	/**
+	 * @param field_type $level
+	 */
+	public function setLevel($level) {
+		$this->level = $level;
+	}
+
+	/**
+	 * @param field_type $projectRole
+	 */
+	public function setProjectRole($projectRole) {
+		$this->projectRole = $projectRole;
+	}
+
+
 
 }

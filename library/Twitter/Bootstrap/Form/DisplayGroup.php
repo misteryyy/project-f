@@ -30,9 +30,11 @@ class Twitter_Bootstrap_Form_DisplayGroup extends Zend_Form_DisplayGroup
         }
 
         $decorators = $this->getDecorators();
+    
         if (empty($decorators)) {
             $this->addDecorator('FormElements')
                  ->addDecorator('Fieldset');
+        
         }
         return $this;
     }

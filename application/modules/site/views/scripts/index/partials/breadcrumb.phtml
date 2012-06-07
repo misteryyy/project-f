@@ -1,8 +1,11 @@
-<?php 		
+<?php 	
+
 $divider = '<span class="divider">~</span>';
-$bread = array();
+
+$bread= array();
 	foreach ($this->pages as $page)
-	{		
+	{
+	
 		if ($page->isActive()) {
 			$link = '<li class="active">'.$page->getlabel().'</li>';
 		} else { 

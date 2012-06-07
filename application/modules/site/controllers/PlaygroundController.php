@@ -30,8 +30,23 @@ class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
    
 
     
-    public function indexAction()
-    {
+    public function indexAction()  {
+    	//TODO tomas rada breadcrumb
+//     	$this->view->breadcrumb = array(array('label' => $label, 'link' => $this->getRequest()->getBaseUrl() . '/kontakty/'));
+//     	a v layout.php to pak zobrazuju
+    	
+//     	<?php
+//     	$separator = '>';
+//     	//$baseUrl = 'http://' . $_SERVER ["SERVER_NAME"] . $this->baseUrl();
+//     	echo '<div id="breadcrumb"><a href="' . $baseUrl . '">Úvodní stránka</a>';
+//     	if ($this->breadcrumb) {
+//     		foreach ($this->breadcrumb as $link) {
+//     			echo ' ' . $separator . ' <a href="' . $link['link'] . '">' . $link['label'] . '</a>';
+//     		}
+//     	}
+//     	echo "</div>"
+//     	?>
+    	
     	//$this->_helper->layout()->disableLayout();
     	
 //     	try{

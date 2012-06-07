@@ -18,34 +18,76 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 	
 	
 	/**
-	 * Modul for Team
+	 * Modul for Levels and Task
 	 */
-	public function teamAction()
+	public function taskAction()
 	{
 		$this->checkProjectAndUser();
-		$this->view->pageTitle = "Team" ;	 
-		$form = new \App\Form\Project\AddUpdateForm();
-		 
-		// update project survey
-		if ($this->_request->isPost()) {
-			if ($form->isValid($this->_request->getPost())) {
-				// update survey
-				$facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
-				$facadeProjectUpdate->createProjectUpdate($this->_member_id, $this->project_id,$form->getValues());
-				$this->_helper->FlashMessenger( array('success' => "New Update has been created."));
-				$params = array('id' => $this->project_id);
-				$this->_helper->redirector('update', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
-				 
-			}
-			// not validated properly
-			else {
-				$this->_helper->FlashMessenger( array('error' => "Please check your input."));
-			}
-		}
-		//display form
-		$this->paginator = null;
-		$this->view->form = $form;
+		$this->view->pageTitle = "Levels and Tasks" ;	 
 		$this->view->project = $this->project;
+	}
+	
+	/**
+	 * Ajax Handling for Question
+	 */
+	public function ajaxTaskAction(){
+		$this->ajaxify();
+		$this->checkProjectAndUser();
+		$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+	
+		if($this->_request->isPost() || $this->_request->isGet()){
+			switch ($this->_request->getParam("_method")){
+				case 'findAll' :
+					$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
+					$data = array(); // data for sending to the script
+					foreach($questions as $q){
+						$data[] = $q->toArray();
+					}
+					$respond = array("respond" => "success",
+							"message" => "Data loaded successfully.",
+							"data" => $data);
+					$this->_response->setBody(json_encode($respond));
+					break;
+					 
+					//  create new question
+				case 'create' :
+					try{
+						$facadeTeam->createProjectWidgetQuestion($this->_member_id,$this->project_id, $this->_request->getParams());
+						$respond = array("respond" => "success",'message' => "Question was added.");
+						$this->_response->setBody(json_encode($respond));
+					}catch(Exception $e){
+						$respond = array("respond" => "error","message" => $e->getMessage());
+						$this->_response->setBody(json_encode($respond));
+					}
+	
+					break;
+				case 'update' :
+					try{
+						$facadeTeam->updateProjectWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'),$this->_request->getParams());
+						$respond = array("respond" => "success",'message' => "Question was updated.");
+						$this->_response->setBody(json_encode($respond));
+					}catch(Exception $e){
+						$respond = array("respond" => "error","message" => $e->getMessage());
+						$this->_response->setBody(json_encode($respond));
+					}
+	
+					break;
+	
+				case 'delete' :
+					try{
+						$facadeTeam->deleteProjectRoleWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'));
+						$respond = array("respond" => "success",'message' => "Question was deleleted.");
+						$this->_response->setBody(json_encode($respond));
+					}catch(Exception $e){
+						$respond = array("respond" => "error","message" => $e->getMessage());
+						$this->_response->setBody(json_encode($respond));
+					}
+					break;
+			}
+		} else {
+			$this->_response->setHttpResponseCode(503); // echo error
+	
+		}
 	
 	}
 	
@@ -219,7 +261,6 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
     }
     
     
-    
     /**
      * Edit Creator's Project
      */
@@ -296,9 +337,7 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
     	}	
     }
     
- 
-    
-    
+
     /**
      * Comments for creator Section
      * Module for answering comments with higher priority

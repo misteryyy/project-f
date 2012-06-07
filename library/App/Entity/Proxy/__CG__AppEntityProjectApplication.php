@@ -54,22 +54,94 @@ class ProjectApplication extends \App\Entity\ProjectApplication implements \Doct
         return parent::setProject($project);
     }
 
-    public function getName()
+    public function getRoleName()
     {
         $this->__load();
-        return parent::getName();
+        return parent::getRoleName();
     }
 
-    public function setName($name)
+    public function getContent()
     {
         $this->__load();
-        return parent::setName($name);
+        return parent::getContent();
+    }
+
+    public function getResult()
+    {
+        $this->__load();
+        return parent::getResult();
+    }
+
+    public function getState()
+    {
+        $this->__load();
+        return parent::getState();
+    }
+
+    public function getLevel()
+    {
+        $this->__load();
+        return parent::getLevel();
+    }
+
+    public function getProject()
+    {
+        $this->__load();
+        return parent::getProject();
+    }
+
+    public function getProjectRole()
+    {
+        $this->__load();
+        return parent::getProjectRole();
+    }
+
+    public function getUser()
+    {
+        $this->__load();
+        return parent::getUser();
+    }
+
+    public function setRoleName($roleName)
+    {
+        $this->__load();
+        return parent::setRoleName($roleName);
+    }
+
+    public function setContent($content)
+    {
+        $this->__load();
+        return parent::setContent($content);
+    }
+
+    public function setResult($result)
+    {
+        $this->__load();
+        return parent::setResult($result);
+    }
+
+    public function setState($state)
+    {
+        $this->__load();
+        return parent::setState($state);
+    }
+
+    public function setLevel($level)
+    {
+        $this->__load();
+        return parent::setLevel($level);
+    }
+
+    public function setProjectRole($projectRole)
+    {
+        $this->__load();
+        return parent::setProjectRole($projectRole);
     }
 
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'type', 'level', 'project', 'projectRole', 'user');
+        return array('__isInitialized__', 'id', 'roleName', 'created', 'modified', 'content', 'result', 'state', 'level', 'project', 'projectRole', 'user');
     }
 
     public function __clone()

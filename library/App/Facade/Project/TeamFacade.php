@@ -88,7 +88,9 @@ class TeamFacade {
 	 * @param unknown_type $data
 	 */
 	public function updateProjectWidgetQuestion($user_id,$project_id,$update_id,$data = array()){
-		$q =$this->findOneProjectWidgetQuestion($user_id,$project_id,$id);
+		if(!isset($data['question']) || (strlen(trim($data['question'])) < 1) ) { throw new \Exception("Question can't be empty."); }
+
+		$q =$this->findOneProjectWidgetQuestion($user_id,$project_id,$update_id);
 		if($q){
 		$q->setQuestion($data['question']);
 		$this->em->flush();
@@ -115,15 +117,18 @@ class TeamFacade {
 		}
 
 		if(count($this->findAllProjectRoleWidgetQuestions($project_id)) < 5){
+			// validate data
+			if(!isset($data['question']) || (strlen(trim($data['question'])) < 1) ) { throw new \Exception("Question can't be empty."); }
+
 			$newQuestion = new \App\Entity\ProjectRoleWidgetQuestion($data['question']);
 			$newQuestion->setProject($project);
 			$this->em->persist($newQuestion);
 			$this->em->flush();
+		
 		}else{
 			throw new \Exception("Project can have maximum 5 questions.");
 		}
 	}
-	
 	
 	/**
 	 * Enable or disable project widget

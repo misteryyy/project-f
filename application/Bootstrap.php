@@ -57,13 +57,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front = Zend_Controller_Front::getInstance()->registerPlugin($eh);
     }
 
-    public function _initServices()
-    {
-        $sc = new sfServiceContainerBuilder();
-        $loader = new sfServiceContainerLoaderFileXml($sc);
-        $loader->load(APPLICATION_PATH . "/configs/services.xml");
-        Zend_Registry::set('sc', $sc);
-    }
 
     #Initializes the default timezone for the php ENV
     protected function _initDate() {
@@ -74,8 +67,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     			->datetime);
     }
     
-   
-    
+
     public function _initLocale()
     {
         $config = $this->getOptions();

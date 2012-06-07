@@ -2,13 +2,9 @@
 <head>
   <meta charset="utf-8">
   <title>Project-F Beta / Admin / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
-  
-   <script src="<?=$this->baseUrl('media/tools/jquery-1.7.1.min.js')?>"></script>
-	   <script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
- 	   
+  <?= $this->action('lib', 'index', 'site');  // libraries ?>  
  </head>
 
 <body>
@@ -40,12 +36,5 @@
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>
     
-    
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
-  <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
-  <script defer src="<?=$this->baseUrl('js/script.js')?>"></script>
-  <!-- end scripts-->
-
 </body>
 </html>

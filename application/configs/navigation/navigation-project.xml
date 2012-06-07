@@ -133,6 +133,39 @@
         			</profile-setting>
             </pages>
         </member>
+        
+         <project>
+            <label>Project</label>
+            <uri>/project/</uri>
+            <pages>        
+                  <main>
+                    <label>Project name</label>
+    				<module>project</module>
+            		<controller>index</controller>
+            		<action>index</action>
+            		<params_label>ID_PROJECT_NAME</params_label> 
+            		<params_id>ID_PROJECT</params_id> 	   
+                   	<pages>
+		                     <comments>
+		               		<label>Comments</label>
+		                    <module>project</module>
+		            		<controller>index</controller>
+		           			<action>comment</action>
+		                   	<params_id>ID_PROJECT_NAME</params_id>
+		                   	</comments>
+		                   	 
+		                   	 <survey>
+		               		<label>Survey</label>
+		                    <module>project</module>
+		            		<controller>index</controller>
+		           			<action>survey</action>
+		                   	<params_id>ID_PROJECT_NAME</params_id>
+		                   	</survey>
+            		</pages>
+            		</main>
+            </pages>
+        </project>
+        
          <admin>
 			<label>Admin Dashboard</label>
 			<uri>/admin/index/index</uri>

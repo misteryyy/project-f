@@ -5,7 +5,7 @@
 
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
-  <script src="<?=$this->baseUrl('media/tools/jquery-1.7.1.min.js')?>"></script>
+  <?= $this->action('lib', 'index', 'site');  // libraries ?>
  </head>
 
 <body>
@@ -14,35 +14,32 @@
 		// if the user has identity
     	if(Zend_Auth::getInstance()->hasIdentity()){
     		echo $this->action('admin-menu', 'index', 'admin');  
-    	}
-    	 	
+    	}	
   		 ?>
-  		 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
-  		 
-  	<div class="row"> 
-	       <div class="span3" >
-	      	   <?= $this->action('left-menu', 'index', 'site');  ?>
-	      </div>
-	      <div class="span9">
+  	 <hr>		 
+	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
+	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+	 <hr>
+	 
+	<div class="row"> 
+	      <div class="span6">
 	      	<!-- Bootstrap messaging generator -->
 	      	<?php echo $this->flashMessenger() ; ?>
 	        <?php echo $this->layout()->content; ?>
 	      </div>
-	       
-	     
-	      
+	    
+	    <div class="span6">
+	    	<h3>Widgets</h3>
+	    	<!-- Form Application -->
+	        <?= $this->action('application', 'widget', 'project',array("id" => $this->project->id));  ?>
+	    	<!-- Similar projects -->
+	     </div>
+  
     </div>
     
     <footer>
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>
-    
-    
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
-  <script defer src="<?=$this->baseUrl('js/plugins.js')?>"></script>
-  <script defer src="<?=$this->baseUrl('js/script.js')?>"></script>
-  <!-- end scripts-->
 
 </body>
 </html>

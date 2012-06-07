@@ -1,6 +1,22 @@
 <!-- Breadcrumbs generation -->
 		<ul class="breadcrumb">
 		<?php 
+		
+		$container = $this->navigation()->breadcrumbs()->getContainer();
+		
+		$pg = $container->findAllBy('params_label', 'ID_PROJECT_NAME');
+		foreach($pg as &$p){
+			$p->setLabel($this->project->title);
+		}
+		
+		// adding current parrameter
+		$pg = $container->findAllBy('params_id', 'ID_PROJECT');
+		foreach($pg as &$p){
+			$p->setParams(array(
+					'id'=> Zend_Controller_Front::getInstance()->getRequest()->getParam('id'),));
+		}
+		
+		
 		echo $this->navigation()->breadcrumbs()
 		->setLinkLast(true)->setMinDepth(0)
 		->setPartial(array('/index/partials/breadcrumb.phtml','site'));

@@ -22,13 +22,21 @@ class Site_IndexController extends Boilerplate_Controller_Action_Abstract
     
     }
       
-    
-    
+
     
     public function phpInfoAction(){
     			
     }
      
+     
+    /**
+     * Action controller for loading libs to the layout
+     * @return empty
+     */
+    public function libAction()
+    {    
+    }
+
 
     public function headerAction()
     {    
