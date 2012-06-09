@@ -52,18 +52,26 @@ class Category
     	$this->projects[] = $project;
     }
     
+    public function __get($property) {
+    	// If a method exists to get the property call it.
+    	if (method_exists ( $this, 'get' . ucfirst ( $property ) )) {
+    		// This will call $this->getPassword() while getting $this->password
+    		return call_user_func ( array ($this, 'get' . ucfirst ( $property ) ) );
+    	} else {
+    		return $this->$property;
     
-    /*
-     * Reflection methods
-    * TODO in production change to real method
-    */
-    public function __get($property)
-    {
-    	return $this->$property;
+    	}
     }
-    public function __set($property,$value)
-    {
-    	$this->$property = $value;
+    
+    public function __set($property, $value) {
+    	// If a method exists to set the property call it.
+    	if (method_exists ( $this, 'set' . ucfirst ( $property ) )) {
+    		// This will call $this->setPassword($value) while setting
+    		// $this->password
+    		return call_user_func ( array ($this, 'set' . ucfirst ( $property ) ), $value );
+    	} else {
+    		$this->$property = $value;
+    	}
     }
     
 

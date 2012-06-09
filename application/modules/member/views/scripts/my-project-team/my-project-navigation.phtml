@@ -3,6 +3,7 @@
 	$allow[1] = false;
 	$allow[2] = false;
 	$allow[3] = false;
+	$allow[4] = false;
 	
 	switch ($this->step){
 		case 1 : $allow[1] = true;
@@ -11,10 +12,14 @@
 		break;
 		case 3 : $allow[3] = true;
 		break;
+		case 4 : $allow[4] = true;
+		break;
 	}
   ?>
   <ul class="nav nav-pills">
   <li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/my-project-team/index/id/<?php echo $this->project->id?>">My team</a></li>
   <li class="<?php echo($allow[2] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/request/id/<?php echo $this->project->id?>">Requests for roles</a></li>
   <li class="<?php echo($allow[3] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/question/id/<?php echo $this->project->id?>">Questions for new members</a></li>
-   </ul>
+  <li class="<?php echo($allow[4] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/setting/id/<?php echo $this->project->id?>">Setting {disable widget for collaboration}</a></li>
+  
+  </ul>

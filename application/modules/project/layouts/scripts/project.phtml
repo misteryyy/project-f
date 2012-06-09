@@ -1,13 +1,14 @@
-<!doctype html>
-<head>
-  <meta charset="utf-8">
-  <title>Project-F Beta / Project / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  	<title>Project-F Beta / Project / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
   <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
   <?= $this->action('lib', 'index', 'site');  // libraries ?>
  </head>
-
 <body>
  		<?= $this->action('header', 'index', 'site');  ?>
  			<?php 
@@ -20,8 +21,7 @@
 	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
 	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
 	 <hr>
-	 
-	<div class="row"> 
+	<div class="row" style="margin-left: 10px"> 
 	      <div class="span6">
 	      	<!-- Bootstrap messaging generator -->
 	      	<?php echo $this->flashMessenger() ; ?>

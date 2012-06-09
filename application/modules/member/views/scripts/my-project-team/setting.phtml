@@ -7,11 +7,12 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 
 <?php 
 // The main project navigation
-$this->sub_step = 1;
+$this->sub_step = 4;
 echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" => $this->sub_step,"project" => $this->project));
 ?>
 
-<h3>My Team</h3>
-<hr />
-<div class="well">My Position</div>
-<div class="well">My Project People</div>
+<?php 
+	echo $this->formDisableRoleWidget;
+?>
+
+

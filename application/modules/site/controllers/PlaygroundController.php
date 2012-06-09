@@ -45,7 +45,7 @@ class Site_PlaygroundController extends  Boilerplate_Controller_Action_Abstract
 //     		}
 //     	}
 //     	echo "</div>"
-//     	?>
+//     	
     	
     	//$this->_helper->layout()->disableLayout();
     	

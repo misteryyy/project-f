@@ -157,72 +157,14 @@ class TeamFacade {
 		
 	}
 	
-	/*
-	 * Return the first layer of commments
-	*/
-	public function findUpdatesForProjectPaginator($project_id){
-		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById($project_id);
-		if(!$project){
-			throw new \Exception("Can't find this project.");
-		}
-	
-		$stmt = 'SELECT u FROM App\Entity\ProjectUpdate u WHERE u.project = ?1';
-		$stmt .= 'ORDER BY u.created DESC  ';
-	
-		$query = $this->em->createQuery($stmt);
-		$query->setParameter(1, $project_id);
-			
-		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
-	
-		$iterator = $paginator->getIterator();
-	
-		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
-		return new \Zend_Paginator($adapter);
-	}
-	
 
-	
-	
-
-	/**
-	 * Get data in Paginator
-	 * @param unknown_type $user_id
-	 * @param unknown_type $project_id
-	 * @throws \Exception
-	 */
-	public function findProjectUpdates($user_id,$project_id){
-		// checking errors
-		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
-		if(!$user){
-			throw new \Exception("Member doesn't exists");
-		}
-		
-		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
-		if(!$project){
-			throw new \Exception("Can't find this project.");
-		}		
-	
- 		$stmt = 'SELECT a FROM App\Entity\ProjectUpdate a WHERE a.project = ?1';
- 		$stmt .= 'ORDER BY a.id ASC';
-		
- 		$query = $this->em->createQuery($stmt);
- 		$query->setParameter(1, $project_id);
-
- 		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
- 		$iterator = $paginator->getIterator();
- 		
- 		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
- 		return new \Zend_Paginator($adapter);
- 		
-	}
-	
 	/**
 	 * Update project survey
 	 * @param unknown_type $user_id
 	 * @param unknown_type $project_id
 	 * @param unknown_type $data
 	 */
-	public function createProjectUpdate($user_id,$project_id,$data = array()){
+	public function createProjectApplication($user_id,$project_id,$data = array()){		
 		// checking errors
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 		if(!$user){
@@ -234,11 +176,58 @@ class TeamFacade {
 			throw new \Exception("Can't find this project.");
 		}
 		
-		$newUpdate = new \App\Entity\ProjectUpdate($project, $data['title'], $data['content']);
-		$this->em->persist($newUpdate);
-		$this->em->flush();
+		if($data['level'] == 1) {
+			$content = "<h3> Survey for level </h3> ". $data['level']. " <br />";
+			$i = 1;
+			for($i; $i < 6; $i++){
+				$questionString = "question_".$i;
+				$answerString = "asnwer_".$i;
+			
+				if(isset($data[$answerString]) ){
+					$content .= "Question: ". $data[$questionString] . "<br />";
+					$content .= "Answer: ". $data[$answerString] . "<br />";
+					$content ." <hr /> ";
+				}
+			
+			}
+			$content .= "General question: " .$data['content']. " <br />";
+
+			$newApplication = new  \App\Entity\ProjectApplication($user, $project, $data['level'], $content, $data['role']);
+			$this->em->persist($newApplication);
+			$this->em->flush();
+		} else {
+			// TODO second level
+			
+		}		
 	}
 	
+	
+	
+	/*
+	 * Return applications for the project
+	*/
+	public function findApplications($user_id,$project_id,$options = array()){
+		
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		$stmt = 'SELECT a FROM App\Entity\ProjectApplication a WHERE a.project = ?1';
+		$stmt .= 'ORDER BY a.created, a.roleName DESC';
+	
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+			
+		
+		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
+	
+		$iterator = $paginator->getIterator();
+	
+		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+		
+		return new \Zend_Paginator($adapter);
+	}
 	
 
 

@@ -1,0 +1,46 @@
+<?php 
+$this->step = 5;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+<div class="well">
+	<a class="btn btn-info" href="/member/my-project/update-create/id/<?php echo $this->project->id?>">Create New Update</a>
+</div>
+<hr/>
+
+<!-- Updates Table -->
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator)) {?>
+      <h3>Updates</h3>
+        <table class="table table-striped">
+        <thead>
+    		<tr>
+    			<th>Title</th>
+    			<th>Created</th>
+    			<th>Last Modification</th>
+    			<th>Actions</th>
+    		</tr>
+    	</thead>
+    <tbody>
+    <?php foreach ($this->paginator as $update){ ?>
+    	<tr>
+    	<td><?php echo $update->title; ?></td>
+		<td><?php echo $update->created->format('Y/m/d'); ?></td>		
+		<td><?php echo $update->modified->format('Y/m/d'); ?></td>		
+    	<td> 
+    		<a class="btn btn-info" href="/member/my-project/update-edit/id/<?php echo $this->project->id?>/update_id/<?php echo $update->id ?>">Edit</a> ~
+    		<a class="btn btn-warning" href="/member/my-project/update-delete/id/<?php echo $this->project->id?>/update_id/<?php echo $update->id ?>">Delete</a>
+ 
+    	</td>			
+    	</tr>	 		
+    <?php } ?>
+    </tbody>
+    </table>
+    	
+    		
+    <?php }?>
+
+
+
+
+

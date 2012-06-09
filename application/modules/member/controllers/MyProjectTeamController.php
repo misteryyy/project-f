@@ -127,15 +127,34 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     {
     	$this->checkProjectAndUser();
     	$this->view->pageTitle = "My Projects Request" ;
+    	$this->view->project = $this->project;
+
+    	$facadeProjectTeam = new \App\Facade\Project\TeamFacade($this->_em);
+	    $paginator = $facadeProjectTeam->findApplications($this->_member_id, $this->project_id);
+	    $paginator->setItemCountPerPage(100);
+ 	    $page = $this->_request->getParam('page', 1);
+ 	    $paginator->setCurrentPageNumber($page);
+ 	    
+ 	    debug($paginator->toJson());
+ 	    $this->view->paginator = $paginator;
+ 	    $this->view->project = $this->project;
+    }
+     
+    
+    /**
+     * Setting for new collaborations
+     */
+    public function settingAction(){
+    	$this->checkProjectAndUser();
+    	$this->view->pageTitle = "Settings" ;
     	$form = new \App\Form\Project\TeamDisableRoleWidget($this->project);
-    	
     	
     	// update project survey
     	if ($this->_request->isPost()) {
     		if ($form->isValid($this->_request->getPost())) {
     			pr($this->_request->getPost());
-                
-   				$this->facadeProject->disableProjectWidget($this->_member_id, $this->project_id, $this->_request->getPost());		
+    	
+    			$this->facadeProject->disableProjectWidget($this->_member_id, $this->project_id, $this->_request->getPost());
     			$this->_helper->FlashMessenger( array('success' => "Saved successfuly."));
     		}
     		// not validated properly
@@ -143,23 +162,13 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     			$this->_helper->FlashMessenger( array('error' => "Please check your input."));
     		}
     	}
-    	
-    	
+    	 
+    	 
     	//display form
     	$this->view->formDisableRoleWidget = $form;
     	$this->view->project = $this->project;
     	
-    	
-//     	// receiving paginator
-//     	$facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
-// 	    	$paginator = $facadeProjectUpdate->findProjectUpdates($this->_member_id, $this->project_id);
-// 	    	$paginator->setItemCountPerPage(3);
-// 	    	$page = $this->_request->getParam('page', 1);
-// 	    	$paginator->setCurrentPageNumber($page);
-// 	    	$this->view->paginator = $paginator;
-// 	    	$this->view->project = $this->project;
     }
-     
     
     /*
      * Check all neccessary things

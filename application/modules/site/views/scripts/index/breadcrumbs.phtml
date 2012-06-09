@@ -16,7 +16,6 @@
 					'id'=> Zend_Controller_Front::getInstance()->getRequest()->getParam('id'),));
 		}
 		
-		
 		echo $this->navigation()->breadcrumbs()
 		->setLinkLast(true)->setMinDepth(0)
 		->setPartial(array('/index/partials/breadcrumb.phtml','site'));

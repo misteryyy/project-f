@@ -8,45 +8,38 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 $this->sub_step = 3;
 echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" => $this->sub_step,"project" => $this->project));
 ?>
-<hr />
-<h3>Questions for applicants</h3>
-    <div class="alert alert-info">
-     Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.
-     Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.
-    </div>
-<hr/>
-
-	<div id="alert-area"></div>
-
-	<!-- Form for creating new question -->
-    <form id="form-create-question" class="well form-search" action="#" method="post" autocomplete="off">
-			<div class="control-group">
-			<label class="control-label" for="input-question-create">Add new question</label>
-				<div class="controls">
-						<input type="text" name="question" class="input-xlarge" id="input-question-create"/>
-					<!--<span class="help-inline">Please enter your name.</span> -->
-				</div>
-			</div>
-		<!-- cant change or add div, because its looking in the script for this-->
-		<input type="submit" class="btn btn-primary create"  name='submit' data-toggle="button"  data-complete-text="finished!"  data-loading-text="processing..." value="add new question" />					
-	    	
+<div id="alert-area"></div>
+<h3>Questions for new people</h3>
+	<!-- Form for filtering -->
+	<form id="form-question-selection"  class="well form-search" action="#" method="post" >
+    	<select name="q" id="q">
+    	<?php $al = str_split("12345"); foreach($al as $a){ echo "<option value='$a'>$a</option>";}?>
+    	</select>
+    	<button type="submit" class="btn">Fetch</button>
     </form>
 
-    <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
+	<!-- Form for creating new question -->
+    <form id="form-create-question" class="well form-search" action="#" method="post" >
+    	<input type="text" name="question" class="input-large" />
+    	<button type="submit" class="btn">Add New Question</button>
+    </form>
+    
  	<hr/>   
  	<ol id="question_list">
 		<script id="question_list_template" type="text/x-handlebars-template">
-				{{#each this}}				
-					<form method="post" action="" class="form-search" data-question_id="{{id}}">
+				{{#each this}}
+					<li data-question_id="{{id}}">
+					<form method="get" action="" data-question_id="{{id}}">
 						<input type="hidden" name="question_id" value="{{id}}" />
-						<input  type="text" name="question" value="{{question}}" />
-						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />
-						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="delete" name="submit" />
+						<input type="text" name="question" value="{{question}}" />
+						<input  class="btn btn-success update" type="submit" value="update" name="submit" />
+						<input class="btn btn-danger delete" type="submit"  value="delete" name="submit" />
 					</form>
+					</li>
 				{{/each}}
 	</script>
 	</ol>
-			
+
 	<div id="question_info">
 		<script id="question_info_template" type="text/x-handlebars-template">
 					<div class="well">
@@ -56,8 +49,10 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 	</div>
 		
 <script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
-        <script type="text/javascript">  	
-
+        <script type="text/javascript"> 
+	 		var url = "/member/my-project-team/ajax-question", 
+	 		project_id = <?php echo $this->project->id; ?>;
+	 		
 			var Questions = {
 
 			init: function(config){
@@ -68,7 +63,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 					dataType: 'json',
 	 	
 				})
-  				
+
 				this.config = config;
 				this.bindEvents();
 				this.setutTemplates();
@@ -82,38 +77,39 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				},
 				
 			bindEvents: function(){
+				this.config.letterSelection.on('change',this.findQuestions);
 				this.config.questionList.on('click','form input.update',this.updateQuestion); // edit question 
 				this.config.questionList.on('click','form input.delete',this.deleteQuestion); // delete question
-				this.config.formCreate.on('click','input.create',this.createQuestion); // create new question
+				this.config.formCreate.on('submit',this.createQuestion); // create new question
 				
 				},
 				
 			findQuestions: function(){
-				 var self = Questions;
-					
-				 $.ajax({
-				 	data: "_method=findAll",// take data from the form and send it to the method delete
-					 }).done(
-						function (results){
-				 			self.config.questionList.empty();
+					var self = Questions;
+					//ajax request
+					$.ajax({ 
+						data: self.config.form.serialize()+"&_method=findAll",
+						success: function(results){
+							// empty for every cycle
+							self.config.questionList.empty();
+							console.log(results);
 							if(results.data[0]){
 								self.config.questionList.append(self.config.questionListTemplate(results.data));
-								//newAlert (results.respond, results.message)
+								newAlert (results.respond, results.message)
 							}else{
-								self.config.questionList.append("No questons.");
+								self.config.questionList.append("Nothing to display.");
 								
 							}
-				 		}
-				 );	
+						}
+					});		
 	
 				},
 
 			// create question
 			createQuestion:function(e){
 				var self = Questions;
-				var but  = $(this).button('toggle');
-				but.button('loading');
-				var form = $(this).parent(); // directly this form
+				var form = $(this); // directly this form
+				console.log(form);
 				//create method
 				 $.ajax({
 				 	data:  form.serialize() + "&_method=create", // take data from the form and send it to the method delete
@@ -121,10 +117,6 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 						function (results){
 				 			newAlert (results.respond, results.message); // display alert
 				 			self.findQuestions(); // refresh questions
-				 			but.button('reset');
-				 			form.each (function(){
-  										this.reset();
-							});
 				 		}
 				 );
 				
@@ -134,7 +126,6 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			// delete question
 			deleteQuestion:function(e){
 				var self = Questions;
-				$(this).button('loading');
 				var form = $(this).parent();
 				//console.log($(e.target));
 				//console.log($(this).parent());
@@ -155,7 +146,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			updateQuestion:function(e){
 				var self = Questions;
 				var form = $(this).parent();
-				$(this).button('loading');
+
+
 				console.log($(this));
 				//delete method
 				$.ajax({
@@ -172,6 +164,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			};
 
 			Questions.init({
+				letterSelection: $('#q'),
+				form: $('#question-selelection'),
 				formCreate: $('#form-create-question'),
 				questionListTemplate: $('#question_list_template').html(),
 				questionList: $("#question_list"),
@@ -181,5 +175,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				
 			});
 		
-	 	   
+	 		function newAlert (type, message) {
+	 			    $("#alert-area").html($("<div class='alert alert-" + type + " '><a class='close' data-dismiss='alert' href='#'>×</a><p>" + message + " </p></div>"));
+	 			   // $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+	 		}    
  </script>  

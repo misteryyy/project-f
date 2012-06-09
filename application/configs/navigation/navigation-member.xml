@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <nav>
-     	<home>
-            <label>Home</label>
-            <order>0</order>
-            <module>site</module>
-            <controller>index</controller>
-            <action>index</action>
-        	<pages>
-						<sitemap>
-								<label>Sitemap</label>
-								<uri>/site/index/sitemap</uri>
-						</sitemap>
-						  <login>
-                  			  <label>Member Login</label>
-                    		 <uri>/member/index/login</uri>
-                    		<resource>guest</resource>    
-                		</login>
-                		<signup>
-                    		<label>Member Sign Up</label>
-                    		<uri>/member/index/sign-up</uri>
-                   			<resource>guest</resource>
-                 		</signup>
-                 		<lost-password>
-                    		<label>Member Lost Password</label>
-                    		<uri>/member/index/lost-password</uri>
-                   			<resource>guest</resource>
-                 		</lost-password>
-        	</pages>
-        </home>
-        
+     	
         <member>
             <label>Member</label>
             <uri>/member/</uri>
@@ -40,7 +12,6 @@
     				<module>member</module>
             		<controller>dashboard</controller>
             		<action>index</action>                   
-                   	<resource>member</resource>
                    	<pages>
 						<flobox>
 							<label>Flo Box Admin</label>
@@ -54,8 +25,26 @@
 						</flobox>
 						<my-project>
 							<label>My Projects</label>
-							<uri>/member/my-project/index</uri>
-						</my-project>
+									<module>member</module>
+									<controller>my-project</controller>
+            						<action>index</action>  
+            						<pages>
+            							<my-project-team>
+										<label>Team</label>
+										<module>member</module>
+										<controller>my-project-team</controller>
+            							<action>index</action>                   
+       	            	</my-project-team>
+            						</pages>                 
+       	            	</my-project>
+       	            
+       	            	
+						<my-collaboration>
+							<label>My Collaborations</label>
+								<module>member</module>
+            					<controller>my-collaboration</controller>
+            				<action>index</action>   
+						</my-collaboration>
 						
 						<create-project-one>
 						      <label>Create Project</label>
@@ -133,49 +122,6 @@
         			</profile-setting>
             </pages>
         </member>
-         <admin>
-			<label>Admin Dashboard</label>
-			<uri>/admin/index/index</uri>
-					<pages>
-		             <admin-user>
-							<label>Admin Members</label>
-							<uri>/admin/member/index</uri>
-					</admin-user>
-						
-				     <admin-project>
-							<label>Admin Projects</label>
-							<uri>/admin/project/index</uri>
-					</admin-project>
-					
-				     <admin-slideshow>
-							<label>Slideshow</label>
-							<uri>/admin/slideshow/index</uri>
-					</admin-slideshow>
-									
-              
-            		</pages>	
-			</admin>
-        
-        
-     
-           <playground>
-			<label>Playground</label>
-			<uri>/site/playground/index</uri>
-					<pages>
-		              <server-info>
-							<label>Server info</label>
-							<uri>/site/index/php-info</uri>
-						</server-info>
-						
-						<rack-test>
-								<label>Rack Test</label>
-								<uri>/check-env.php</uri>
-						</rack-test>
-							
-              
-            		</pages>	
-			</playground>
-     
  
     </nav>
 </config>

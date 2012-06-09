@@ -1,4 +1,5 @@
  <?php  
+	
 	$allow[1] = false;
 	$allow[2] = false;
 	$allow[3] = false;
@@ -24,7 +25,7 @@
 		break;
 	}
   ?>
-  <h3><?php echo $this->project->title?> 	<span class="badge badge-success">L<?php echo $this->project->level?></span> ~  <a class="btn btn-success" href="/project/index/index/id/<?php echo $this->project->id?>">Public profile</a> </h3>
+  <h3><?php echo $this->project->title?> {Level <?php echo $this->project->level?>} ~  <a class="btn btn-success" href="/project/index/index/id/<?php echo $this->project->id?>">Public profile</a> </h3>
   <hr/>
   <ul class="nav nav-tabs">
   <li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/my-project/edit-project/id/<?php echo $this->project->id?>">Edit general information</a></li>

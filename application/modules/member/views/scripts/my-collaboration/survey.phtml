@@ -1,0 +1,55 @@
+<?php 
+$this->step = 3;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+
+<h3>Project Survey</h3>
+<hr/>
+<div class="well">
+Info about unanswered question; count : <?php echo count($this->emptyAnswers);?>
+<br/>
+<?php 
+	foreach ($this->emptyAnswers as $answer){
+		$unansweredQuestion[] = $answer->question->id;
+		//	pr(array($answer->id,$answer->question->question,$answer->question->id));
+	}
+ 	pr($unansweredQuestion);
+?>
+</div>
+
+<div class="well">
+		<div id="title-target"></div>
+</div>   
+
+<?php  echo $this->form;   ?>
+
+<!-- Load jQuery build -->
+<script type="text/javascript" src="<?=$this->baseUrl('/media/jquery.stepy-1.1.0/js/jquery.validate.min.js')?>"></script>
+<script type="text/javascript" src="<?=$this->baseUrl('/media/jquery.stepy-1.1.0/js/jquery.stepy.js')?>"></script>
+<script type="text/javascript">
+$(document).ready(function()
+		{	// disable cache
+			 $.ajaxSetup ({cache: false });  	
+			// $("#submit").hide();
+			 $('#step').stepy({
+				 next: function(index) {
+				    if(index==16){
+					   	// $("#submit").show();	
+					}
+					}
+				 ,
+				  finishButton:	false,
+				  nextLabel:      'Next question',
+				  backLabel:      'Previous question',
+				  titleClick: true,
+				  description:  false,
+				  legend:       true,
+				  titleClick:   true,
+				  titleTarget:  '#title-target'
+				}); 
+				    
+
+});
+</script>
+
+

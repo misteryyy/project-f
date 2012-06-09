@@ -1,18 +1,69 @@
+<?php if($this->project->disableRoleWidget) echo "Widget for collaboration disabled"; return;?>
 
-  <a class="btn btn-xlarge btn-info" data-toggle="modal" href="#modal-form-application" >Apply for the first LEVEL position</a>
-	    
-	 <div class="modal hide" id="modal-form-application">
-    		<div class="modal-header">
-    		<button type="button" class="close" data-dismiss="modal">×</button>
-    		<h3>Application</h3>
-    		</div>
-    		
-    		<div class="modal-body">
-		 	 		<?php echo $this->form;?>
-		    </div>		   		
-		    </div>
-		   
+<div class="well">
+	<div style="text-align: center">
+		<a class="btn btn-xlarge btn-info" data-toggle="modal"
+			href="#modal-form-application">Apply for the first LEVEL position</a>
 	</div>
+	<hr>
+</div>
+
+<div class="modal span7 hide" id="modal-form-application">
+	<?php echo $this->form;?>
+</div>
+
+<div id='debug'></div>
+
+<!-- External libraries -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script>
+<script src="<?=$this->baseUrl('/media/tools/jquery.validate.bootstrap.js')?>"></script>
+
+<script type="text/javascript">
+
+//wait for the DOM to be loaded 
+$(document).ready(function() { 
+	var form = $('#form-application');
+	var myModal = $('#modal-form-application');
+
+	form.validate({
+	    		rules: {
+	    			answer_1 :{
+		    			required: true,
+	    				minlength: 2
+			    		},
+			    	answer_2 :{
+		    			required: true,
+	    				minlength: 2
+			    		},
+			    	answer_3 :{
+			    			required: true,
+		    				minlength: 2
+				    		},
+				    answer_4 :{
+				    			required: true,
+			    				minlength: 2
+					    		},
+					answer_5 :{
+					    			required: true,
+				    				minlength: 2
+						    		},
+	    			content: {
+	    				required: true,
+	    				minlength: 2
+	    			}
+	    		},
+	    		   submitHandler: function(form) {
+		    		   form.submit();
+				 		myModal.modal('hide');					 		    
+			 		   }
+	    	}
+	   );	
 
 
+    }); ; 
+
+
+
+</script>
 

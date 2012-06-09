@@ -63,7 +63,7 @@ class ProjectRoleWidgetQuestion
 	 * @return the $question
 	 */
 	public function getQuestion() {
-		return $this->name;
+		return $this->question;
 	}
 	public function __get($property) {
 		// If a method exists to get the property call it.

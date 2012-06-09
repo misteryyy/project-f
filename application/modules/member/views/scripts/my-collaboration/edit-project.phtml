@@ -1,0 +1,41 @@
+<?php if(count ($this->project) > 0){ ?>
+
+<?php
+$this->step = 1;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+	
+ 	<h3>Edit General Information</h3>
+  	<hr/>
+	<?php echo $this->form;?>
+	<!-- Load jQuery build -->
+	<script type="text/javascript" src="<?=$this->baseUrl('/media/tiny_mce/tiny_mce.js')?>"></script>
+	<script type="text/javascript">
+		tinyMCE.init({
+		        // General options
+		        mode : "textareas",
+		        theme : "simple",
+		        mode : "exact",
+		        elements : "content", // just for textarea with id content   
+		        plugins : "autolink",
+	});
+	</script>
+	 
+<?php } else {
+	
+	echo "No projects";
+	
+}?>
+    
+    
+    
+    
+    
+    
+    </div>
+
+ 
+  </div>
+</div>
+
+

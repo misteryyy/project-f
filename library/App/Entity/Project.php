@@ -271,6 +271,16 @@ class Project {
 		$this->disableRoleWidget = false;
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function getDisableRoleWidget() {
+		return $this->disableRoleWidget;
+	}
+	
 	/**
 	 *
 	 * @param $value boolean       	

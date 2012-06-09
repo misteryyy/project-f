@@ -1,6 +1,6 @@
 <?php
 /**
- * Actions which are only under project
+ * Widget for public project page
  * @author misteryyy
  *
  */
@@ -10,13 +10,10 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 	private $project = null;
 	private $facadeProject;
 	
-
-	
 	public function init(){
 		parent::init();
 		$this->facadeProject = new \App\Facade\ProjectFacade($this->_em);
 		//$this->checkProject();
-		
 	}
 	
 	/*
@@ -43,8 +40,6 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 		}
 	}
 	
-
-    
     /**
 	 * New Applicants module
 	 */ 
@@ -52,7 +47,6 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 		$this->checkProject();
     	$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
     	$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
-    
     	$form = new \App\Form\Project\AddProjectApplicationForm($this->_member, $this->project, $questions);
     	$this->view->form = $form;
     	
@@ -62,9 +56,41 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
      * Ajax Handling for Applications
      */
     public function ajaxApplicationAction(){
+    	$this->checkProject();
+    	if($this->_request->isPost() || $this->_request->isGet()){
+    		switch ($this->_request->getParam("_method")){
+    			//  create new question
+    			case 'create' :	
+					// checking form
+	   				$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+    				$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
+    				$form = new \App\Form\Project\AddProjectApplicationForm($this->_member, $this->project, $questions);   
+    				
+    				// validation data
+    				if(!$form->isValid($this->_request->getParams())){
+    					$this->_helper->FlashMessenger(array('error' => 'Something is wrong with the form data.'));
+    					$this->_redirect('/project/index/index/id/'.$this->project_id);	
+    				} 
+    				try{
+    					// sending the application
+    					$facadeTeam->createProjectApplication($this->_member_id, $this->project_id,$form->getValues());
+    					// saving data and getting back to project
+    					$this->_helper->FlashMessenger(array('success' => "You application has been sent."));
+    					$this->_redirect('/project/index/index/id/'.$this->project_id); // go back to the project
+    						
+    				}catch (\Exception $e){
+    					$this->_helper->FlashMessenger(array('error' => $e->getMessage()));
+    					$this->_redirect('/project/index/index/id/'.$this->project_id); // go back to the project
+    					    
+    				}
+    			  }
+    	} else {
+    		$this->_response->setHttpResponseCode(503); // echo error
+    	
+    	}
     	
     	
-    	
+    
     }
     
 }

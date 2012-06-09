@@ -21,13 +21,12 @@
   <div class="span11" >
    
    <?= $this->action('header', 'index', 'site');  ?>
-   <?= $this->action('breadcrumbs', 'index', 'site');  ?>
-  
-    <div class="row-fluid">
-      <div class="span2" >
-      	   <?= $this->action('left-menu', 'index', 'site');  ?>
-      </div>
-
+  	 <hr>		 
+	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
+	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+	 <hr>
+   
+    <div class="row-fluid">    
       <div class="span10">
          <!-- Bootstrap messaging generator -->
       	<?php echo $this->flashMessenger() ; ?>
