@@ -229,5 +229,25 @@ class ProjectApplication {
 		}
 	}
 
+	
+	/**
+	 * Return just basic information about the entity
+	 */
+	public function toArray(){
+		$params = array ("id" => $this->id,
+				"level" => $this->level,
+				"roleName" => $this->roleName,
+				"content" => $this->content,
+				"project_id" => $this->project->id,
+				"user_id" => $this->project->user->id);
+		
+		// additional information for second level
+		if($this->level ==2 && isset($this->projectRole)){
+			$params["project_role_id"] = $this->projectRole->id;
+			$params["project_role_description"] = $this->projectRole->description;
+		}
+		
+		return $params;
+	}
 
 }

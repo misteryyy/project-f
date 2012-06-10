@@ -176,12 +176,14 @@ class TeamFacade {
 			throw new \Exception("Can't find this project.");
 		}
 		
+	
 		if($data['level'] == 1) {
-			$content = "<h3> Survey for level </h3> ". $data['level']. " <br />";
+			$content = "<h3> Survey for level ". $data['level']. "  </h3> <br />";
 			$i = 1;
 			for($i; $i < 6; $i++){
 				$questionString = "question_".$i;
-				$answerString = "asnwer_".$i;
+				$answerString = "answer_".$i;
+			
 			
 				if(isset($data[$answerString]) ){
 					$content .= "Question: ". $data[$questionString] . "<br />";
@@ -190,6 +192,7 @@ class TeamFacade {
 				}
 			
 			}
+			
 			$content .= "General question: " .$data['content']. " <br />";
 
 			$newApplication = new  \App\Entity\ProjectApplication($user, $project, $data['level'], $content, $data['role']);
@@ -206,7 +209,7 @@ class TeamFacade {
 	/*
 	 * Return applications for the project
 	*/
-	public function findApplications($user_id,$project_id,$options = array()){
+	public function findApplicationsPaginator($user_id,$project_id,$options = array()){
 		
 		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
 		if(!$project){
@@ -229,8 +232,41 @@ class TeamFacade {
 		return new \Zend_Paginator($adapter);
 	}
 	
+	
+	/*
+	 * Return applications for the project
+	*/
+	public function findApplications($user_id,$project_id,$options = array()){
+	
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+	
+		$stmt = 'SELECT a FROM App\Entity\ProjectApplication a WHERE a.project = ?1';
+		$stmt .= 'ORDER BY a.created, a.roleName DESC';
+	
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+
+	
+		return $query->getResult();
+	}
 
 
+	/*
+	 * Returns one update by id
+	*/
+	public function findOneApplication($user_id,$project_id,$id){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		$application = $this->em->getRepository ('\App\Entity\ProjectApplication')->findOneBy(array("id" => $id));
+		if(!$application){ 	throw new \Exception("This update doesn't exists");}
+		return $application;
+	}
+	
 }
 
 ?>

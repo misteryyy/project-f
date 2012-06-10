@@ -130,7 +130,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	$this->view->project = $this->project;
 
     	$facadeProjectTeam = new \App\Facade\Project\TeamFacade($this->_em);
-	    $paginator = $facadeProjectTeam->findApplications($this->_member_id, $this->project_id);
+	    $paginator = $facadeProjectTeam->findApplicationsPaginator($this->_member_id, $this->project_id);
 	    $paginator->setItemCountPerPage(100);
  	    $page = $this->_request->getParam('page', 1);
  	    $paginator->setCurrentPageNumber($page);
@@ -138,6 +138,80 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
  	    debug($paginator->toJson());
  	    $this->view->paginator = $paginator;
  	    $this->view->project = $this->project;
+    }
+     
+    
+    /**
+     * Request for project
+     */
+    public function ajaxRequestAction()
+    {	$this->ajaxify();
+    	$this->checkProjectAndUser();
+    
+    	$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+    	$applications = $facadeTeam->findApplications($this->_member_id, $this->project_id);
+    	 
+    	if($this->_request->isPost() || $this->_request->isGet()){
+    		switch ($this->_request->getParam("_method")){
+    			case 'findSurvey' :
+    				
+    				$application = $facadeTeam->findOneApplication($this->_member_id,$this->project_id,$this->_request("application_id"));
+    				$data[] = $application;
+    				$respond = array("respond" => "success",
+    						"message" => "Data loaded successfully.",
+    						"data" => $data);
+    				$this->_response->setBody(json_encode($respond));
+    				break;
+    				 
+    			//  create new question
+    			case 'findAll' :
+    				try{
+    					$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id);
+    					$data = array(); // data for sending to the script
+    					foreach($applications as $a){
+    						$data[] = $a->toArray();
+    					}
+    					
+    					$respond = array("respond" => "success",
+    						"message" => "Data loaded successfully.",
+    						"data" => $data);
+    					$this->_response->setBody(json_encode($respond));
+    					break;
+    				}catch(Exception $e){
+    					$respond = array("respond" => "error","message" => $e->getMessage());
+    					$this->_response->setBody(json_encode($respond));
+    				}
+    	
+    				break;
+    				
+    			case 'accept' :
+    				try{
+    					$facadeTeam->updateProjectWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'),$this->_request->getParams());
+    					$respond = array("respond" => "success",'message' => "Question was updated.");
+    					$this->_response->setBody(json_encode($respond));
+    				}catch(Exception $e){
+    					$respond = array("respond" => "error","message" => $e->getMessage());
+    					$this->_response->setBody(json_encode($respond));
+    				}
+    	
+    				break;
+    	
+    			case 'deny' :
+    				try{
+    					$facadeTeam->deleteProjectRoleWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'));
+    					$respond = array("respond" => "success",'message' => "Question was deleleted.");
+    					$this->_response->setBody(json_encode($respond));
+    				}catch(Exception $e){
+    					$respond = array("respond" => "error","message" => $e->getMessage());
+    					$this->_response->setBody(json_encode($respond));
+    				}
+    				break;
+    		}
+    	} else {
+    		$this->_response->setHttpResponseCode(503); // echo error
+    	
+    	}
+    	
     }
      
     

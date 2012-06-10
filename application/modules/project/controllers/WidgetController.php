@@ -56,6 +56,7 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
      * Ajax Handling for Applications
      */
     public function ajaxApplicationAction(){
+    	$this->ajaxify();
     	$this->checkProject();
     	if($this->_request->isPost() || $this->_request->isGet()){
     		switch ($this->_request->getParam("_method")){

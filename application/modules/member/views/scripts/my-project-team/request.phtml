@@ -34,18 +34,198 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
     	<td><?php echo $application->level; ?></td>
 		<td><?php echo $application->created->format('Y/m/d'); ?></td>	
 		<td><?php echo $application->roleName; ?></td>		
+		<td><?php 
+		if(isset($application->projectRole)){
+		 	echo "project role for applying";	
+		} else {
+			echo 'project role is not set, if will accept will create new role';
+		}
+		?>		
+		</td>	
 		
 		<td><?php echo $application->modified->format('Y/m/d'); ?></td>		
     	<td> 
-    		<a class="btn btn-info" href="/member/my-project/update-edit/id/<?php echo $this->project->id?>/update_id/<?php echo $application->id ?>">Edit</a> ~
-    		<a class="btn btn-warning" href="/member/my-project/update-delete/id/<?php echo $this->project->id?>/update_id/<?php echo $application->id ?>">Delete</a>
- 
+    		<a class="btn btn-info"  href="/member/my-project-team/ajax-request/id/<?php echo $this->project->id?>/_method/getSurvey/application_id/<?php echo $application->id ?>">Survey</a> ~    					
     	</td>			
     	</tr>	 		
     <?php } ?>
     </tbody>
     </table>
-    	
-    		
+    	    		
     <?php }?>
+    
+  
+  	<div id="alert-area"></div>
 
+	<!-- Form for creating new question -->
+    <form id="form-create-question" class="well form-search" action="#" method="post" autocomplete="off">
+			<div class="control-group">
+			<label class="control-label" for="input-question-create">Add new question</label>
+				<div class="controls">
+						<input type="text" name="question" class="input-xlarge" id="input-question-create"/>
+					<!--<span class="help-inline">Please enter your name.</span> -->
+				</div>
+			</div>
+		<!-- cant change or add div, because its looking in the script for this-->
+		<input type="submit" class="btn btn-primary create"  name='submit' data-toggle="button"  data-complete-text="finished!"  data-loading-text="processing..." value="add new question" />					
+	    	
+    </form>
+
+    <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
+ 	<hr/>   
+ 	<ol id="question_list">
+		<script id="question_list_template" type="text/x-handlebars-template">
+				{{#each this}}				
+					<form method="post" action="" class="form-search" data-question_id="{{id}}">
+						<input type="hidden" name="question_id" value="{{id}}" />
+						<input  type="text" name="question" value="{{question}}" />
+						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />
+						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="delete" name="submit" />
+					</form>
+				{{/each}}
+	</script>
+	</ol>
+			
+	<div id="question_info">
+		<script id="question_info_template" type="text/x-handlebars-template">
+					<div class="well">
+						{{question}} has id {{id}}
+					</div>
+		</script>
+	</div>
+		
+<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+        <script type="text/javascript">  	
+
+			var Questions = {
+
+			init: function(config){
+				// ajax setup
+				$.ajaxSetup({
+					url: "/member/my-project-team/ajax-question/id/<?php echo $this->project->id;?>", 
+					type: 'POST',
+					dataType: 'json',
+	 	
+				})
+  				
+				this.config = config;
+				this.bindEvents();
+				this.setutTemplates();
+				this.findQuestions(); // fill the question_list
+				},
+			// setting template system
+			setutTemplates: function(){
+				this.config.questionListTemplate = Handlebars.compile(this.config.questionListTemplate);
+				this.config.QuestionInfoTemplate = Handlebars.compile(this.config.QuestionInfoTemplate);
+			
+				},
+				
+			bindEvents: function(){
+				this.config.questionList.on('click','form input.update',this.updateQuestion); // edit question 
+				this.config.questionList.on('click','form input.delete',this.deleteQuestion); // delete question
+				this.config.formCreate.on('click','input.create',this.createQuestion); // create new question
+				
+				},
+				
+			findQuestions: function(){
+				 var self = Questions;
+					
+				 $.ajax({
+				 	data: "_method=findAll",// take data from the form and send it to the method delete
+					 }).done(
+						function (results){
+				 			self.config.questionList.empty();
+							if(results.data[0]){
+								self.config.questionList.append(self.config.questionListTemplate(results.data));
+								//newAlert (results.respond, results.message)
+							}else{
+								self.config.questionList.append("No questons.");
+								
+							}
+				 		}
+				 );	
+	
+				},
+
+			// create question
+			createQuestion:function(e){
+				var self = Questions;
+				var but  = $(this).button('toggle');
+				but.button('loading');
+				var form = $(this).parent(); // directly this form
+				//create method
+				 $.ajax({
+				 	data:  form.serialize() + "&_method=create", // take data from the form and send it to the method delete
+				 }).done(
+						function (results){
+				 			newAlert (results.respond, results.message); // display alert
+				 			self.findQuestions(); // refresh questions
+				 			but.button('reset');
+				 			form.each (function(){
+  										this.reset();
+							});
+				 		}
+				 );
+				
+				 e.preventDefault();
+			},	
+
+			// delete question
+			deleteQuestion:function(e){
+				var self = Questions;
+				$(this).button('loading');
+				var form = $(this).parent();
+				//console.log($(e.target));
+				//console.log($(this).parent());
+				//delete method
+				$.ajax({
+					data:  form.serialize() + "&_method=delete", // take data from the form and send it to the method delete
+				}).done(
+						function (results){
+							newAlert (results.respond, results.message); // display alert
+							self.findQuestions(); // refresh questions
+						}
+				);
+				
+				e.preventDefault();
+			},	
+
+			// update question
+			updateQuestion:function(e){
+				var self = Questions;
+				var form = $(this).parent();
+				$(this).button('loading');
+				console.log($(this));
+				//delete method
+				$.ajax({
+					data:  form.serialize() + "&_method=update", // take data from the form and send it to the method update
+				}).done(
+						function (results){
+							newAlert (results.respond, results.message); // display alert
+							self.findQuestions(); // refresh questions
+						}
+				);
+				e.preventDefault();
+			},	
+
+			};
+
+			Questions.init({
+				formCreate: $('#form-create-question'),
+				questionListTemplate: $('#question_list_template').html(),
+				questionList: $("#question_list"),
+				questionInfo :  $("#question_info"),
+				QuestionInfoTemplate :  $("#question_info_template"),
+
+				
+			});
+		
+	 	   
+ </script>  
+
+    
+    
+    
+    
+    
+    
