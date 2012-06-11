@@ -11,7 +11,28 @@ class LaunchFacade {
 		$this->em = $em;
 	}
 	
+	/**
+	 * Add email for newsletter Beta Launch
+	 * @param unknown_type $data
+	 */
+	public function createNewsleter($data){
+		
+		$nl = new \App\Entity\Launch\Newsletter($data['email']);
+		$this->em->persist($nl);
+		$this->em->flush();
+	}
 	
+	
+	/**
+	 * Get all registered newsletter
+	 */
+	public function findNewslettersArray(){
+		
+		
+	}
+		
+	
+		
 	/*
 	 * Creates BETA Account
 	*/
@@ -19,7 +40,6 @@ class LaunchFacade {
 	
 		// check if the email exists 
 		// finding user
-		debug($data);
 		$user = $this->em->getRepository ('\App\Entity\Launch\User')->findOneByEmail ( $data['email'] );
 		if($user) {throw new \Exception("This email is already registered. You can't use this email.");}
 

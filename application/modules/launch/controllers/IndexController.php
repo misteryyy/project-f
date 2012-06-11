@@ -20,13 +20,42 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     	$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - FAQ';
     
     }
+
+    
+    /*
+     * Sign up process, validation of form
+    */
+    public function newsletterAction() {
+    	$this->ajaxify(); 
+    	
+    	if ($this->_request->isPost ()) {
+    		if ( trim($_POST['email']) != "" ) {
+    			try {
+    				// storing the values
+    				$facadeLaunch = new \App\Facade\Launch\LaunchFacade($this->_em);
+    				$facadeLaunch->createNewsleter($_POST);
+    				// SUCCESS
+    				$this->_helper->FlashMessenger ( array ('success' => "Your email has been registered to our newsletter system." ) );
+    				$this->_helper->redirector('index', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());
+    					
+    			} catch ( Exception $e ) {
+    				$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
+    			}
+    		}
+    		else {
+    			$this->_helper->FlashMessenger ( array ('error' => "Something is wrong and you can't be sign-up for newsletter." ) );
+    		}
+    	}
+    	 
+    }
+    
+     
+    
     
     	/*
     	 * Sign up process, validation of form
     	*/
     	public function signUpAction() {
-
-    		
     		$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - SignUp';
     		$form = new \App\Form\Launch\SignupForm();
     		$this->view->form = $form;
@@ -38,7 +67,7 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     						$facadeLaunch = new \App\Facade\Launch\LaunchFacade($this->_em);
     						$facadeLaunch->createBetaAccount($form->getValues()); 							
     						// SUCCESS
-    						$this->_helper->FlashMessenger ( array ('success' => "Sign for BETA FLO~ was success. We are proud to have you on our board." ) );
+    						$this->_helper->FlashMessenger ( array ('success' => "Thank you for signing up for the beta-testing of our product. we're pretty excited to have you on board!" ) );
     						$this->_helper->redirector('index', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());
     						 
     					} catch ( Exception $e ) {

@@ -1,3 +1,121 @@
-<p>Prepare for a social platform that helps you discover the entrepreneur within, and grow your idea into something beautiful and real. Get early access and relevant updates by E-mail, Facebook, and Twitter.
+<!-- Carousel Slideshow Module -->
+<div id="myCarousel" class="carousel">
+  <div class="carousel-inner">
+                <div class="item active" >  
+                        <a data-toggle="modal" href="#myThumbnailModal1" >
+                            <img class="thumbnail" src="http://placehold.it/200x201" width="200" height="201" alt="" title="" />
+                        </a>
+                  </div>                 
+                  <div class="item" >                   
+                           <a data-toggle="modal" href="#myThumbnailModal2" >
+                            <img class="thumbnail" src="http://placehold.it/200x82" width="200" height="202" alt="" title="" />
+                        </a>
+                  </div>                
+                  <div class="item" >                   
+                           <a data-toggle="modal" href="#myThumbnailModal3" >
+                            <img class="thumbnail" src="http://placehold.it/200x83" width="200" height="203" alt="" title="" />
+                        </a>
+                   </div>                
+                  <div class="item" >                   
+                                   <a data-toggle="modal" href="#myThumbnailModal4" >
+                            <img class="thumbnail" src="http://placehold.it/200x84" width="200" height="204" alt="" title="" />
+                        </a>
+                  </div>                 
+  </div>
+</div>
+
+
+
+<ul id="carousel-nav" class="nav nav-tabs nav-stacked">
+    <li><a href="#myCarousel" data-to="1" >Slide 1</a></li>
+    <li><a href="#myCarousel" data-to="2" >Slide 2</a></li>
+    <li><a href="#myCarousel" data-to="3" >Slide 3</a></li>    
+    <li><a href="#myCarousel" data-to="4" >Slide 4</a></li>
+</ul>
+
+<p id="description_1">
+Description for the 1 one
 </p>
-  
+<p id="description_2">
+Description for the 2 one
+</p>
+<p id="description_3">
+Description for the 3 one
+</p>
+<p id="description_4">
+Description for the 4 one
+</p>
+
+<div class="modal fade" id="myThumbnailModal1" style="display:none;padding:5px 5px 5px 5px;">
+            <img src="http://placehold.it/600x401" width="600" height="400" alt="Screen One" title="Screen 1" />
+</div>                  
+<div class="modal fade" id="myThumbnailModal2" style="display:none;padding:5px 5px 5px 5px;">
+            <img src="http://placehold.it/600x402" width="600" height="400" alt="Screen One" title="Screen 1" />
+</div>                  
+<div class="modal fade" id="myThumbnailModal3" style="display:none;padding:5px 5px 5px 5px;">
+            <img src="http://placehold.it/600x403" width="600" height="400" alt="Screen One" title="Screen 1" />
+</div>                  
+<div class="modal fade" id="myThumbnailModal4" style="display:none;padding:5px 5px 5px 5px;">
+            <img src="http://placehold.it/600x404" width="600" height="400" alt="Screen One" title="Screen 1" />
+</div>          
+
+
+               
+<script type="text/javascript">
+
+$(document).ready(function() { 
+	
+        $('#carousel-nav a').click(function(q){
+                 q.preventDefault();
+                    targetSlide = $(this).attr('data-to')-1;
+                    $('#myCarousel').carousel(targetSlide);
+                });
+    }); 
+</script>
+
+<hr>
+<form class="form" id="form-newsletter" method="post" action="index/newsletter">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label hide" for="prependedInput">Input your email:</label>
+            <div class="controls">
+              <div class="input-prepend input-append">
+                <span class="add-on"><i class="icon-envelope"></i></span>
+                <input class="span2" id="appendedPrependedInput" size="16" type="text" name="email">
+                <input type="submit" class="btn" type="button" value="subscribe">
+              </div>
+              <p class="help-block">Hear about new features, tips and other updates.</p>
+            </div>
+          </div>
+        </fieldset>
+ </form>
+
+ <!-- External libraries -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script>
+<script src="<?=$this->baseUrl('/media/tools/jquery.validate.bootstrap.js')?>"></script>
+
+<script type="text/javascript">
+//wait for the DOM to be loaded 
+$(document).ready(function() { 
+	var form = $('#form-newsletter');
+
+	form.validate({
+	    		rules: {
+	    			email :{
+		    			required: true,
+	    				email: true
+			    		}
+	    		},
+	    		 submitHandler: function(form) {
+		    		   form.submit();					 		    
+			 	}
+	    	}
+	   );	
+
+
+    }); 
+
+
+
+</script>

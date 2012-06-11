@@ -40,7 +40,37 @@ class Newsletter
     
     
     
-    public function __get($property) {
+    
+    /**
+	 * @return the $email
+	 */
+	public function getEmail() {
+		return $this->email;
+	}
+
+	/**
+	 * @return the $ip
+	 */
+	public function getIp() {
+		return $this->ip;
+	}
+
+	/**
+	 * @return the $date
+	 */
+	public function getDate() {
+		return $this->date;
+	}
+
+	/**
+	 * @param field_type $email
+	 */
+	public function setEmail($email) {
+		$this->email = $email;
+	}
+
+
+	public function __get($property) {
     	// If a method exists to get the property call it.
     	if (method_exists ( $this, 'get' . ucfirst ( $property ) )) {
     		// This will call $this->getPassword() while getting $this->password
