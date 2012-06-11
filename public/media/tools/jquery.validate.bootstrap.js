@@ -2,7 +2,7 @@
   * Jquery validate update for work with Twitter Bootstrap Forms
   */ 
 $.extend($.validator.messages, {
-	required: "This part is required.",
+	required: "This field is required.",
 	remote: 'needs to get fixed',
 	email: 'is an invalid email address',
 	url: 'is not a valid URL',

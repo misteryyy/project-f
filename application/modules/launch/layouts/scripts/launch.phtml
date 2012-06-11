@@ -2,28 +2,17 @@
 <head>
   <meta charset="utf-8">
   <title><?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-  <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
-
-  <link rel="shortcut icon" href="/css/launch/default/favicon.ico" />
-  <link rel="stylesheet" type="text/css" href="<?=$this->baseUrl('/css/launch/default/style_launchpage.css')?>">
- 
-  	<script src="<?=$this->baseUrl('js/libs/modernizr-2.0.6.min.js')?>"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-   <script defer src="<?=$this->baseUrl('media/bootstrap/js/bootstrap.js')?>"></script>
-</head>
+  <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/2.0.4/css/bootstrap.css')?>">
+  <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
+  <?= $this->action('lib', 'index', 'site');  // libraries ?>  
+ </head>
 
 <body>
-  <div class="row-fluid" style="margin-left:10px">
-  <div class="span10">
-    
+
     <div class="row-fluid">
       <div class="span10">
-       <?= $this->action('header', 'index', 'launch');  ?>  
- 
+       <?= $this->action('header', 'index', 'launch');  ?>   
       	 <div class="well">
-      	
       	 <h1>FLO~ Start.Build.Lead.Grow.</h1>
    		  <img src="/css/launch/default/platform.png" alt="platform" id="platform" />
       	 </div> 
@@ -31,14 +20,12 @@
       	<?php echo $this->flashMessenger() ; // message generator; in style of bootstrap?>
    		<?php echo $this->layout()->content; ?>
         </div>
-      
-      
-       <?= $this->action('footer', 'index', 'launch');  ?> 
+       <? //$this->action('footer', 'index', 'launch');  ?> 
       </div>
 
   </div> 
-	
-  </div>
+
+
   
 
     

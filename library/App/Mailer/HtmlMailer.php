@@ -26,7 +26,7 @@ static $_defaultView;
      */
 protected $_view;
 
-public function __construct($charset = "iso-8859-1"){
+public function __construct($charset = "utf-8"){
 	parent::__construct($charset);
 	$this->setFrom(self::$fromEmail, self::$fromName);
 	$this->_view = self::getDefaultView();
@@ -49,13 +49,15 @@ public function __construct($charset = "iso-8859-1"){
   			'auth' => "login",
   			'username' => "info@floplatform.com",
   			'password' => "flow2011",
-  			'ssl' => 'ssl',
-  			'port' => 465
+  			'ssl' => 'tls',
+  			'port' => 587
   	);
   	 
-  	$smtpTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$smtpOptions);
+  	$smtpTransport = new \Zend_Mail_Transport_Smtp('smtp.gmail.com',$smtpOptions);
+  	 
   	$this->setBodyHtml($html,$this->getCharset(),$encoding);
-  	$this->send($smtpOptions);
+  	$this->send($smtpTransport);
+  	
   }
  
   public function setViewParam($property,$value){

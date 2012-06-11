@@ -3,36 +3,21 @@ namespace App\Form\Launch;
 
 class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 {
-	
-
 	public function init()
-	{
-		// $this->setIsArray(true);
-		// $this->setElementsBelongTo('bootstrap'); // will make form array
-		$this->_addClassNames('well');
-		
-		$this->addElement('text', 'name', array(
-				'label' => 'First Name',
-				'required' => true,
-				'filters' => array('StringTrim'),
-				//'errorMessages' => array("You have to have project title. You can use just letters and numbers"),
-				'description' => "name of your project",
-				'validators' => array( array('alnum',false, array("allowWhiteSpace" => true)), array('StringLength', false, array(1,100)) )
-		));
+	{	
 	
-		$this->addElement('text', 'surname', array(
-				'label' => 'Last Name',
+		$this->addAttribs(array("id" => "form-sign-up-beta"));
+		$this->addElement('text', 'name', array(
+				'label' => 'Name',
 				'required' => true,
 				'filters' => array('StringTrim'),
 				//'errorMessages' => array("You have to have project title. You can use just letters and numbers"),
 				'description' => "name of your project",
 				'validators' => array( array('alnum',false, array("allowWhiteSpace" => true)), array('StringLength', false, array(1,100)) )
 		));
-
-		
+			
 		$this->addElement('text', 'email', array(
 				'label' => 'Email',
-				'class' => 'span6',
 				'required' => true,
 				'errorMessages' => array("You should have emailll which will simply describe your goal."),
 				'description' => "description",
@@ -41,37 +26,59 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 
 		$this->addElement('text', 'email_verification', array(
 				'label' => 'Email verification',
-				'class' => 'span6',
 				'required' => true,
-				'errorMessages' => array("Email is not the same as previous one."),
+				'errorMessage' => "Email is not the same as previous one.",
 				'description' => "description",
 				'validators' => array(array("emailAddress"),
 									  array('Identical', true, array('token' => 'email') )
-							)
+				)
 		));
+		
+		$this->addElement('password', 'password', array(
+				'label' => 'Password',
+				'required' => true,
+				'description' => "description",
+				'validators' => array( array('StringLength',array(5,20)))
+				));
+		
+		$this->addElement('password', 'password_verification', array(
+				'label' => 'Password verification',
+				'required' => true,
+				'errorMessages' => array("Password is not the same as previous one."),
+				'description' => "description",
+				'validators' => array(
+						array('Identical', true, array('token' => 'password') ),
+						array('StringLength',array(5,20)
+						)
+				)
+		));
+		
 		
 		
 		// Passion Bar
 		$this->addElement('select','location', array(
 				'label' => 'Do you reside in Prague?',
 				'description' => "description",
-				'multiOptions' => array("yes",'no')
+				'multiOptions' => array("no",'yes')
 		));
 			
+		$this->addElement('checkbox', 'accept', array(
+				'label'=>'Terms and Services',
+				'uncheckedValue'=> '',
+				'checkedValue' => 'I Agree',
+				'validators' => array(
+						array('notEmpty', true, array(
+								'messages' => array(
+										'isEmpty'=>'You must agree to the terms'
+								)
+						))
+				),
+				'required'=>true,
+		));
 		
-		// Widget Setting
-		$this->addElement('checkbox','accept',
-				array(  'missingMessage' => "Field '%field%' is required by rule '%rule%', dawg!",
-						'required' => true,
-						'label' => "Accept terms",
-						'description' => 'Please read what will happen if you will disable role widget.',
-						'validators' => array(array('GreaterThan', false, array(0)))
-				)
-		);
-
 
 		$this->addDisplayGroup(
-				array('name','surname','email','email_verification','location','accept'), 'Sign Up', array('legend' => 'Sign up')
+				array('name','email','email_verification','password','password_verification','location','accept'), 'Sign Up', array('legend' => 'Sign up')
 		);
 
 		

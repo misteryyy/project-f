@@ -1,23 +1,66 @@
-
 <?php echo $this->form; ?>
 
 
-<hr>
-Other version how to work with the same form  <br />
 
-<!-- Other way how to display forms -->
-<form id="sign-up" class="form-horizontal" action="<?= $this->form->getAction(); ?>" method="<?= $this->form->getMethod(); ?>">
-	<fieldset id="fieldset-FLOBoxIdea"><legend>Create New FloBox Message</legend>
-	<?= $this->form->name; ?>
-	<?= $this->form->surname; ?>
-	<?= $this->form->email; ?>
-	<?= $this->form->email_verification; ?>
-	
-	<?= $this->form->location; ?>
-	<?= $this->form->accept; ?>
-	</fieldset>
-	
-	<?= $this->form->submit ?>
-</form>
+<!-- External libraries -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script src="<?=$this->baseUrl('/media/tools/jquery.validate.bootstrap.js')?>"></script>
+<script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script>
+<script type="text/javascript">
+
+//wait for the DOM to be loaded 
+$(document).ready(function() { 
+	var form = $('#form-sign-up-beta');
+
+	form.validate({
+	    		rules: {
+	    			name :{
+		    			required: true,
+	    				minlength: 2
+			    		},
+			    	password :{
+		    			required: true,
+	    				minlength: 5,
+			    		},
+
+			    	password_verification: {
+						required: true,
+						minlength: 5,
+						equalTo: "#password"
+					},
+
+					email: {
+						required: true,
+						email: true
+					},
+
+					email_verification: {
+						required: true,
+						equalTo: "#email"
+					},
+
+			    	location :{
+			    			required: true,
+				    		},
+				    accept :{
+				    			required: true,
+					    		}
+					
+	    		},
+	   			submitHandler: function(form) {
+					alert("lala");
+			   		form.submit();	 		    
+
+		   		}	
+	    		 
+	    	}
+	   );	
+
+
+    }); ; 
+
+
+
+</script>
 
 

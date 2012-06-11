@@ -141,6 +141,12 @@ class Project extends \App\Entity\Project implements \Doctrine\ORM\Proxy\Proxy
         return parent::getTags();
     }
 
+    public function getDisableRoleWidget()
+    {
+        $this->__load();
+        return parent::getDisableRoleWidget();
+    }
+
     public function setDisableRoleWidget($value)
     {
         $this->__load();
