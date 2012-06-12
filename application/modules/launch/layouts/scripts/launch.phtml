@@ -2,33 +2,38 @@
 <head>
   <meta charset="utf-8">
   <title><?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/2.0.4/css/bootstrap.css')?>">
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
-  <?= $this->action('lib', 'index', 'site');  // libraries ?>  
- </head>
+
+<link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
+<link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/2.0.4.launch/css/bootstrap.css')?>">
+<link rel="stylesheet" href="<?=$this->baseUrl('/media/slepice-launch/1.0.0/css/launchpage_css.css')?>">
+<link rel="stylesheet" href="<?=$this->baseUrl('/media/jquery.stepy-1.1.0/css/jquery.stepy.css')?>">
+<script src="<?=$this->baseUrl('/js/libs/modernizr-2.0.6.min.js')?>"></script>
+<script src="<?=$this->baseUrl('media/jquery/1.7.2/jquery.min.js')?>"></script>
+<script src="<?=$this->baseUrl('media/bootstrap/2.0.4.launch/js/bootstrap.min.js')?>"></script>   
+<script src="<?=$this->baseUrl('/media/tools/flo-tools.js')?>"></script>
+
+</head>
 
 <body>
 
-    <div class="row-fluid">
-      <div class="span10">
-       <?= $this->action('header', 'index', 'launch');  ?>   
-      	 <div class="well">
-      	 <h1>FLO~ Start.Build.Lead.Grow.</h1>
-   		  <img src="/css/launch/default/platform.png" alt="platform" id="platform" />
-      	 </div> 
-      	 <div class="well">
-      	<?php echo $this->flashMessenger() ; // message generator; in style of bootstrap?>
-   		<?php echo $this->layout()->content; ?>
-        </div>
-       <? //$this->action('footer', 'index', 'launch');  ?> 
+<div id="lp-container">
+   
+   <?= $this->action('header', 'index', 'launch');  ?> 
+   
+
+  <div id="lp-content">
+    <div class="container"> 
+      <div class="lp-margin">
+        <?php echo $this->flashMessenger() ; // message generator; in style of bootstrap?>
       </div>
+      <div class="row">
+        <?php echo $this->layout()->content; ?>
+      </div>
+    </div>
+  </div>
 
-  </div> 
+  <?= $this->action('footer', 'index', 'launch');  ?> 
 
-
-  
-
-    
-    
+</div>
 </body>
 </html>

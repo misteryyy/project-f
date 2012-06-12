@@ -20,14 +20,6 @@
 			<controller>index</controller>
 			<action>rules</action>
 		</rules>
-		<sign-up>
-			<label>Sign up for BETA!</label>
-			<module>launch</module>
-			<controller>index</controller>
-			<action>sign-up</action>
-		</sign-up>
-
-
 	</nav>
 </config>
 

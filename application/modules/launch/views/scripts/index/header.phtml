@@ -1,32 +1,36 @@
-<div class="navbar">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-
-          <div class="nav-collapse">
-            <ul class="nav">
-       	  <?php 
-					  $subtree = $this->navigation()->findOneByLabel('Home');
-					   
-					 $options = array("ulClass"=>"nav", 			
+  <div class="container">
+    <div class="row">
+     <div class="span6">
+       <h1>
+         <a href="/" title="FLO~PLATFORM Start. Build. Lead. Grow."><span id="lp-logo-flow"></span>FLO~</a>
+         <span id="lp-logo-platform">PLATFORM</span>
+         <span id="lp-logo-slogan">Start.Build.Lead.Grow.</span>
+       </h1>
+     </div>
+     <div class="span4">
+     
+     
+     	<?php 
+		$subtree = $this->navigation()->findOneByLabel('Home');
+		$options = array("ulClass"=>"nav nav-pills lp-menu", 			
 					  				"intent"=>"333",
 					  				"minDepth" => 0,
 					  				"maxDepth" => 0,
 					 				"onlyActiveBranch" => false,
 					 				"renderParents" => true);
 					  
-					  echo $this->navigation()->menu()->renderMenu(null,$options);
-
-					  ?>
-            </ul>
+		echo $this->navigation()->menu()->renderMenu(null,$options);
+		?>
           
-          
-          
-          </div><!--/.nav-collapse -->
-          
-          
-          
-          
-        </div>
-      </div>
-    </div>
+     </div>
+     <div class="span2">
+       
+       <div class="fl-user-menu lp-menu">
+         <a href="/index/sign-up" class="btn btn-primary right"><i class="icon-white icon-lock"></i> Early Access</a>
+       </div>
+       
+     </div>
+     
+   </div>
+</div>
 
