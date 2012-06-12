@@ -138,8 +138,21 @@ h4{
 	color: #0088cc;
 }
 
-.lp-carousel-thumbnails{
-	width: 20%;
+.lp-screens-navigation{
+  width: 100%;
+  margin: 0 0 10px 0;
+  padding: 0px;
+  list-style: none;
+  float: left;
+}
+
+.lp-screens-navigation-thumbnails{
+	width: 25%;
 	margin: 0px;
+  float: left;
+}
+
+.lp-screens-navigation-thumbnails img{
+  width: 100%;
 }
 
