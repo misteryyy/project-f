@@ -1,12 +1,12 @@
 <?php
-namespace App\Form\Launch;
+namespace App\Form\Site;
 
 class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 {
 	public function init()
 	{	
 	
-		$this->addAttribs(array("id" => "form-sign-up-beta"));
+		$this->addAttribs(array("id" => "form-sign-up"));
 		$this->addElement('text', 'name', array(
 				'label' => 'Name',
 				'required' => true,
@@ -54,13 +54,29 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		));
 		
 		
+		
 		// Passion Bar
-		$this->addElement('select','location', array(
-				'label' => 'Do you reside in Prague?',
+		$this->addElement('radio','verification', array(
+				'label' => 'Select second value.',
+				'required' => true,
+				'errorMessages' => array("You have choose second value. Which is second :)"),
 				//'description' => "description",
-				'multiOptions' => array("no",'yes')
+				'multiOptions' => array("Three",'One',"Two"),
+				'validators' => array(
+						array('Between',true,array('min' => 1, 'max' => 1),
+						)
+				)
+				
 		));
-			
+		
+		
+// 		$radio->setLabel('Choose green color box:')
+// 		->setMultiOptions(array('1' => PHP_EOL . 'Green', '2' => PHP_EOL . 'Blue','3' => PHP_EOL . 'Red','4' => PHP_EOL . 'Black'))
+// 		->setRequired(true)
+// 		->addValidator('Between',true, array('min' => 1, 'max' => 1)); // value one
+		
+		
+
 		$this->addElement('checkbox', 'accept', array(
 				'label'=>'Do you agree with <a href="/index/rules">rules</a>?',
 				'uncheckedValue'=> '',
@@ -87,7 +103,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		
 
 		$this->addDisplayGroup(
-				array('name','email','email_verification','password','password_verification','location','accept'), 'Sign Up', array('legend' => 'Sign up')
+				array('name','email','email_verification','password','password_verification','verification','accept'), 'Sign Up', array('legend' => 'Sign up')
 		);
 
 		

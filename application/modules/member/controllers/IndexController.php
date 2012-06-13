@@ -13,7 +13,7 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 	public function lostPasswordAction() {	
 		$this->view->pageTitle = 'Lost password';
 
-		$form = new \App\Form\PublicMemberLostPassword();
+		$form = new \App\Form\Site\LostPasswordForm();
 		$this->view->form = $form;
 		
 		if ($this->_request->isPost ()) {
@@ -76,8 +76,7 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 		$this->view->pageTitle = 'Login';
 		
 		
-		$form = new \App\Form\PublicMemberLogin ();
-		// $form = new \App\Form\ExampleForm();
+		$form = new \App\Form\Site\LoginForm();
 		$this->view->form = $form;
 		
 		
@@ -117,7 +116,7 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 		
 		$this->view->pageTitle = 'Sign up for FLO~';
 		
-		$form = new \App\Form\PublicMemberSignUp ();
+		$form = new \App\Form\Site\SignupForm();
 		$this->view->form = $form;
 		
 		if ($this->_request->isPost ()) {

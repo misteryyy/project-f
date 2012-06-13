@@ -30,7 +30,7 @@ class Newsletter
     public function __construct($email){
 		$this->email = $email;	
 		$this->date = new \DateTime ( "now" );
-    	$THIS->ip = getRealIpAddr();
+    	$this->ip = getRealIpAddr();
     }
     
     public function getId()
