@@ -51,6 +51,30 @@ class Newsletter extends \App\Entity\Launch\Newsletter implements \Doctrine\ORM\
         return parent::getId();
     }
 
+    public function getEmail()
+    {
+        $this->__load();
+        return parent::getEmail();
+    }
+
+    public function getIp()
+    {
+        $this->__load();
+        return parent::getIp();
+    }
+
+    public function getDate()
+    {
+        $this->__load();
+        return parent::getDate();
+    }
+
+    public function setEmail($email)
+    {
+        $this->__load();
+        return parent::setEmail($email);
+    }
+
     public function __get($property)
     {
         $this->__load();
