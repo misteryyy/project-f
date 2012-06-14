@@ -1,18 +1,25 @@
   <div class="container">
     <div class="row">
-     <div class="span6">
+      <div class="span4 offset6">
+        <div class="fl-user-menu">
+         pocitadlo <a href="/index/sign-up" class="btn btn-primary right"><i class="icon-white icon-lock"></i> Early Access</a>
+       </div>
+      </div>
+    </div>
+    <div class="row">
+     <div class="span7">
        <h1>
          <a href="/" title="FLO~PLATFORM Start. Build. Lead. Grow."><span id="lp-logo-flow"></span>FLO~</a>
          <span id="lp-logo-platform">PLATFORM</span>
          <span id="lp-logo-slogan">Start.Build.Lead.Grow.</span>
        </h1>
      </div>
-     <div class="span4">
+     <div class="span3">
      
      
      	<?php 
 		$subtree = $this->navigation()->findOneByLabel('Home');
-		$options = array("ulClass"=>"nav nav-pills lp-menu", 			
+		$options = array("ulClass"=>"nav nav-pills lp-menu right", 			
 					  				"intent"=>"333",
 					  				"minDepth" => 0,
 					  				"maxDepth" => 0,
@@ -23,13 +30,7 @@
 		?>
           
      </div>
-     <div class="span2">
-       
-       <div class="fl-user-menu lp-menu">
-         <a href="/index/sign-up" class="btn btn-primary right"><i class="icon-white icon-lock"></i> Early Access</a>
-       </div>
-       
-     </div>
+     
      
    </div>
 </div>

@@ -11,8 +11,8 @@ body{
 }
 
 #lp-container{
-  width: 960px;
-  margin: 20px auto 20px auto;
+  width: 810px;
+  margin: 0px auto 20px auto;
 }
 
 #lp-content{
@@ -22,7 +22,7 @@ body{
 }
 
 .container{
-  margin: 0 10px 0 10px;
+  margin: 0 15px 0 15px;
 }
 
 .left{
@@ -117,6 +117,14 @@ h2{
 
 }
 
+h3{
+  color: #0b4e70;
+}
+
+p.screen-description{
+  color: #0a4461;
+}
+
 .h2span{
   display: block;
   width: 100%;
@@ -147,7 +155,7 @@ h4{
 }
 
 .lp-screens-navigation-thumbnails{
-	width: 25%;
+	width: 20%;
 	margin: 0px;
   float: left;
 }
