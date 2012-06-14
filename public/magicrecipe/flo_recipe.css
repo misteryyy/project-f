@@ -1,0 +1,121 @@
+/* CSS Document for FLO~ Recipe*/
+
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+img{
+			border:0;
+			height:auto;
+			line-height:100%;
+			outline:none;
+			text-decoration:none;
+		}
+
+body{
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 0.9em;
+  color: #414142;
+  background: #000000;
+}
+
+p{
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  line-height: 120%;
+}
+
+p#sblg{
+  font-size: 1.3em;
+  width: 243px;
+  float: left;
+  margin-left: 178px;
+}
+
+strong{
+  font-size: 0.9em;
+}
+
+h1{
+  width: 243px;
+  height: 69px;
+  float: left;
+  margin: 40px 178px 10px 178px;
+  background: url('img/flow_black.png') top left no-repeat;
+}
+
+h1 span{
+  display: none;
+}
+
+h2{
+  font-size: 1.8em;
+  display: block;
+  float: left;
+  width: 100%;
+  margin: 15px 0 20px 0;
+  text-align: center;
+  font-weight:bold;
+}
+
+#container{
+    width: 600px;
+    margin: 10px auto 10px auto;
+      
+}
+
+#container_in{
+  width: 100%;
+  height: 100%;
+  float: left;
+  border:1px solid #DDDDDD;
+  background: url('img/content_bcg.jpg') top left no-repeat;
+}
+
+#header, #body, #footer{
+    width: 100%;
+    float: left;
+}
+
+#header{
+    height: 184px;
+    background: url('img/header_bcg.jpg') top left no-repeat;
+ }
+
+#body{
+    background: url('img/body_bcg.jpg') top left no-repeat;
+}
+
+#content{
+    margin: 20px 65px 20px 65px;
+}
+
+#icons{
+  width: 100%; 
+  float: left; 
+  margin: 30px 0px 30px 0px;
+}
+
+.icon{
+  width: 16%; 
+  float: left; 
+  text-align: center;
+}
+
+#footer{
+  margin: 20px 0 20px 0;
+  font-size: 0.7em;
+  text-align: center;
+  color: black;
+}
+
+ul{
+  margin: 10px 0 0 0;
+  width: 100%;
+  float: left;
+}
+
+li{
+  margin: 0 0 20px 20px;
+}
