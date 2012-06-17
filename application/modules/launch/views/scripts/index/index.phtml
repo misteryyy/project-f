@@ -9,7 +9,7 @@
         <div class="item active" > 
         <li class="span6">
           <a data-toggle="modal" href="#myThumbnailModal1" class="thumbnail">
-            <img src="/media/slepice-launch/1.0.0/img/featured_01.jpg" alt="" title="450x300">
+            <img src="/media/slepice-launch/1.0.0/img/featured_01.jpg" alt="">
           </a>
         </li>
         </div>
@@ -100,18 +100,49 @@ Begin a project by yourself, powered by your own inspiration and passion, <stron
       </div>
 
 
-<div class="modal fade" id="myThumbnailModal1" style="display:none;padding:5px 5px 5px 5px;">
-     <img src="/media/slepice-launch/1.0.0/img/fullsize_01.jpg" alt="Your project" title="Your project" />
-</div>    
-<div class="modal fade" id="myThumbnailModal2" style="display:none;padding:5px 5px 5px 5px;">
-     <img src="/media/slepice-launch/1.0.0/img/flow_design_01_mainpage.jpg" width="600" height="400" alt="Screen two" title="Screen 2" />
-</div>    
-<div class="modal fade" id="myThumbnailModal3" style="display:none;padding:5px 5px 5px 5px;">
-     <img src="/media/slepice-launch/1.0.0/img/fullsize_03.jpg" alt="Levels" title="Levels" />
-</div>    
-<div class="modal fade" id="myThumbnailModal4" style="display:none;padding:5px 5px 5px 5px;">
-     <img src="/media/slepice-launch/1.0.0/img/fullsize_04.jpg" alt="FLO~ box" title="FLO~ box" />
+
+<?php 
+// settings, nastav si vsechno co chces rozbrazit za informace
+$modalArr = array( 
+ array("id" => "myThumbnailModal1","label"=>"Project Detail","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
+array("id" => "myThumbnailModal2", "label"=>"Project Detail 2","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
+ array("id" => "myThumbnailModal3", "label"=>"Project Detail 3","img" => "/media/slepice-launch/1.0.0/img/fullsize_03.jpg"),
+ array("id" => "myThumbnailModal4",  "label"=>"Project Detail 4 ","img" => "/media/slepice-launch/1.0.0/img/fullsize_04.jpg"),
+ array("id" => "myThumbnailModal5", "label"=>"Project Detail 4 ","img" => "/media/slepice-launch/1.0.0/img/fullsize_05.jpg")
+);
+
+foreach ($modalArr as $modal ) {
+?>
+<div class="modal hide" id="<?php echo $modal['id'];?>" style="display:none;padding:5px 5px 5px 5px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Project Detail</h3>
+  </div>
+  <div class="modal-body">
+    <img src="<?php echo $modal['img'];?>" alt="<?php echo $modal['label'];?>" title="<?php echo $modal['label'];?>" />
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
 </div>
-<div class="modal fade" id="myThumbnailModal5" style="display:none;padding:5px 5px 5px 5px;">
-     <img src="/media/slepice-launch/1.0.0/img/fullsize_05.jpg" alt="Roles" title="Roles" />
-</div>
+
+<script type="text/javascript">
+$('#<?php echo $modal['id'];?>').modal({
+        backdrop: true,
+        keyboard: true,
+        show: false
+    }).css({
+       'width': function () { 
+           return ($(document).width() * .9) + 'px';  
+       },
+       'margin-left': function () { 
+           return -($(this).width() / 2); 
+       }
+});
+</script>
+
+
+<?php
+}
+?>
+
