@@ -10,6 +10,10 @@ body{
   src: url('../other/ftrabk.ttf');
 }
 
+p{
+  text-align: justify;
+}
+
 #lp-container{
   width: 810px;
   margin: 0px auto 20px auto;
@@ -19,6 +23,7 @@ body{
   background: #ffffff;
   width: 100%;
   float: left;
+  padding: 15px 0 15px 0;
 }
 
 .container{
@@ -36,7 +41,7 @@ body{
 .lp-margin{
 	width: 100%;
 	float: left;
-  margin: 10px 0 0 0;
+  margin: 15px 0 0 0;
 }
 
 .lp-menu{
@@ -51,10 +56,11 @@ body{
 
 .lp-footer p{
 	margin: 0px;
+  text-align: right;
 }
 
-.lp-copy{
-	text-align: left;
+p.lp-copy{
+  text-align: left;
 }
 
 .lp-mails a{
@@ -64,6 +70,15 @@ body{
 
 .lp-text-align-right{
 	text-align: right;
+}
+
+p.lp-donate{
+  padding: 10px 0 10px 0;
+}
+
+.lp-paypal-img{
+  width: 100px;
+  float: right;
 }
 
 h1{
@@ -113,12 +128,34 @@ h1 a{
 }
 
 h2{
-  font-size: 25px;
-
+  margin-bottom: 27px;
+  font-size: 19.5px;
+  line-height: 36px;
+  color: #333333;
+  font-weight: normal;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 h3{
   color: #0b4e70;
+}
+
+h3.lp-faq-question{
+  font-weight: normal;
+  margin: 5px 0 5px 0;
+}
+
+h3.lp-desc-title{
+  font-weight: normal;
+  margin: 15px 0 10px 0;
+  border-top: 1px solid #e5e5e5;
+  padding: 5px 0 0 0;
+}
+
+.lp-faq{
+  margin: 0 0 25px 0;
+  border-left: 2px solid #b7e5fc;
+  padding: 0 0 0 15px;
 }
 
 p.screen-description{
@@ -162,5 +199,24 @@ h4{
 
 .lp-screens-navigation-thumbnails img{
   width: 100%;
+}
+
+.lp-btn-access{
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+  margin: 0 auto 30px 6px;
+  padding: 6px 15px 6px 15px;
+}
+
+.lp-btn-survey{
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+  margin: 0px;
+  padding: 15px;
 }
 

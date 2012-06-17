@@ -16,6 +16,10 @@
 
 <body>
 
+<a href="https://www.surveymonkey.com/s/flolaunchpage" class="btn btn-warning lp-btn-survey">
+  S<br />U<br />R<br />V<br />E<br />Y
+</a>
+
 <div id="lp-container">
    
    <?= $this->action('header', 'index', 'launch');  ?> 
@@ -23,9 +27,8 @@
 
   <div id="lp-content">
     <div class="container"> 
-      <div class="lp-margin">
-        <?php echo $this->flashMessenger(); ?>
-      </div>
+      <?php echo $this->flashMessenger(); ?>
+      
       <div class="row">
         <?php echo $this->layout()->content; ?>
       </div>

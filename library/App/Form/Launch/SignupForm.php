@@ -62,7 +62,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		));
 			
 		$this->addElement('checkbox', 'accept', array(
-				'label'=>'Do you agree with <a href="/index/rules">rules</a>?',
+				'label'=>'Do you agree with <a href="/index/privacy">rules</a>?',
 				'uncheckedValue'=> '',
 				'checkedValue' => 'I Agree',
 				'validators' => array(
@@ -87,7 +87,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		
 
 		$this->addDisplayGroup(
-				array('name','email','email_verification','password','password_verification','location','accept'), 'Sign Up', array('legend' => 'Sign up')
+				array('name','email','email_verification','password','password_verification','location','accept'), 'Sign Up', array('legend' => 'Early Access')
 		);
 
 		

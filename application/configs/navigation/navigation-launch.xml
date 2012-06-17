@@ -8,18 +8,18 @@
 			<controller>index</controller>
 			<action>index</action>
 		</home>
+		<about>
+			<label>About</label>
+			<module>launch</module>
+			<controller>index</controller>
+			<action>about</action>
+		</about>
 		<faq>
 			<label>FAQ</label>
 			<module>launch</module>
 			<controller>index</controller>
 			<action>faq</action>
 		</faq>
-		<rules>
-			<label>Rules</label>
-			<module>launch</module>
-			<controller>index</controller>
-			<action>rules</action>
-		</rules>
 	</nav>
 </config>
 

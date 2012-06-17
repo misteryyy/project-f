@@ -8,10 +8,16 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     	$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow.';
     	
     }
-    
-    public function rulesAction()
+
+    public function aboutAction()
     {
-    	$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - Rules';
+        $this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - About';
+    
+    }
+    
+    public function privacyAction()
+    {
+    	$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - Privacy & Terms';
     	 
     }
     
@@ -56,7 +62,7 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     	 * Sign up process, validation of form
     	*/
     	public function signUpAction() {
-    		$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - SignUp';
+    		$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow. - Early Access';
     		$form = new \App\Form\Launch\SignupForm();
     		$this->view->form = $form;
     	
