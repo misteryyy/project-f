@@ -4,14 +4,14 @@
 $.extend($.validator.messages, {
 	required: "This field is required.",
 	remote: 'needs to get fixed',
-	email: 'is an invalid email address',
+	email: 'Hmm, looks like you've entered an invalid email address...',
 	url: 'is not a valid URL',
 	date: 'is not a valid date',
 	dateISO: 'is not a valid date (ISO)',
 	number: 'is not a valid number',
 	digits: 'needs to be digits',
 	creditcard: 'is not a valid credit card number',
-	equalTo: 'is not the same value again',
+	equalTo: "Hmm, this doesn't seem to match the previous field. Try again",
 	accept: 'is not a value with a valid extension',
 	maxlength: jQuery.validator.format('needs to be more than {0} characters'),
 	minlength: jQuery.validator.format('needs to be at least {0} characters'),
@@ -20,6 +20,7 @@ $.extend($.validator.messages, {
 	max: jQuery.validator.format('needs to be a value less than or equal to {0}'),
 	min: jQuery.validator.format('needs to be a value greater than or equal to {0}')
 	});
+
 
 /**
 
