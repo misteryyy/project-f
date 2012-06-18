@@ -4,7 +4,7 @@
 $.extend($.validator.messages, {
 	required: "This field is required.",
 	remote: 'needs to get fixed',
-	email: 'Hmm, looks like you've entered an invalid email address...',
+	email: "Hmm, looks like you've entered an invalid email address...",
 	url: 'is not a valid URL',
 	date: 'is not a valid date',
 	dateISO: 'is not a valid date (ISO)',
