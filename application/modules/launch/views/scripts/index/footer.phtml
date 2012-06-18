@@ -3,7 +3,9 @@
    <div class="row">
      <div class="span6">
        
-      <h4>Sign Up for our newsletter</h4>
+      <p>
+We are excited to announce that our beta launch is right around the corner. It’s almost time to get started on that next great idea of yours! Stay on top of eleventh-hour updates and feature additions (and the occasional rant) by subscribing to our unobtrusive and timely newsletters.
+      </p>
 
       <form class="form" id="form-newsletter" method="post" action="index/newsletter">
         <fieldset>
@@ -11,9 +13,8 @@
             <label class="control-label hide" for="prependedInput">Input your email:</label>
             <div class="controls">
               <div class="input-prepend input-append">
-                <span class="add-on"><i class="icon-envelope"></i></span><input class="span2" id="appendedPrependedInput" size="16" type="text" name="email"><input type="submit" class="btn" type="button" value="subscribe">
+                <span class="add-on"><i class="icon-envelope"></i></span><input class="span2" id="appendedPrependedInput" size="16" type="text" name="email"><input type="submit" class="btn" type="button" value="Keep Me Posted!">
               </div>
-              <p class="help-block">Hear about new features, tips and other updates.</p>
             </div>
           </div>
         </fieldset>
@@ -33,7 +34,7 @@
       <div class="span2">
         
       <g:plusone size='small' count='true' href='http://www.floplatform.com'></g:plusone>
-      <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.floplatform.com%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
+      <div class="fb-like" data-href="http://www.facebook.com/floplatform" data-send="false" data-width="200" data-show-faces="false"></div>
       </div>
 
    </div>
@@ -118,3 +119,13 @@ $(document).ready(function() {
      ); 
 }); 
 </script>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

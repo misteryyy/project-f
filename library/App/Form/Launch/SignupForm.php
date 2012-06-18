@@ -19,7 +19,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		$this->addElement('text', 'email', array(
 				'label' => 'Email',
 				'required' => true,
-				'errorMessages' => array("You should have emailll which will simply describe your goal."),
+				'errorMessages' => array("You should have email which will simply describe your goal."),
 				//'description' => "description",
 				'validators' => array("emailAddress"),
 		));
@@ -27,7 +27,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		$this->addElement('text', 'email_verification', array(
 				'label' => 'Email verification',
 				'required' => true,
-				'errorMessage' => "Email is not the same as previous one.",
+				'errorMessage' => "Hmm, this doesn't seem to match the previous field. Try again.",
 				//'description' => "description",
 				'validators' => array(array("emailAddress"),
 									  array('Identical', true, array('token' => 'email') )
@@ -44,7 +44,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		$this->addElement('password', 'password_verification', array(
 				'label' => 'Password verification',
 				'required' => true,
-				'errorMessages' => array("Password is not the same as previous one."),
+				'errorMessages' => array("Hmm, this doesn't seem to match the previous field. Try again."),
 				//'description' => "description",
 				'validators' => array(
 						array('Identical', true, array('token' => 'password') ),
@@ -56,19 +56,19 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		
 		// Passion Bar
 		$this->addElement('select','location', array(
-				'label' => 'Do you reside in Prague?',
+				'label' => 'Do you live in Prague?',
 				//'description' => "description",
 				'multiOptions' => array("no",'yes')
 		));
 			
 		$this->addElement('checkbox', 'accept', array(
-				'label'=>'Do you agree with <a href="/index/privacy">rules</a>?',
+				'label'=>'Do you agree with <a href="/index/privacy">Terms & Conditions</a>?',
 				'uncheckedValue'=> '',
 				'checkedValue' => 'I Agree',
 				'validators' => array(
 						array('notEmpty', true, array(
 								'messages' => array(
-										'isEmpty'=>'You must agree to the terms.'
+										'isEmpty'=>'You must agree with Terms & Conditions.'
 								)
 						))
 				),
@@ -94,7 +94,7 @@ class SignupForm extends \Twitter_Bootstrap_Form_Horizontal
 		// submit button
 		$this->addElement('submit','submit',array(
 				'buttonType' => \Twitter_Bootstrap_Form_Element_Submit::BUTTON_PRIMARY,
-				'label' => "Sign up",
+				'label' => "Sign Up",
 				'escape' => false,
 		));
 		 

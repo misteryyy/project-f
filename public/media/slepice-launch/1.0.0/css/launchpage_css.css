@@ -1,13 +1,15 @@
 /* FLOW LAUNCHPAGE CSS Document */
+@font-face{
+  font-family: Futura;
+  src: url('../other/ftrabk.ttf');
+}
+
 body{
   /*background: #e7e8ea;*/
   background: #e7e8ea url('../img/bcg.jpg') 25% 35% no-repeat;
   width: 100%;
-}
-
-@font-face{
-  font-family: Futura;
-  src: url('../other/ftrabk.ttf');
+  font-family: Futura, Helvetica, "Trebuchet MS";
+  font-size: 13px;
 }
 
 p{
@@ -81,6 +83,13 @@ p.lp-donate{
   float: right;
 }
 
+.lp-thin-divider{
+  width: 100%;
+  height: 1px;
+  margin: 10px 0 20px 0;
+  background: url('../img/thin_divider.png') top left repeat-x;
+}
+
 h1{
   position: relative;
   overflow: hidden;
@@ -117,8 +126,8 @@ h1 span#lp-logo-platform, h1 span#lp-logo-slogan{
 
 h1 span#lp-logo-slogan{
 	height: 24px;
-	font-size: 17px;
-    line-height:14px;
+	font-size: 15.1px;
+  line-height:14px;
 }
 
 h1 a{
@@ -147,7 +156,7 @@ h3.lp-faq-question{
 
 h3.lp-desc-title{
   font-weight: normal;
-  margin: 15px 0 10px 0;
+  margin: 0 0 10px 0;
   border-top: 1px solid #e5e5e5;
   padding: 5px 0 0 0;
 }
@@ -211,7 +220,7 @@ h4{
 
 .lp-btn-survey{
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 0px;
   -webkit-border-radius: 0 4px 4px 0;
   -moz-border-radius: 0 4px 4px 0;
@@ -220,3 +229,36 @@ h4{
   padding: 15px;
 }
 
+
+/*bootstrap overwrite */
+
+.thumbnail {
+  display: block;
+  padding: 0px;
+  line-height: 1;
+  border: 2px solid #bbcfd9;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.thumbnails {
+  margin-left: -20px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  list-style: none;
+  *zoom: 1;
+}
+
+.thumbnails > li {
+  float: left;
+  margin-bottom: 5px;
+  margin-left: 20px;
+}
+
+.modal-body{
+  text-align: center;
+}
