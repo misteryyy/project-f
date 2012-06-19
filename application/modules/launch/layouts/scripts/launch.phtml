@@ -12,9 +12,22 @@
 <script src="<?=$this->baseUrl('media/bootstrap/2.0.4.launch/js/bootstrap.min.js')?>"></script>   
 <script src="<?=$this->baseUrl('/media/tools/flo-tools.js')?>"></script>
 
-</head>
+<script type='text/javascript'>
+var __wtw_lucky_ref_id = 49974;
+var __wtw_lucky_setup_key = {};
+__wtw_lucky_setup_key.id = '4195';
+__wtw_lucky_setup_key.key = 'dYrar7ekansaLvuepfZ3bLq8qbw936nW';
 
+(function() {
+var wa = document.createElement('script'); wa.type = 'text/javascript'; wa.async = true;
+wa.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://ca195961') + '.luckyorange.com/w.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wa, s);
+ })();
+</script>   
+
+</head>
 <body>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -49,5 +62,26 @@
   <?= $this->action('footer', 'index', 'launch');  ?> 
 
 </div>
+
+
+<!-- tracking services -->
+<script type="text/javascript">
+function woopraReady(tracker) {
+    tracker.setDomain('floplatform.com');
+    tracker.setIdleTimeout(432000000);
+    tracker.trackPageview({type:'pageview',url:window.location.pathname+window.location.search,title:document.title});
+    return false;
+}
+(function() {
+    var wsc = document.createElement('script');
+    wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
+    wsc.type = 'text/javascript';
+    wsc.async = true;
+    var ssc = document.getElementsByTagName('script')[0];
+    ssc.parentNode.insertBefore(wsc, ssc);
+})();
+</script>
+
+
 </body>
 </html>

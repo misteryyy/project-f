@@ -2,7 +2,12 @@
 <div class="span10">
   <p>It’s never been easier to begin a project and reach potential users or customers. It’s faster and cheaper than it’s ever been before. Unfortunately, that doesn't mean the process is any easier; it remains incredibly difficult. This is where FLO~ comes in...</p>
   <p><strong>start</strong> a project by yourself, powered by your own inspiration and passion, <strong>build</strong> around a team of like-minded collaborators with a specific blend of skills, <strong>lead</strong> it through the development process, and <strong>grow</strong> your project into something successful and real.</p>
+
+  <div class="well">
+Number of member who sign up for BETA <?php echo $this->betaRegistrationCount; ?>
 </div>
+  </div>
+
 </div>
   <div class="lp-thin-divider"></div>
 <div class="row">
@@ -59,7 +64,6 @@
   </div>
 </div>
 
-
 <ul id="carousel-nav" class="lp-screens-navigation">
     <li class="lp-screens-navigation-thumbnails"><a href="#myCarousel" data-to="1" class="thumbnail"><img src="/media/slepice-launch/1.0.0/img/thumbnail_01.jpg" alt=""></a></li>
     <li class="lp-screens-navigation-thumbnails"><a href="#myCarousel" data-to="2" class="thumbnail"><img src="/media/slepice-launch/1.0.0/img/thumbnail_01.jpg" alt=""></a></li>
@@ -110,11 +114,11 @@
 <?php 
 // settings, nastav si vsechno co chces rozbrazit za informace
 $modalArr = array( 
- array("id" => "myThumbnailModal1","label"=>"Your Project","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
- array("id" => "myThumbnailModal2", "label"=>"The Control Room","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
- array("id" => "myThumbnailModal3", "label"=>"Take Action, and Work Through the Process","img" => "/media/slepice-launch/1.0.0/img/fullsize_03.jpg"),
- array("id" => "myThumbnailModal4",  "label"=>"Brainstorm, and Plant the Seeds for Collaboration","img" => "/media/slepice-launch/1.0.0/img/fullsize_04.jpg"),
- array("id" => "myThumbnailModal5", "label"=>"Collaborate and Build Your Team","img" => "/media/slepice-launch/1.0.0/img/fullsize_05.jpg")
+ array("id" => "myThumbnailModal1","width-ratio"=> "1", "label"=>"Your Project","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
+ array("id" => "myThumbnailModal2","width-ratio"=> "1", "label"=>"The Control Room","img" => "/media/slepice-launch/1.0.0/img/fullsize_01.jpg"),
+ array("id" => "myThumbnailModal3","width-ratio"=> "0.4", "label"=>"Take Action, and Work Through the Process","img" => "/media/slepice-launch/1.0.0/img/fullsize_03.jpg"),
+ array("id" => "myThumbnailModal4","width-ratio"=> "0.6",  "label"=>"Brainstorm, and Plant the Seeds for Collaboration","img" => "/media/slepice-launch/1.0.0/img/fullsize_04.jpg"),
+ array("id" => "myThumbnailModal5","width-ratio"=> "0.6", "label"=>"Collaborate and Build Your Team","img" => "/media/slepice-launch/1.0.0/img/fullsize_05.jpg")
 );
 
 foreach ($modalArr as $modal ) {
@@ -137,8 +141,8 @@ $('#<?php echo $modal['id'];?>').modal({
         show: false
     }).css({
        'width': function () { 
-           return ($(document).width() * .9) + 'px';  
-       },
+           return ($(document).width() * .9 * <?php echo $modal['width-ratio'];?> ) + 'px';  
+           },
        'margin-left': function () { 
            return -($(this).width() / 2); 
        }

@@ -23,7 +23,7 @@ class Newsletter
      */
     private $date;
     
- 
+
     /**
      * Initialization of Collections
      */
@@ -37,9 +37,7 @@ class Newsletter
     {
     	return $this->id;
     }
-    
-    
-    
+
     
     /**
 	 * @return the $email

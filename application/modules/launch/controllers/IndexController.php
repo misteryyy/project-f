@@ -6,6 +6,11 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     public function indexAction()
     {    
     	$this->view->pageTitle = 'FLO~ Start.Build.Lead.Grow.';
+    		
+    	// count of registrated members
+    	$facadeLaunch = new \App\Facade\Launch\LaunchFacade($this->_em);
+    	$betaRegistrations = $facadeLaunch->findBetaAccounts();
+    	$this->view->betaRegistrationCount = count($betaRegistrations); 
     	
     }
 

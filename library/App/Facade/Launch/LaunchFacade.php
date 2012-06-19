@@ -31,8 +31,14 @@ class LaunchFacade {
 		
 	}
 		
+	/**
+	 * Return the account of all registrated members for beta account
+	 */
+	public function findBetaAccounts(){
+		return $this->em->getRepository('\App\Entity\Launch\User')->findAll();
+	}
 	
-		
+	
 	/*
 	 * Creates BETA Account
 	*/
@@ -52,11 +58,7 @@ class LaunchFacade {
 		 $mailer->setSubject("Welcome to FLO~ Platform")
 		 ->addTo($data['email'])
 		 ->setViewParam('name',"Josef Kortan")
-		 ->sendHtmlTemplate("welcome.phtml");
-		// log
-	
-	
-	
+		 ->sendHtmlTemplate("welcome-beta.phtml");
 	}
 	
 
