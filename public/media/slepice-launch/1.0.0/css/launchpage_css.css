@@ -6,23 +6,30 @@
 
 body{
   /*background: #e7e8ea;*/
-  background: #e7e8ea url('../img/bcg.jpg') 25% 35% no-repeat;
+  background: #e7e8ea url('../img/bcg.jpg') left -300px no-repeat;
   width: 100%;
   font-family: Futura, Helvetica, "Trebuchet MS";
   font-size: 13px;
 }
 
+input[type="submit"], button[type="reset"]{
+  font-family: Futura, Helvetica, "Trebuchet MS";
+}
+
 p{
+  font-family: Futura, Helvetica, "Trebuchet MS";
   text-align: justify;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 #lp-container{
-  width: 810px;
+  width: 970px;
   margin: 0px auto 20px auto;
 }
 
 #lp-content{
-  background: #ffffff;
+  
   width: 100%;
   float: left;
   padding: 15px 0 15px 0;
@@ -41,13 +48,17 @@ p{
 }
 
 .lp-margin{
-	width: 100%;
+	width: 80%;
 	float: left;
   margin: 15px 0 0 0;
 }
 
 .lp-menu{
 	margin: 40px 0 0 0;
+}
+
+.lp-menu-margin{
+  margin: 0 30px 0 0;
 }
 
 .lp-footer{
@@ -59,10 +70,12 @@ p{
 .lp-footer p{
 	margin: 0px;
   text-align: right;
+  font-size: 12px;
 }
 
 p.lp-copy{
   text-align: left;
+  font-size: 12px;
 }
 
 .lp-mails a{
@@ -78,6 +91,12 @@ p.lp-donate{
   padding: 10px 0 10px 0;
 }
 
+p.lp-editorial{
+  font-size: 15px;
+  line-height: 22px;
+  margin: 10px 0 0 0;
+}
+
 .lp-paypal-img{
   width: 100px;
   float: right;
@@ -89,6 +108,15 @@ p.lp-donate{
   margin: 10px 0 20px 0;
   background: url('../img/thin_divider.png') top left repeat-x;
 }
+
+.lp-logo-margin{
+  margin: 0 0 0 40px;
+}
+
+p.lp-footer-p{
+  font-size: 12px;
+}
+
 
 h1{
   position: relative;
@@ -138,11 +166,10 @@ h1 a{
 
 h2{
   margin-bottom: 27px;
-  font-size: 19.5px;
+  font-size: 23px;
   line-height: 36px;
   color: #333333;
   font-weight: normal;
-  border-bottom: 1px solid #e5e5e5;
 }
 
 h3{
@@ -154,21 +181,27 @@ h3.lp-faq-question{
   margin: 5px 0 5px 0;
 }
 
-h3.lp-desc-title{
-  font-weight: normal;
-  margin: 0 0 10px 0;
-  border-top: 1px solid #e5e5e5;
-  padding: 5px 0 0 0;
-}
 
 .lp-faq{
   margin: 0 0 25px 0;
-  border-left: 2px solid #b7e5fc;
+  border-left: 2px solid #7190bd;
   padding: 0 0 0 15px;
 }
 
-p.screen-description{
+.screen-description{
   color: #0a4461;
+  border-left: 5px solid #7190bd;
+  padding: 5px 0 5px 10px;
+  margin: 40px 0 0 0;
+}
+
+.screen-description h3{
+  margin: 0 0 0 0;
+}
+
+.screen-description p{
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .h2span{
@@ -193,16 +226,16 @@ h4{
 }
 
 .lp-screens-navigation{
-  width: 100%;
-  margin: 0 0 10px 0;
+  width: 388px;
+  margin: 0 0 10px 30px;
   padding: 0px;
   list-style: none;
   float: left;
 }
 
 .lp-screens-navigation-thumbnails{
-	width: 20%;
-	margin: 0px;
+	width: 18%;
+	margin: 0px 1% 0px 1%;
   float: left;
 }
 
@@ -236,13 +269,20 @@ h4{
   display: block;
   padding: 0px;
   line-height: 1;
-  border: 2px solid #bbcfd9;
+  border: 0px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.075);
+}
+
+a.thumbnail:hover {
+  border: 0px;
+  -webkit-box-shadow: 0 0 0 rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 0 0 rgba(0, 105, 214, 0.25);
+  box-shadow: 0 0 0 rgba(0, 105, 214, 0.25);
 }
 
 .thumbnails {
@@ -261,4 +301,8 @@ h4{
 
 .modal-body{
   text-align: center;
+}
+
+.form-actions{
+  background: none;
 }
