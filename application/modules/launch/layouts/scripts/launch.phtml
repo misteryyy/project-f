@@ -50,8 +50,10 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wa
    
 
   <div id="lp-content">
-    <div class="container"> 
+    <div class="container">
+      <div class="lp-flash-messenger"> 
       <?php echo $this->flashMessenger(); ?>
+      </div>
       
       <div class="row">
         <?php echo $this->layout()->content; ?>

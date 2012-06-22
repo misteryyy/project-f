@@ -47,6 +47,12 @@ p{
   float: right;
 }
 
+.lp-flash-messenger{
+  width: 100%;
+  float: left;
+  margin: 5px 0 10px 0;
+}
+
 .lp-margin{
 	width: 80%;
 	float: left;
