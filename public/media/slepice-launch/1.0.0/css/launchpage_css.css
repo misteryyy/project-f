@@ -123,6 +123,10 @@ p.lp-footer-p{
   font-size: 12px;
 }
 
+.lp-featured-size{
+  height: 600px;
+}
+
 
 h1{
   position: relative;
