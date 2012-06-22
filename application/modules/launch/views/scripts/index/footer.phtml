@@ -95,7 +95,12 @@ Our beta launch is right around the corner! Stay on top of updates and feature a
         $('#descriptions div').each(function(o){
             $(this).css('display','none');
         });
+        $('#carousel-nav li').each(function(o){
+            $(this).css('border-color','#c8c8c8');
+        });
+
         $('#description_'+targetSlide).css('display','block');
+        $('#carousel-nav-'+targetSlide).css('border','2px solid #585999');
         
        });
     }); 

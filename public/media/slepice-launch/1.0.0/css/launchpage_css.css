@@ -198,6 +198,10 @@ h3.lp-faq-question{
   padding: 0 0 0 15px;
 }
 
+#descriptions{
+  height: 150px;
+}
+
 .screen-description{
   color: #0a4461;
   border-left: 5px solid #7190bd;
@@ -236,17 +240,18 @@ h4{
 }
 
 .lp-screens-navigation{
-  width: 388px;
-  margin: 0 0 10px 30px;
+  width: 100%;
+  margin: 0;
   padding: 0px;
   list-style: none;
   float: left;
 }
 
 .lp-screens-navigation-thumbnails{
-	width: 18%;
+	width: 17%;
 	margin: 0px 1% 0px 1%;
   float: left;
+  border: 2px solid #c8c8c8;
 }
 
 .lp-screens-navigation-thumbnails img{
