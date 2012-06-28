@@ -46,7 +46,7 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     				$facadeLaunch = new \App\Facade\Launch\LaunchFacade($this->_em);
     				$facadeLaunch->createNewsleter($_POST);
     				// SUCCESS
-    				$this->_helper->FlashMessenger ( array ('success' => "Your email has been registered to our newsletter system." ) );
+    				$this->_helper->FlashMessenger ( array ('success' => "I think this one can remain the same. Whatever we have for the current one. It’s written somewhere..." ) );
     				$this->_helper->redirector('index', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());
     					
     			} catch ( Exception $e ) {
@@ -78,7 +78,7 @@ class Launch_IndexController extends Boilerplate_Controller_Action_Abstract
     						$facadeLaunch = new \App\Facade\Launch\LaunchFacade($this->_em);
     						$facadeLaunch->createBetaAccount($form->getValues()); 							
     						// SUCCESS
-    						$this->_helper->FlashMessenger ( array ('success' => "Thank you for signing up for the beta-testing of our product. we're pretty excited to have you on board!" ) );
+    						$this->_helper->FlashMessenger ( array ('success' => "Thank you for choosing to be one of our Guinea pigs! Actually no, you are much much more than that. Please take a minute to read the welcome e-mail we’ve sent you....(minute)....and thanks for jumping on board!" ) );
     						$this->_helper->redirector('index', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());
     						 
     					} catch ( Exception $e ) {

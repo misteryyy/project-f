@@ -3,9 +3,7 @@
    <div class="row">
      <div class="span6">
        
-      <p>
-We are excited to announce that our beta launch is right around the corner. Itâ€™s almost time to get started on that next great idea of yours! Stay on top of eleventh-hour updates and feature additions (and the occasional rant) by subscribing to our unobtrusive and timely newsletters.
-      </p>
+      
 
       <form class="form" id="form-newsletter" method="post" action="index/newsletter">
         <fieldset>
@@ -16,6 +14,9 @@ We are excited to announce that our beta launch is right around the corner. Itâ€
                 <span class="add-on"><i class="icon-envelope"></i></span><input class="span2" id="appendedPrependedInput" size="16" type="text" name="email"><input type="submit" class="btn" type="button" value="Keep Me Posted!">
               </div>
             </div>
+            <p class="lp-footer-p">
+Our beta launch is right around the corner! Stay on top of updates and feature additions by subscribing to our unobtrusive and timely newsletters.
+      </p>
           </div>
         </fieldset>
       </form>
@@ -94,7 +95,12 @@ We are excited to announce that our beta launch is right around the corner. Itâ€
         $('#descriptions div').each(function(o){
             $(this).css('display','none');
         });
+        $('#carousel-nav li').each(function(o){
+            $(this).css('border-color','#c8c8c8');
+        });
+
         $('#description_'+targetSlide).css('display','block');
+        $('#carousel-nav-'+targetSlide).css('border','2px solid #585999');
         
        });
     }); 
