@@ -20,6 +20,11 @@
 							<label>Slideshow</label>
 							<uri>/admin/slideshow/index</uri>
 					</admin-slideshow>
+					
+					<admin-newsletter>
+							<label>Newsletters</label>
+							<uri>/admin/newsletter/index</uri>
+					</admin-newsletter>
 									
               
             		</pages>	

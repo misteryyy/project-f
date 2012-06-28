@@ -3,6 +3,19 @@
 class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abstract
 {
 
+	private $facadeUser;
+	
+	/**
+	 * Initialization
+	 * @see Boilerplate_Controller_Action_Abstract::init()
+	 */
+	public function init(){
+		parent::init();
+		// user facade
+		$this->facadeUser =  new \App\Facade\UserFacade($this->_em);
+	}
+	
+	
     public function indexAction()
     {
   			$this->_helper->redirector('member-info', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());	
@@ -165,9 +178,25 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      */
     public function notificationAction()
     {
-    	$this->view->pageTitle = "Notification" ;
-    	 
-    	 
+    	$this->view->pageTitle = "Member / Notification" ;     	 
+    	// initialization of form
+    	$form =  new \App\Form\Member\EditNofificationAndNewsletterForm($this->facadeUser->findOneUser($this->_member_id));
+
+    	// newsletter and notifivation
+    	if ($this->_request->isPost()) {
+    		if ($form->isValid($this->_request->getPost())) {
+    			$this->_helper->FlashMessenger( array('success' => "Settings save successfully."));
+    			// update survey
+    			$this->_helper->redirector('notification', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName());
+    		}
+    		// not validated properly
+    		else {
+    			$this->_helper->FlashMessenger( array('error' => "Please check your input."));
+    		}
+    	}
+    	
+    	//display form
+    	$this->view->form = $form;	 
     }
     
     /**
@@ -191,8 +220,7 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      			}
      			catch (Exception $e){
      				$this->_helper->FlashMessenger( array('error' => $e->getMessage()));
-     			}
-     			 
+     			} 
      		}
      		// not validated properly
      		else {
@@ -216,8 +244,6 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
      				array("name" => \App\Entity\UserRole::MEMBER_ROLE_GROWER),
      				array("name" => \App\Entity\UserRole::MEMBER_ROLE_ADVISER)
      		);
-     		
-
      		 $data = array();
       		 foreach($arrayRoles as $role){
         			//if specific role is set, add it to the user
@@ -229,15 +255,8 @@ class Member_ProfileSettingController extends  Boilerplate_Controller_Action_Abs
       					$data ["role_".$role['name']."_tags"] = $specRole->getTagsString(); 
       			}
     		} 
-   			
      		$form->setDefaults($data);
-     	
-     	
      	}
-     	
-     	
-    
-
     }
     
     

@@ -184,13 +184,11 @@ class TeamFacade {
 				$questionString = "question_".$i;
 				$answerString = "answer_".$i;
 			
-			
 				if(isset($data[$answerString]) ){
 					$content .= "Question: ". $data[$questionString] . "<br />";
 					$content .= "Answer: ". $data[$answerString] . "<br />";
 					$content ." <hr /> ";
-				}
-			
+				}		
 			}
 			
 			$content .= "General question: " .$data['content']. " <br />";
@@ -199,11 +197,9 @@ class TeamFacade {
 			$this->em->persist($newApplication);
 			$this->em->flush();
 		} else {
-			// TODO second level
-			
+			// TODO second level		
 		}		
 	}
-	
 	
 	
 	/*
@@ -218,17 +214,12 @@ class TeamFacade {
 		
 		$stmt = 'SELECT a FROM App\Entity\ProjectApplication a WHERE a.project = ?1';
 		$stmt .= 'ORDER BY a.created, a.roleName DESC';
-	
 		$query = $this->em->createQuery($stmt);
 		$query->setParameter(1, $project_id);
-			
-		
+					
 		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
-	
 		$iterator = $paginator->getIterator();
-	
 		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
-		
 		return new \Zend_Paginator($adapter);
 	}
 	

@@ -53,6 +53,16 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     }
     
     /**
+     * Module for tasks and levels
+     */
+    public function taskAction(){
+    	$this->checkProject();
+    	 	 
+    }
+    
+    
+    
+    /**
      * Ajax Handling for Applications
      */
     public function ajaxApplicationAction(){

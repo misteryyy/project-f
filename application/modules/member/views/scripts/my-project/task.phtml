@@ -6,22 +6,23 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 
 <hr />
 <h3>Levels and Task</h3>
-    <div class="alert alert-info">
-     Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.
-     Info this is the info info info.Info this is the info info info.Info this is the info info info.Info this is the info info info.
-    </div>
+Current LEVEL <?php echo $this->project->level;?> <br>
+  	
+  	<hr>
+    <?php echo $this->form;?>
+        
 <hr/>
 
 	<div id="alert-area"></div>
 
-	<h4>Tasks for level 1</h4>
-	<!-- Form for creating new question -->
-    <form id="form-create-task-level1" class="well form-search" action="#" method="post" autocomplete="off">
+	<h4>Create new task for current level : <?php echo $this->project->level;?></h4>
+	<!-- Form for creating new task -->
+    <form id="form-create-task" class="well form-search" action="#" method="post" autocomplete="off">
 			<div class="control-group">
 				<div class="controls">
-						<input type="hidden" name="level" value="1" />
-						<input type="text" name="task" placeholder="task" class="input-xlarge" id="input-task-create"/>
-					<!--<span class="help-inline">Please enter your name.</span> -->
+						<input type="hidden" name="level" value="<?php echo $this->project->level;?>" />
+						<input type="text" name="task" placeholder="write your task for this level" class="input-xlarge" id="input-task-create"/>
+					
 				</div>
 			</div>
 		<!-- cant change or add div, because its looking in the script for this-->
@@ -36,7 +37,7 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 				{{#each this}}				
 					<form method="post" action="" class="form-search" data-question_id="{{id}}">
 						<input type="hidden" name="question_id" value="{{id}}" />
-						<input  type="text" name="question" value="{{question}}" />
+						<input  type="text" name="task" value="{{task}}" />
 						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />
 						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="delete" name="submit" />
 					</form>
@@ -52,7 +53,12 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 		</script>
 	</div>
 		
-<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+<!-- <script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+      --> 
+<script src="/media/tools/handlebars-1.0.0.beta.6.js"></script>
+       
+       
+       
         <script type="text/javascript">  	
 
 			var Questions = {
@@ -60,12 +66,11 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 			init: function(config){
 				// ajax setup
 				$.ajaxSetup({
-					url: "/member/my-project-team/ajax-question/id/<?php echo $this->project->id;?>", 
+					url: "/member/my-project/ajax-task/id/<?php echo $this->project->id;?>", 
 					type: 'POST',
 					dataType: 'json',
-	 	
-				})
-  				
+				});
+				
 				this.config = config;
 				this.bindEvents();
 				this.setutTemplates();
@@ -89,7 +94,7 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 				 var self = Questions;
 					
 				 $.ajax({
-				 	data: "_method=findAll",// take data from the form and send it to the method delete
+				 	data: "_method=findAllForCurrentLevel",// take data from the form and send it to the method delete
 					 }).done(
 						function (results){
 				 			self.config.questionList.empty();
@@ -169,7 +174,7 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 			};
 
 			Questions.init({
-				formCreate: $('#form-create-question'),
+				formCreate: $('#form-create-task'),
 				questionListTemplate: $('#question_list_template').html(),
 				questionList: $("#question_list"),
 				questionInfo :  $("#question_info"),

@@ -69,6 +69,18 @@ class ProjectTask extends \App\Entity\ProjectTask implements \Doctrine\ORM\Proxy
         return parent::setProject($project);
     }
 
+    public function getFinished()
+    {
+        $this->__load();
+        return parent::getFinished();
+    }
+
+    public function setFinished($finished)
+    {
+        $this->__load();
+        return parent::setFinished($finished);
+    }
+
     public function getTask()
     {
         $this->__load();
@@ -96,7 +108,7 @@ class ProjectTask extends \App\Entity\ProjectTask implements \Doctrine\ORM\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'level', 'task', 'project');
+        return array('__isInitialized__', 'id', 'level', 'task', 'finished', 'project');
     }
 
     public function __clone()

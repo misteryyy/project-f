@@ -54,6 +54,18 @@ class User {
 	 * @Column(type="boolean", name="email_visibility",nullable=true)
 	 */
 	private $emailVisibility;
+	
+	
+	/**
+	 * @Column(type="boolean", name="email_newsletter")
+	 */
+	private $emailNewsletter;
+	
+	/**
+	 * @Column(type="boolean", name="email_notification")
+	 */
+	private $emailNotification;
+	
 	/**
 	 * @Column(type="string", name="password")
 	 */
@@ -124,6 +136,10 @@ class User {
 		$this->created = new \DateTime("now");
 		$this->ban = false;
 		$this->info = new \App\Entity\UserInfo();
+		
+		// notification settings
+		$this->emailNewsletter = true;
+		$this->emailNotification = true;
 	}
 	
 	public function setProfilePicture($path){
@@ -131,7 +147,34 @@ class User {
 		$this->profilePicture = $path;
 	}
 	
-	
+	/**
+	 * @return the $emailNewsletter
+	 */
+	public function getEmailNewsletter() {
+		return $this->emailNewsletter;
+	}
+
+	/**
+	 * @return the $emailNotification
+	 */
+	public function getEmailNotification() {
+		return $this->emailNotification;
+	}
+
+	/**
+	 * @param boolean $emailNewsletter
+	 */
+	public function setEmailNewsletter($emailNewsletter) {
+		$this->emailNewsletter = $emailNewsletter;
+	}
+
+	/**
+	 * @param boolean $emailNotification
+	 */
+	public function setEmailNotification($emailNotification) {
+		$this->emailNotification = $emailNotification;
+	}
+
 	public function getProfilePicture($resolution = 200){
 	
 		if($this->profilePicture == null){

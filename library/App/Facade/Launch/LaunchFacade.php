@@ -43,7 +43,6 @@ class LaunchFacade {
 	 * Creates BETA Account
 	*/
 	public function createBetaAccount($data){
-	
 		// check if the email exists 
 		// finding user
 		$user = $this->em->getRepository ('\App\Entity\Launch\User')->findOneByEmail ( $data['email'] );

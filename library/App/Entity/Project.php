@@ -164,6 +164,11 @@ class Project {
 	}
 	
 	
+	
+	public function setLevel($level){
+		$this->level = $level;
+	}
+	
 	/*
 	 * Add tag to the SpecificRole
 	 */
@@ -261,7 +266,7 @@ class Project {
 		$this->level = 1;
 		$this->viewCount = 0;
 		$this->user = $user;
-		$this->setCategory ( $category );
+		$this->setCategory ($category);
 		$this->title = $title;
 		$this->pitchSentence = $pitchSentence;
 		$this->content = $content;

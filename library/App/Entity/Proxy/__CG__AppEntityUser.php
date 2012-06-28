@@ -48,6 +48,30 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::setProfilePicture($path);
     }
 
+    public function getEmailNewsletter()
+    {
+        $this->__load();
+        return parent::getEmailNewsletter();
+    }
+
+    public function getEmailNotification()
+    {
+        $this->__load();
+        return parent::getEmailNotification();
+    }
+
+    public function setEmailNewsletter($emailNewsletter)
+    {
+        $this->__load();
+        return parent::setEmailNewsletter($emailNewsletter);
+    }
+
+    public function setEmailNotification($emailNotification)
+    {
+        $this->__load();
+        return parent::setEmailNotification($emailNotification);
+    }
+
     public function getProfilePicture($resolution = 200)
     {
         $this->__load();
@@ -279,7 +303,7 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'email', 'profilePicture', 'emailVisibility', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'created', 'dateOfBirthVisibility', 'ban', 'roles', 'specRoles', 'projectRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
+        return array('__isInitialized__', 'id', 'name', 'email', 'profilePicture', 'emailVisibility', 'emailNewsletter', 'emailNotification', 'password', 'country', 'confirmed', 'description', 'dateOfBirth', 'created', 'dateOfBirthVisibility', 'ban', 'roles', 'specRoles', 'projectRoles', 'userInfo', 'projects', 'userFieldOfInterestTags');
     }
 
     public function __clone()

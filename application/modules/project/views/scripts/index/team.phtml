@@ -1,0 +1,36 @@
+<h3><?php echo $this->project->title?></h3>
+<?php
+// basic project navigation
+$this->step = 5;
+echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+<h2>Team</h2>
+<div class="well">
+<?php 	$creator = $this->project->user;
+	 	$creatorRoles = $this->project->getCreatorRolesArray();
+ 		pr($creatorRoles);
+?>
+
+
+Creator: 
+<?php echo $this->project->user->name;?>
+</div>
+
+<hr>
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator) > 0) {?>
+    	<?php foreach ($this->paginator as $answer){ ?>
+
+    		<div class="well">
+		 		<?php echo $answer->question->id;?>. <?php echo $answer->question->question;?>
+		 		<hr>
+		 		<?php echo $answer->answer;?>
+		 		
+			</div>
+		
+    	
+    	<?php } 
+ 	}
+ 	else {
+	echo "There is no team for this project";
+} ?>

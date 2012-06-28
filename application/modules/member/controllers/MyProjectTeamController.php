@@ -32,8 +32,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 				$facadeProjectUpdate->createProjectUpdate($this->_member_id, $this->project_id,$form->getValues());
 				$this->_helper->FlashMessenger( array('success' => "New Update has been created."));
 				$params = array('id' => $this->project_id);
-				$this->_helper->redirector('update', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
-				 
+				$this->_helper->redirector('update', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params); 
 			}
 			// not validated properly
 			else {

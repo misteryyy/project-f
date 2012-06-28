@@ -73,6 +73,20 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
     }
     
     /**
+     * Team Section in Project Page
+     */
+    public function teamAction(){
+    
+    	$this->view->pageTitle .=  "~ Team ";
+    		$facadeSurvey = new \App\Facade\Project\SurveyFacade($this->_em);
+    		$paginator = $facadeSurvey->findProjectSurveyAnswersPaginator($this->project_id);
+    		$paginator->setItemCountPerPage(50);
+    		$paginator->setCurrentPageNumber($this->_request->getParam('page', 1));
+    	$this->view->paginator = $paginator;
+    
+    }
+    
+    /**
      * Project Section
      */
     public function projectBoardAction(){

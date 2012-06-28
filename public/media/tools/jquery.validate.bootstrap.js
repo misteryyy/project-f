@@ -21,7 +21,6 @@ $.extend($.validator.messages, {
 	min: jQuery.validator.format('needs to be a value greater than or equal to {0}')
 	});
 
-
 /**
 
 Adapt validator plugin to work with twitter bootstrap

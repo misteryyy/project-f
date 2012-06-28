@@ -19,7 +19,7 @@ class ProjectTask
      */
     private $level;
     
-    /** @Column(type="string", name="question",nullable=false) */
+    /** @Column(type="string", name="task",nullable=false) */
     private $task;   
     
     /**
@@ -28,6 +28,22 @@ class ProjectTask
      **/
     private $project;
   
+    
+    /**
+     * @Column(type="boolean", name="finished")
+     */
+    private $finished;
+    
+    /**
+     *
+     * @param unknown_type $question
+     */
+    public function __construct($task,$level = 1){
+    	$this->task = $task;
+    	$this->level = $level;
+    	$this->finished = false;
+    }
+    
     /**
 	 * @return the $id
 	 */
@@ -54,14 +70,22 @@ class ProjectTask
     	
     }
     
+    
     /**
-     * 
-     * @param unknown_type $question
-     */
-    public function __construct($task,$level = 1){
-    	$this->task = $task;
-    	$this->level = $level;
-    }
+	 * @return the $finished
+	 */
+	public function getFinished() {
+		return $this->finished;
+	}
+
+	/**
+	 * @param field_type $finished
+	 */
+	public function setFinished($finished) {
+		$this->finished = $finished;
+	}
+
+	
     /**
 	 * @return the $question
 	 */

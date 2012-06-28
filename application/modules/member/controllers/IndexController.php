@@ -5,6 +5,7 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 	
 	public function indexAction() {
 	
+		$this->_redirect('/member/dashboard');
 	}
 	
 	/*
@@ -70,7 +71,6 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 		$this->_redirect('/');			
 		
 	}
-	
 	
 	public function loginAction() {
 		$this->view->pageTitle = 'Login';
@@ -148,7 +148,6 @@ class Member_IndexController extends Boilerplate_Controller_Action_Abstract {
 				else {
 					$this->_helper->FlashMessenger ( array ('error' => "The provided e-mail address is already associated with a registered user." ) );
 				}
-			
 			} 			// print error
 			else {
 				pr ( $form->getValues () );

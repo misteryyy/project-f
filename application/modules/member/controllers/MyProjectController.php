@@ -25,6 +25,30 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 		$this->checkProjectAndUser();
 		$this->view->pageTitle = "Levels and Tasks" ;	 
 		$this->view->project = $this->project;
+		
+		// Form for changing levels
+		$form = new \App\Form\Project\EditProjectLevelForm($this->project);
+		$facadeProject = new \App\Facade\ProjectFacade($this->_em);
+		// validation
+		if ($this->_request->isPost()) {
+			if ($form->isValid($this->_request->getPost())) {
+				try{
+					$facadeProject->setProjectLevel($this->_member_id, $this->project_id,$form->getValues());
+					$this->_helper->FlashMessenger( array('success' =>  "Project has been successfully moved to level ". $values['level']));
+				
+				} catch (\Exception $e){
+					$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
+				}
+			}
+			// not validated properly
+			else {
+				$this->_helper->FlashMessenger( array('error' => "Please check your input."));
+			}
+		}
+		
+		$this->view->form = $form;
+		
+		
 	}
 	
 	/**
@@ -33,27 +57,31 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 	public function ajaxTaskAction(){
 		$this->ajaxify();
 		$this->checkProjectAndUser();
+
 		$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+		$facadeTask = new \App\Facade\Project\TaskFacade($this->_em);
 	
 		if($this->_request->isPost() || $this->_request->isGet()){
 			switch ($this->_request->getParam("_method")){
-				case 'findAll' :
-					$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
+				case 'findAllForCurrentLevel' :
+					
+					$tasks = $facadeTask->findTasksForProject($this->project_id, $this->project->level);
+					
 					$data = array(); // data for sending to the script
-					foreach($questions as $q){
-						$data[] = $q->toArray();
+					foreach($tasks as $t){
+						$data[] = $t->toArray();
 					}
 					$respond = array("respond" => "success",
 							"message" => "Data loaded successfully.",
 							"data" => $data);
 					$this->_response->setBody(json_encode($respond));
 					break;
-					 
 					//  create new question
 				case 'create' :
 					try{
-						$facadeTeam->createProjectWidgetQuestion($this->_member_id,$this->project_id, $this->_request->getParams());
-						$respond = array("respond" => "success",'message' => "Question was added.");
+
+						$facadeTask->createProjectTask($this->_member_id,$this->project_id, $this->_request->getParams());
+						$respond = array("respond" => "success",'message' => "New task was added.");
 						$this->_response->setBody(json_encode($respond));
 					}catch(Exception $e){
 						$respond = array("respond" => "error","message" => $e->getMessage());
