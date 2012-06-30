@@ -1,4 +1,6 @@
-<?php if($this->project->disableRoleWidget) { echo "Widget for collaboration disabled"; return;}?>
+<?php if($this->project->disableRoleWidget) { echo "<div class='well'>Widget for collaboration disabled</div>"; return;}?>
+<?php if($this->project->level > 2) { echo "<div class='well'>Is not possible to apply for collaboration in this level.</div>"; return;}?>
+
 
 <div class="well">
 	<div style="text-align: center">

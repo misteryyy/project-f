@@ -15,11 +15,8 @@
     <?= $this->user->dateOfBirthVisibility; ?>
     <?= $this->user->description; ?>
 
-   <?php
-		// pr($this->user->getUserInfo());
-		
-		?>
-    <?= $this->user->userInfo->im; ?>
+  
+    <?= $this->user->getUserInfo()->getIm(); ?>
     <?= $this->user->getUserInfo()->getSkype(); ?>
     <?= $this->user->getUserInfo()->getWebsite(); ?>
     <?= $this->user->getUserInfo()->getPhone(); ?>

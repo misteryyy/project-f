@@ -93,26 +93,29 @@ $project->setEmail("j.kortan@gmail.com");
 $project->setPassword("pi2131221");
 $project->setName("Josef Kortan");
 
-$user2 = new \App\Entity\User();
-$user2->setEmail("visitor@gmail.com");
-$user2->setPassword("visitor");
-$user2->setName("Visitor Jean");
-
 // setting roles
 $project->addRole($role_visitor);
 $project->addRole($role_member);
 $project->addRole($role_admin);
 
+// adding userInfo / skype, phone, ...
+$userInfo = new \App\Entity\UserInfo();
+$project->setUserInfo($userInfo);
+$em->persist($project);
+
+
+$user2 = new \App\Entity\User();
+$user2->setEmail("visitor@gmail.com");
+$user2->setPassword("visitor");
+$user2->setName("Visitor Jean");
 // setting roles
 $user2->addRole($role_visitor);
 $user2->addRole($role_member);
 
 // adding userInfo / skype, phone, ...
 $userInfo = new \App\Entity\UserInfo();
-$project->setUserInfo($userInfo);
+$user2->setUserInfo($userInfo);
 
-
-$em->persist($project);
 $em->persist($user2);
 $em->flush();
 

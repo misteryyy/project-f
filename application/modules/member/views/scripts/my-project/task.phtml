@@ -14,7 +14,7 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 <hr/>
 
 	<div id="alert-area"></div>
-
+	
 	<h4>Create new task for current level : <?php echo $this->project->level;?></h4>
 	<!-- Form for creating new task -->
     <form id="form-create-task" class="well form-search" action="#" method="post" autocomplete="off">
@@ -28,21 +28,27 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 		<!-- cant change or add div, because its looking in the script for this-->
 		<input type="submit" class="btn btn-primary create"  name='submit' data-toggle="button" data-loading-text="processing..." value="create task" />						
     </form>
-    
 
     <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
  	<hr/>   
  	<ol id="question_list">
+	<table id ="question_list" class="table">
+		<tr> <td>
 		<script id="question_list_template" type="text/x-handlebars-template">
 				{{#each this}}				
 					<form method="post" action="" class="form-search" data-question_id="{{id}}">
-						<input type="hidden" name="question_id" value="{{id}}" />
-						<input  type="text" name="task" value="{{task}}" />
+						<input  class="finish" type="checkbox" name="finished" />
+						<input type="hidden" name="task_id" value="{{id}}" />
+						<input  type="text" name="task" value="{{task}} + {{finished}}" />
 						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />
-						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="delete" name="submit" />
-					</form>
+						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="x" name="submit" />
+						</form>
 				{{/each}}
-	</script>
+
+		</script>
+			</td>
+		</tr>
+	</table>
 	</ol>
 			
 	<div id="question_info">
@@ -86,6 +92,7 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 			bindEvents: function(){
 				this.config.questionList.on('click','form input.update',this.updateQuestion); // edit question 
 				this.config.questionList.on('click','form input.delete',this.deleteQuestion); // delete question
+				this.config.questionList.on('click','form input.finish',this.finishTask); // complete question
 				this.config.formCreate.on('click','input.create',this.createQuestion); // create new question
 				
 				},
@@ -110,6 +117,27 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 	
 				},
 
+				// finish task
+				finishTask:function(e){
+					var self = Questions;
+					var form = $(this).parent(); // directly this form
+					//create method
+					 $.ajax({
+					 	data: form.serialize() + "&_method=finish", // take data from the form and send it to the method delete
+					 }).done(
+							function (results){
+					 			newAlert (results.respond, results.message); // display alert
+					 			//self.findQuestions(); // refresh questions
+					 			//form.each (function(){
+	  							//			this.reset();
+								//});
+								
+					 		}
+					 );
+					
+					// e.preventDefault();
+				},	
+				
 			// create question
 			createQuestion:function(e){
 				var self = Questions;
@@ -118,7 +146,7 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 				var form = $(this).parent(); // directly this form
 				//create method
 				 $.ajax({
-				 	data:  form.serialize() + "&_method=create", // take data from the form and send it to the method delete
+				 	data: form.serialize() + "&_method=create", // take data from the form and send it to the method delete
 				 }).done(
 						function (results){
 				 			newAlert (results.respond, results.message); // display alert
@@ -133,13 +161,11 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 				 e.preventDefault();
 			},	
 
-			// delete question
+			// delete task
 			deleteQuestion:function(e){
 				var self = Questions;
 				$(this).button('loading');
 				var form = $(this).parent();
-				//console.log($(e.target));
-				//console.log($(this).parent());
 				//delete method
 				$.ajax({
 					data:  form.serialize() + "&_method=delete", // take data from the form and send it to the method delete
@@ -149,7 +175,6 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 							self.findQuestions(); // refresh questions
 						}
 				);
-				
 				e.preventDefault();
 			},	
 

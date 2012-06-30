@@ -17,15 +17,7 @@ class Member_MyCollaborationController extends  Boilerplate_Controller_Action_Ab
 	}
 	
 	
-	/**
-	 * Modul for Levels and Task
-	 */
-	public function taskAction()
-	{
-		$this->checkProjectAndUser();
-		$this->view->pageTitle = "Levels and Tasks" ;	 
-		$this->view->project = $this->project;
-	}
+	
 	
 	/**
 	 * Ajax Handling for Question

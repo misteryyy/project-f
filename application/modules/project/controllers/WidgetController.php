@@ -57,6 +57,12 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
      */
     public function taskAction(){
     	$this->checkProject();
+    	$facadeTask = new \App\Facade\Project\TaskFacade($this->_em);
+    	
+    	// return all task ordered by id and level
+    	$tasks = $facadeTask->findTasksForProject($this->project_id);
+    	$this->view->tasks = $tasks;
+    	
     	 	 
     }
     

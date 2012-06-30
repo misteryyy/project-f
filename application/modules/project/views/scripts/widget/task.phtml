@@ -1,6 +1,23 @@
-<div class="well">
-Current level <?php echo $this->project->level;?>
-</div>
-<hr>
+
+<?php //pr($this->tasks);
+foreach ($this->tasks as $t){
+	pr($t->toArray());
+}
+
+?>
+
+<ul class="nav nav-tabs">
+<li class="active">
+<a href="/project/index/index/id/1">LEVEL1 Tasks</a>
+</li>
+<li class="disable">
+<a href="/project/index/project-board/id/1">LEVEL2 Tasks</a>
+</li>
+
+<li class="disable">
+<a href="/project/index/project-board/id/1">LEVEL3 Tasks</a>
+</li>
+
+</ul>
 
 

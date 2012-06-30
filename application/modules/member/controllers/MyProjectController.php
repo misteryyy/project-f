@@ -35,7 +35,9 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 				try{
 					$facadeProject->setProjectLevel($this->_member_id, $this->project_id,$form->getValues());
 					$this->_helper->FlashMessenger( array('success' =>  "Project has been successfully moved to level ". $values['level']));
-				
+					$params = array('id' => $this->project_id);
+					$this->_helper->redirector('task', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
+					
 				} catch (\Exception $e){
 					$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
 				}
@@ -64,9 +66,7 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 		if($this->_request->isPost() || $this->_request->isGet()){
 			switch ($this->_request->getParam("_method")){
 				case 'findAllForCurrentLevel' :
-					
 					$tasks = $facadeTask->findTasksForProject($this->project_id, $this->project->level);
-					
 					$data = array(); // data for sending to the script
 					foreach($tasks as $t){
 						$data[] = $t->toArray();
@@ -79,7 +79,6 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 					//  create new question
 				case 'create' :
 					try{
-
 						$facadeTask->createProjectTask($this->_member_id,$this->project_id, $this->_request->getParams());
 						$respond = array("respond" => "success",'message' => "New task was added.");
 						$this->_response->setBody(json_encode($respond));
@@ -91,26 +90,42 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 					break;
 				case 'update' :
 					try{
-						$facadeTeam->updateProjectWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'),$this->_request->getParams());
-						$respond = array("respond" => "success",'message' => "Question was updated.");
+						$facadeTask->updateProjectTask($this->_member_id, $this->project_id, $this->_request->getParam('task_id'),$this->_request->getParams());
+						$respond = array("respond" => "success",'message' => "Task was updated.");
 						$this->_response->setBody(json_encode($respond));
+
 					}catch(Exception $e){
 						$respond = array("respond" => "error","message" => $e->getMessage());
 						$this->_response->setBody(json_encode($respond));
 					}
 	
 					break;
-	
 				case 'delete' :
 					try{
-						$facadeTeam->deleteProjectRoleWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'));
-						$respond = array("respond" => "success",'message' => "Question was deleleted.");
+						$facadeTask->deleteProjectTask($this->_member_id, $this->project_id, $this->_request->getParam('task_id'));
+						$respond = array("respond" => "success",'message' => "Task was deleleted.");
 						$this->_response->setBody(json_encode($respond));
 					}catch(Exception $e){
 						$respond = array("respond" => "error","message" => $e->getMessage());
 						$this->_response->setBody(json_encode($respond));
 					}
 					break;
+					
+				case 'finish' :
+						try{
+							$data = $this->_request->getParams();
+							$facadeTask->finishProjectTask($this->_member_id, $this->project_id, $this->_request->getParam('task_id'),$data);
+							if(isset($data['finished']))
+							$respond = array("respond" => "success","message" => "Task has been finished.");
+							else
+							$respond = array("respond" => "success","message" => "Task has been set to unfinished state.");
+	
+							$this->_response->setBody(json_encode($respond));
+						}catch(Exception $e){
+							$respond = array("respond" => "error","message" => $e->getMessage());
+							$this->_response->setBody(json_encode($respond));
+						}
+						break;
 			}
 		} else {
 			$this->_response->setHttpResponseCode(503); // echo error

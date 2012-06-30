@@ -22,6 +22,7 @@ class ProjectTask
     /** @Column(type="string", name="task",nullable=false) */
     private $task;   
     
+    
     /**
      * @ManyToOne(targetEntity="Project", inversedBy="roleWidgetQuestions")
      * @JoinColumn(name="project_id", referencedColumnName="id")
@@ -121,6 +122,7 @@ class ProjectTask
 		$params = array ("id" => $this->id,
 						 "task" => $this->task,
 						 "level" => $this->level,
+						"finished" => $this->finished,
 						 "project_id" => $this->project->id,
 						  "user_id" => $this->project->user->id);	
 		return $params;
