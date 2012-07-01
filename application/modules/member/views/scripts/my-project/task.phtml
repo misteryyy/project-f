@@ -35,7 +35,7 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
   						{{/if}}
 						 />
 						<input type="hidden" name="task_id" value="{{id}}" />
-						<input  type="text" name="task" value="{{task}} + {{finished}}" />
+						<input  type="text" name="task" value="{{task}}" />
 						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />
 						<input class="btn  btn-danger delete" type="submit"  data-loading-text="processing..." value="x" name="submit" />
 						</form>
@@ -105,7 +105,7 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 								self.config.questionList.append(self.config.questionListTemplate(results.data));
 								//newAlert (results.respond, results.message)
 							}else{
-								self.config.questionList.append("No questons.");
+								self.config.questionList.append("No tasks.");
 								
 							}
 				 		}

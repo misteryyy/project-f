@@ -38,36 +38,7 @@ class ProjectFacade {
 		
 	}
 	
-	/**
-	 * Change the project Level
-	 * @param unknown_type $user_id
-	 * @param unknown_type $project_id
-	 * @param unknown_type $data
-	 * @throws \Exception
-	 */
-	public function setProjectLevel($user_id,$project_id,$data=array()){
-		// checking errors
-		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
-		if(!$user){
-			throw new \Exception("Member doesn't exists");
-		}
-		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
-		if(!$project){
-			throw new \Exception("Can't find this project.");
-		}
-		
-		if($project->user == $user){
-			
-			// TODO checking if all task are completed
-			$project->setLevel($data['level']);
-			$this->em->flush();
-		
-		} else {
-			throw new \Exception("You are not allowed to change this property.");
-		}
 
-		
-	}
 	
 	/*
 	 * Returns one project by id
