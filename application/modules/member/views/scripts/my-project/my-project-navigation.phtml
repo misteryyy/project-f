@@ -6,6 +6,7 @@
 	$allow[5] = false;
 	$allow[6] = false;
 	$allow[7] = false;
+	$allow[8] = false;
 	
 	switch ($this->step){
 		case 1 : $allow[1] = true;
@@ -22,6 +23,9 @@
 		break;
 		case 7 : $allow[7] = true;
 		break;
+		case 8 : $allow[8] = true;
+		break;
+		
 	}
   ?>
   <h3><?php echo $this->project->title?> 	<span class="badge badge-success">L<?php echo $this->project->level?></span> ~  <a class="btn btn-success" href="/project/index/index/id/<?php echo $this->project->id?>">Public profile</a> </h3>
@@ -33,5 +37,7 @@
   <li class="<?php echo($allow[4] == true ? "active" : "disable" );?>"><a href="/member/my-project/comment-creator/id/<?php echo $this->project->id?>">Comments for Creator</a></li>
   <li class="<?php echo($allow[5] == true ? "active" : "disable" );?>"><a href="/member/my-project/update/id/<?php echo $this->project->id?>">Updates</a></li>
   <li class="<?php echo($allow[6] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/index/id/<?php echo $this->project->id?>">Team</a></li>
-    <li class="<?php echo($allow[7] == true ? "active" : "disable" );?>"><a href="/member/my-project/task/id/<?php echo $this->project->id?>">Task and Levels</a></li>
+  <li class="<?php echo($allow[7] == true ? "active" : "disable" );?>"><a href="/member/my-project/task/id/<?php echo $this->project->id?>">Tasks</a></li>
+  <li class="<?php echo($allow[8] == true ? "active" : "disable" );?>"><a href="/member/my-project/level/id/<?php echo $this->project->id?>">Move to next level</a></li>
+  
   </ul>

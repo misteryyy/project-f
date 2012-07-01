@@ -28,7 +28,7 @@ class TaskFacade {
 		
 		// filter tasks
 		if($level != 0 && $level < 3){
-			$stmt . " AND u.level = " . $level;	
+			$stmt .= " AND u.level = " . $level;	
 		}
 		
 		$stmt .= 'ORDER BY u.id, u.level ASC';	

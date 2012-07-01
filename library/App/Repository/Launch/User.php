@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
  
 class User extends EntityRepository
 {
-    public function findThemAll()
+    public function findAll()
     {
         $stmt = 'SELECT q FROM App\Entity\Launch\User q ORDER BY q.id DESC';
         return $this->_em->createQuery($stmt)->getResult();

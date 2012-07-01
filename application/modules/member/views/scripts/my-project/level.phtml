@@ -1,0 +1,7 @@
+<?php 
+// The main project navigation
+$this->step = 8;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+<hr>
+<?php echo $this->form;?>

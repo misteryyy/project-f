@@ -27,7 +27,7 @@ class LaunchFacade {
 	 * Get all registered newsletter
 	 */
 	public function findNewslettersArray(){
-		
+		return $this->em->getRepository('\App\Entity\Launch\Newsletter')->findAll();
 		
 	}
 		

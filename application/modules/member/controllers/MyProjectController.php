@@ -18,14 +18,14 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 	
 	
 	/**
-	 * Modul for Levels and Task
+	 * Modul for Levels
 	 */
-	public function taskAction()
+	public function levelAction()
 	{
 		$this->checkProjectAndUser();
-		$this->view->pageTitle = "Levels and Tasks" ;	 
+		$this->view->pageTitle = "Levels and Tasks" ;
 		$this->view->project = $this->project;
-		
+	
 		// Form for changing levels
 		$form = new \App\Form\Project\EditProjectLevelForm($this->project);
 		$facadeProject = new \App\Facade\ProjectFacade($this->_em);
@@ -36,8 +36,8 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 					$facadeProject->setProjectLevel($this->_member_id, $this->project_id,$form->getValues());
 					$this->_helper->FlashMessenger( array('success' =>  "Project has been successfully moved to level ". $values['level']));
 					$params = array('id' => $this->project_id);
-					$this->_helper->redirector('task', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
-					
+					$this->_helper->redirector('level', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
+						
 				} catch (\Exception $e){
 					$this->_helper->FlashMessenger( array('error' =>  $e->getMessage()));
 				}
@@ -47,10 +47,18 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 				$this->_helper->FlashMessenger( array('error' => "Please check your input."));
 			}
 		}
-		
-		$this->view->form = $form;
-		
-		
+		$this->view->form = $form;	
+	}
+
+	
+	/**
+	 * Modul for Levels
+	 */
+	public function taskAction()
+	{
+		$this->checkProjectAndUser();
+		$this->view->pageTitle = "Tasks" ;	 
+		$this->view->project = $this->project;
 	}
 	
 	/**

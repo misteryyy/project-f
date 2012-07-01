@@ -5,19 +5,12 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 ?>
 
 <hr />
-<h3>Levels and Task</h3>
-Current LEVEL <?php echo $this->project->level;?> <br>
-  	
-  	<hr>
-    <?php echo $this->form;?>
-        
-<hr/>
+<h3>Tasks <span class="badge badge-success">for level <?php echo $this->project->level;?></span></h3>
+<div id="alert-area"></div>	
 
-	<div id="alert-area"></div>
-	
-	<h4>Create new task for current level : <?php echo $this->project->level;?></h4>
-	<!-- Form for creating new task -->
-    <form id="form-create-task" class="well form-search" action="#" method="post" autocomplete="off">
+<h4>Create new task for current level : <?php echo $this->project->level;?></h4>
+<!-- Form for creating new task -->
+<form id="form-create-task" class="well form-search" action="#" method="post" autocomplete="off">
 			<div class="control-group">
 				<div class="controls">
 						<input type="hidden" name="level" value="<?php echo $this->project->level;?>" />
@@ -37,7 +30,10 @@ Current LEVEL <?php echo $this->project->level;?> <br>
 		<script id="question_list_template" type="text/x-handlebars-template">
 				{{#each this}}				
 					<form method="post" action="" class="form-search" data-question_id="{{id}}">
-						<input  class="finish" type="checkbox" name="finished" />
+						<input  class="finish" type="checkbox" name="finished" {{#if finished}}
+  						checked="checked"
+  						{{/if}}
+						 />
 						<input type="hidden" name="task_id" value="{{id}}" />
 						<input  type="text" name="task" value="{{task}} + {{finished}}" />
 						<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />

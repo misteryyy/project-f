@@ -10,11 +10,9 @@ use App\Entity\UserRole;
  */
 class EditProjectLevelForm extends \Twitter_Bootstrap_Form_Horizontal
 {
-	
-	
+		
 	protected $project; // Array of categories from DB
 
-	
 	public function __construct($project)
 	{
 		$this->project = $project;
