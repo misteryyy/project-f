@@ -52,6 +52,11 @@ class ProjectRole {
 	 */
 	private $user;
 	
+	/**
+	 * @Column(type="datetime",name="created", nullable=false)
+	 */
+	private $created;
+	
 	public function setUser($user) {
 		$this->user = $user;
 	}
@@ -64,11 +69,12 @@ class ProjectRole {
 	 *
 	 * @param $name unknown_type       	
 	 */
-	public function __construct($name, $type) {
+	public function __construct($name, $type,$level = 1,$description = "") {
 		$this->name = $name;
-		$this->level = 1;
+		$this->level = $level;
 		$this->type = $type;
-	
+		$this->description = $description;
+		$this->created = new \DateTime ( "now" );		
 	}
 	/**
 	 *
@@ -78,6 +84,13 @@ class ProjectRole {
 		return $this->name;
 	}
 	
+	public function getId(){
+		return $this->id;
+	}
+	
+	public function getDescription(){
+		return $this->description;
+	}
 	/**
 	 *
 	 * @param $name field_type       	
@@ -107,5 +120,23 @@ class ProjectRole {
 			$this->$property = $value;
 		}
 	}
-
+	
+	
+	/**
+	 * Return just basic information about the entity
+	 */
+	public function toArray(){
+		$params = array ("id" => $this->id,
+				"level" => $this->level,
+				"role_name" => $this->name,
+				"type" => $this->type,
+				"description" => $this->description,
+				"project_id" => $this->project->id,
+				"user_id" => $this->user->id,
+				"user_name" => $this->user->name,
+	
+	
+		);
+		return $params;
+	}
 }

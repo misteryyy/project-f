@@ -11,7 +11,135 @@ $this->sub_step = 1;
 echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" => $this->sub_step,"project" => $this->project));
 ?>
 
-<h3>My Team</h3>
+<hr>
+
+<h3>My team</h3>
 <hr />
-<div class="well">My Position</div>
-<div class="well">My Project People</div>
+<div class="well">My Position <br>
+<?php 	foreach($this->creatorRoles as $r) {
+		echo $r->name;
+		echo "]["; }
+?>
+</div>
+
+<div class="well">My Project People </div>
+<hr/>
+
+  	<div id="alert-area"></div>
+    <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
+    	 <div id="model_list">
+    		<script id="model_list_template" type="text/x-handlebars-template">
+			
+			<table class="table table-striped">
+        	<thead>
+    		<tr>
+    			<th>ID</th>
+				<th>Level</th>
+				<th>Member</th>
+    			<th>Role</th>
+				<th>Description</th>	
+    			<th>Actions</th>
+    		</tr>
+    				</thead>
+   				 <tbody>
+				{{#each this}}				
+				<tr>
+						<td>{{id}}</td>
+						<td>{{level}}</td>  
+						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
+						<td>{{role_name}}</td>  
+						<td><input type="text" name="description" value="{{role_description}}" disabled /></td>  
+						<td class="actions" id="{{id}}">
+								<input  class="btn btn-danger deny" type="submit"  data-loading-text="processing..." value="Kickout" name="submit" />
+						
+						</td>
+				</tr>
+				<!-- modal  -->
+		    	<div class="modal hide" id="surveyModal-id-{{id}}">
+				<div class="modal-body">
+    			<p>{{{content}}}</p>
+    			</div>
+    			<div class="modal-footer">
+    				<a href="#" class="btn" data-dismiss="modal">Close</a>
+    			</div>
+    			</div>
+				{{/each}}
+		    		 		
+   			 </tbody>
+    		</table>	
+		</script>
+</div>
+
+		
+<script src="/media/tools/handlebars-1.0.0.beta.6.js"></script>   
+        <script type="text/javascript">  	
+			var Models = {
+					
+			init: function(config){
+				// ajax setup
+				$.ajaxSetup({
+					url: "/member/my-project-team/ajax-index/id/<?php echo $this->project->id;?>", 
+					type: 'POST',
+					dataType: 'json',
+				});
+		
+				this.config = config;
+				this.bindEvents();
+				this.setutTemplates();
+				this.findData(); // fill the question_list
+				},
+			// setting template system
+			setutTemplates: function(){
+				this.config.modelListTemplate = Handlebars.compile(this.config.modelListTemplate);			
+				},
+				
+			bindEvents: function(){
+				this.config.modelList.on('click','td.actions input.deny',this.acceptMember); // edit question 				
+				},
+				
+			findData: function(){
+				 var self = Models;
+					
+				 $.ajax({
+				 	data: "_method=findAllProjectRoles",// take data from the form and send it to the method delete
+					 }).done(
+						function (results){
+				 			self.config.modelList.empty();
+							if(results.data[0]){
+								self.config.modelList.append(self.config.modelListTemplate(results.data));
+								//newAlert (results.respond, results.message)
+							}else{
+								self.config.modelList.append("No requests.");
+							}
+				 		}
+				 );	
+	
+				},
+	
+			// acceptMember
+			acceptMember:function(e){
+				var self = Models;
+				var par = $(this).parent();
+				var application_id = par.attr("id");
+				$(this).button('loading');
+				console.log($(this));
+				$.ajax({
+					data:   "&_method=accept&&application_id="+application_id, // take data from the form and send it to the method update
+				}).done(
+						function (results){
+							newAlert (results.respond, results.message); // display alert
+							self.findData(); // refresh questions
+						}
+				);
+				e.preventDefault();
+			},
+
+			};
+
+			Models.init({
+				modelListTemplate: $('#model_list_template').html(),
+				modelList: $("#model_list"),
+			});
+ </script>  
+
+    

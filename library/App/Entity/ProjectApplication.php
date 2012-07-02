@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\ProjectApplication")
+ * @Entity(repositoryClass="App\Repository\Project\ProjectApplication")
  * @Table(name="project_application",indexes={@index(name="search_project_application",columns={"project_id"}),@index(name="search_project_application_user",columns={"user_id"})})
  */
 class ProjectApplication {
@@ -14,6 +14,9 @@ class ProjectApplication {
 	const PROJECT_ROLE_ADVISER = "advisor";
 	const PROJECT_ROLE_TYPE_CREATOR = "creator";
 	const PROJECT_ROLE_TYPE_MEMBER = "member";
+	const APPLICATION_ACCEPTED = 2;
+	const APPLICATION_DENIED = 1;
+	const APPLICATION_NEW = 1;
 	
 	/**
 	 * @Id @Column(type="integer", name="id")
@@ -183,6 +186,7 @@ class ProjectApplication {
 	 * @param field_type $result
 	 */
 	public function setResult($result) {
+		$this->modified = new \DateTime ( "now" );
 		$this->result = $result;
 	}
 
@@ -236,10 +240,26 @@ class ProjectApplication {
 	public function toArray(){
 		$params = array ("id" => $this->id,
 				"level" => $this->level,
-				"roleName" => $this->roleName,
+				"role_name" => $this->roleName,
 				"content" => $this->content,
 				"project_id" => $this->project->id,
-				"user_id" => $this->project->user->id);
+				"user_id" => $this->project->user->id,
+				"created" => $this->created->format('Y/m/d h:m:s'),
+				"user_id" => $this->user->id,
+				"user_name" => $this->user->name,
+				
+				
+		);
+		
+		// if role exists
+		if(isset($this->projectRole)){
+			$params["project_role_id"] = $this->projectRole->id;
+			$params["project_role_description"] = $this->projectRole->description;
+		}else {
+			$params["project_role_id"] = null;
+			$params["project_role_description"] = null;
+			
+		}
 		
 		// additional information for second level
 		if($this->level ==2 && isset($this->projectRole)){

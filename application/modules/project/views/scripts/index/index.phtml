@@ -1,7 +1,11 @@
 <?php 
 if(count ($this->project) > 0){ ?>
 			
-<h3><?php echo $this->project->title?></h3>
+
+<h3><?php echo $this->project->title?>  <span class="badge badge-success">level <?php echo $this->project->level;?></span>
+</h3>
+<hr>
+ 
 <div class="well">
 Created by <i><?php echo $this->project->user->name?></i> ~ <?php echo $this->project->created->format('Y/m/d');?>
 </div>

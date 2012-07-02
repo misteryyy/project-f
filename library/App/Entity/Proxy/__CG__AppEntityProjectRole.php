@@ -60,6 +60,18 @@ class ProjectRole extends \App\Entity\ProjectRole implements \Doctrine\ORM\Proxy
         return parent::getName();
     }
 
+    public function getId()
+    {
+        $this->__load();
+        return parent::getId();
+    }
+
+    public function getDescription()
+    {
+        $this->__load();
+        return parent::getDescription();
+    }
+
     public function setName($name)
     {
         $this->__load();
@@ -78,10 +90,16 @@ class ProjectRole extends \App\Entity\ProjectRole implements \Doctrine\ORM\Proxy
         return parent::__set($property, $value);
     }
 
+    public function toArray()
+    {
+        $this->__load();
+        return parent::toArray();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'type', 'description', 'level', 'project', 'user');
+        return array('__isInitialized__', 'id', 'name', 'type', 'description', 'level', 'created', 'project', 'user');
     }
 
     public function __clone()

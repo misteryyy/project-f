@@ -21,29 +21,71 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 	public function indexAction()
 	{
 		$this->checkProjectAndUser();
-		$this->view->pageTitle = "Team" ;	 
-		$form = new \App\Form\Project\AddUpdateForm();
-		 
-		// update project survey
-		if ($this->_request->isPost()) {
-			if ($form->isValid($this->_request->getPost())) {
-				// update survey
-				$facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
-				$facadeProjectUpdate->createProjectUpdate($this->_member_id, $this->project_id,$form->getValues());
-				$this->_helper->FlashMessenger( array('success' => "New Update has been created."));
-				$params = array('id' => $this->project_id);
-				$this->_helper->redirector('update', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params); 
-			}
-			// not validated properly
-			else {
-				$this->_helper->FlashMessenger( array('error' => "Please check your input."));
-			}
-		}
-		//display form
-		$this->paginator = null;
-		$this->view->form = $form;
+		$this->view->pageTitle = "Team" ;	
+		
+		// get creator roles
+		$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+		$this->view->creatorRoles = $facadeTeam->findCreatorRolesForProject($this->project_id);
+		
 		$this->view->project = $this->project;
+
+	}
+
 	
+	/**
+	 * Request for project
+	 */
+	public function ajaxIndexAction()
+	{
+		$this->ajaxify();
+		$this->checkProjectAndUser();
+	
+		$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+		$applications = $facadeTeam->findApplications($this->_member_id, $this->project_id);
+	
+		if($this->_request->isPost() || $this->_request->isGet()){
+			switch ($this->_request->getParam("_method")){
+		
+					//  create new question
+				case 'findAllProjectRoles':
+					try{
+						$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id,array('state' =>\App\Entity\ProjectApplication::APPLICATION_ACCEPTED));
+						$roles = $facadeTeam->findProjectRolesForProject($this->project_id);
+						$data = array(); // data for sending to the script
+						foreach($roles as $a){
+							$data[] = $a->toArray();
+						}
+							
+						$respond = array("respond" => "success",
+								"message" => "Data loaded successfully.",
+								"data" => $data);
+						$this->_response->setBody(json_encode($respond));
+						break;
+					}catch(Exception $e){
+						$respond = array("respond" => "error","message" => $e->getMessage());
+						$this->_response->setBody(json_encode($respond));
+					}
+					 
+					break;
+					// accept application
+				case 'deny' :
+					try{
+						$facadeTeam->deleteProjectRole($this->_member_id, $this->project_id, $this->_request->getParam("project_role_id"));
+						$respond = array("respond" => "success",'message' => "Member was kickout from your team.");
+						$this->_response->setBody(json_encode($respond));
+							
+					}catch(Exception $e){
+						$respond = array("respond" => "error","message" => $e->getMessage());
+						$this->_response->setBody(json_encode($respond));
+					}
+					 
+					break;
+			}
+		} else {
+			$this->_response->setHttpResponseCode(503); // echo error
+			 
+		}
+		 
 	}
 	
 	/**
@@ -127,16 +169,6 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	$this->checkProjectAndUser();
     	$this->view->pageTitle = "My Projects Request" ;
     	$this->view->project = $this->project;
-
-    	$facadeProjectTeam = new \App\Facade\Project\TeamFacade($this->_em);
-	    $paginator = $facadeProjectTeam->findApplicationsPaginator($this->_member_id, $this->project_id);
-	    $paginator->setItemCountPerPage(100);
- 	    $page = $this->_request->getParam('page', 1);
- 	    $paginator->setCurrentPageNumber($page);
- 	    
- 	    debug($paginator->toJson());
- 	    $this->view->paginator = $paginator;
- 	    $this->view->project = $this->project;
     }
      
     
@@ -152,8 +184,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	 
     	if($this->_request->isPost() || $this->_request->isGet()){
     		switch ($this->_request->getParam("_method")){
-    			case 'findSurvey' :
-    				
+    			case 'findSurvey' :   				
     				$application = $facadeTeam->findOneApplication($this->_member_id,$this->project_id,$this->_request("application_id"));
     				$data[] = $application;
     				$respond = array("respond" => "success",
@@ -163,9 +194,9 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     				break;
     				 
     			//  create new question
-    			case 'findAll' :
+    			case 'findAllNewApplications' :
     				try{
-    					$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id);
+    					$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id,array('state' =>\App\Entity\ProjectApplication::APPLICATION_NEW));
     					$data = array(); // data for sending to the script
     					foreach($applications as $a){
     						$data[] = $a->toArray();
@@ -183,11 +214,13 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	
     				break;
     				
+    			// accept application
     			case 'accept' :
     				try{
-    					$facadeTeam->updateProjectWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'),$this->_request->getParams());
-    					$respond = array("respond" => "success",'message' => "Question was updated.");
+						$facadeTeam->acceptApplication($this->_member_id, $this->project_id, $this->_request->getParam("application_id"));
+    					$respond = array("respond" => "success",'message' => "Member was accepted to your team.");
     					$this->_response->setBody(json_encode($respond));
+    					
     				}catch(Exception $e){
     					$respond = array("respond" => "error","message" => $e->getMessage());
     					$this->_response->setBody(json_encode($respond));
@@ -195,24 +228,31 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	
     				break;
     	
+    			// not ajax
     			case 'deny' :
-    				try{
-    					$facadeTeam->deleteProjectRoleWidgetQuestion($this->_member_id,$this->project_id,$this->_request->getParam('question_id'));
-    					$respond = array("respond" => "success",'message' => "Question was deleleted.");
-    					$this->_response->setBody(json_encode($respond));
+
+    				try {
+    						// SUCCESS
+    						$facadeTeam->denyApplication($this->_member_id, $this->project_id, $this->_request->getParam("application_id"),$_POST);
+    						$this->_helper->FlashMessenger ( array ('success' => "Member was denied." ) );
+    						$params = array('id' => $this->project_id);
+							$this->_helper->redirector('request', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
+						//$respond = array("respond" => "success",'message' => "Question was deleleted.");
+    					//$this->_response->setBody(json_encode($respond));
     				}catch(Exception $e){
-    					$respond = array("respond" => "error","message" => $e->getMessage());
-    					$this->_response->setBody(json_encode($respond));
+    					$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
+    					//$respond = array("respond" => "error","message" => $e->getMessage());
+    					//$this->_response->setBody(json_encode($respond));
     				}
     				break;
-    		}
+    		
+    	} 
     	} else {
     		$this->_response->setHttpResponseCode(503); // echo error
-    	
     	}
     	
     }
-     
+    
     
     /**
      * Setting for new collaborations

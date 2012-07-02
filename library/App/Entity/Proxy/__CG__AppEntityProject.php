@@ -87,6 +87,12 @@ class Project extends \App\Entity\Project implements \Doctrine\ORM\Proxy\Proxy
         return parent::getTitle();
     }
 
+    public function setLevel($level)
+    {
+        $this->__load();
+        return parent::setLevel($level);
+    }
+
     public function addTag($tag)
     {
         $this->__load();

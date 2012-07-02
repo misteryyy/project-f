@@ -178,16 +178,16 @@ class TeamFacade {
 		
 	
 		if($data['level'] == 1) {
-			$content = "<h3> Survey for level ". $data['level']. "  </h3> <br />";
+			$content = "<h3>Survey for level ". $data['level']. "  </h3> <br/>";
 			$i = 1;
 			for($i; $i < 6; $i++){
 				$questionString = "question_".$i;
 				$answerString = "answer_".$i;
 			
 				if(isset($data[$answerString]) ){
-					$content .= "Question: ". $data[$questionString] . "<br />";
-					$content .= "Answer: ". $data[$answerString] . "<br />";
-					$content ." <hr /> ";
+					$content .= "Question: ". $data[$questionString] . "<br/>";
+					$content .= "Answer: ". $data[$answerString] . "<br/>";
+					$content ." <hr> ";
 				}		
 			}
 			
@@ -224,6 +224,71 @@ class TeamFacade {
 	}
 	
 	
+	
+	/**
+	 * Find all members in project
+	 * @param unknown_type $project_id
+	 * @param unknown_type $options
+	 * @throws \Exception
+	 */
+	public function findProjectRolesForProject($project_id,$options = array()){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 ';
+		
+		$stmt .= 'ORDER BY r.name, r.level, r.description DESC';
+		
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+		
+		return $query->getResult();
+		
+	}
+	/**
+	 * Find creator roles for project
+	 * @param unknown_type $project_id
+	 * @param unknown_type $options
+	 * @throws \Exception
+	 */
+	public function findCreatorRolesForProject($project_id,$options = array()){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 ';
+		$stmt .= 'ORDER BY r.name, r.level, r.description DESC';
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_CREATOR);
+		return $query->getResult();
+	
+	}
+	
+	/**
+	 * Delete the role for the current project
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $role_id
+	 */
+	public function deleteProjectRole($user_id, $project_id, $role_id){
+		
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		// delete the project role
+		
+		
+	}
+		
+	
+	
 	/*
 	 * Return applications for the project
 	*/
@@ -235,6 +300,14 @@ class TeamFacade {
 		}
 	
 		$stmt = 'SELECT a FROM App\Entity\ProjectApplication a WHERE a.project = ?1';
+		
+		if(isset($options['state'])){
+			// select just new application
+			if( $options['state'] == \App\Entity\ProjectApplication::APPLICATION_NEW)
+			$stmt .= ' AND a.state = 0 '; //. \App\Entity\ProjectApplication::APPLICATION_NEW;
+		
+		}
+		
 		$stmt .= 'ORDER BY a.created, a.roleName DESC';
 	
 		$query = $this->em->createQuery($stmt);
@@ -254,10 +327,78 @@ class TeamFacade {
 			throw new \Exception("Can't find this project for this user.");
 		}
 		$application = $this->em->getRepository ('\App\Entity\ProjectApplication')->findOneBy(array("id" => $id));
-		if(!$application){ 	throw new \Exception("This update doesn't exists");}
+		if(!$application){ 	throw new \Exception("This application doesn't exists");}
 		return $application;
 	}
 	
+	/**
+	 * Accept application from member
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $application_id
+	 */
+	public function acceptApplication($user_id,$project_id,$application_id,$level = 1){
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
+		if(!$user){
+			throw new \Exception("Member doesn't exists");
+		}
+		
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+		
+		$application = $this->findOneApplication($user_id, $project_id, $application_id);
+		
+		// create new role for project
+		
+		$newRole = new \App\Entity\ProjectRole($application->roleName, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+		
+		$project->addProjectRole($newRole);
+		$application->user->addProjectRole($newRole); // add application to the member in application
+		// TODO think about this, if delete or not
+		// set application to the new statea
+		//$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
+		//$application->setProjectRole($newRole); // set role for the application
+		
+		$this->em->remove($application); // delete application, only role is left
+		$this->em->flush();
+
+	}
+	
+	/**
+	 * Accept application from member
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $application_id
+	 */
+	public function denyApplication($user_id,$project_id,$application_id,$data = array()){
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
+		if(!$user){
+			throw new \Exception("Member doesn't exists");
+		}
+	
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+	
+		$application = $this->findOneApplication($user_id, $project_id, $application_id);
+	
+		// set application to the new statea
+		$application->setState(\App\Entity\ProjectApplication::APPLICATION_DENIED);
+		
+		// if creator doesn't fullfil the message
+		if(trim($data['message']) ==""){
+			$application->setResult("There is no reason written.");
+		}
+		else{
+			$application->setResult($data['message']);
+		}
+		$this->em->flush();
+	
+	
+	}
 }
 
 ?>

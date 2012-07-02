@@ -36,14 +36,15 @@ class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
 		// changes with different levels
 		if($this->project->level == 1){
 			$this->generateLevel1(); 
-		} 
+		}
+
 		// The same for every level
 		$this->generateFooter();
 
 	}
 
 	/**
-	 * Look for LEVEL 1 / Max 5 questoins plus one compulsory question
+	 * Look for LEVEL 2 / Max 5 questoins plus one compulsory question
 	 */
 	private function generateLevel1(){
 		$name = "role";
