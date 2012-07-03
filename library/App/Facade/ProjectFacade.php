@@ -396,18 +396,20 @@ class ProjectFacade {
 		}	
 	}
 	
-	public function findAllProjectsForUser($id){
+	public function findAllProjectsForUser($user_id){
 		// check if user exists
-		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 	
-		if($user){	
-			$projects = $this->em->getRepository('\App\Entity\Project')->findBy(array("user" => $user));	
-			return $projects;
-			
-		}else {
-			throw new \Exception("User doesn't exists");		
-		}	
+		if(!$user){	throw new \Exception("User doesn't exists");}
+		
+		$projects = $this->em->getRepository('\App\Entity\Project')->findBy(array("user" => $user));	
+		return $projects;	
 	}
+	
+	
+
+	
+	
 	
 	/**
 	 * Return all categories in array / used for form

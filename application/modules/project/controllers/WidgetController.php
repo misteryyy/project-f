@@ -45,11 +45,16 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 	 */ 
     public function applicationAction(){
 		$this->checkProject();
-    	$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
-    	$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
-    	$form = new \App\Form\Project\AddProjectApplicationForm($this->_member, $this->project, $questions);
-    	$this->view->form = $form;
-    	
+		// check if application has been sent
+		if($this->facadeAcl->projectApplicationHasBeenSent($this->_member_id, $this->project_id)) {
+			$this->view->aclPermissionDenied = true;
+			//return;
+		} else {
+			$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
+			$questions = $facadeTeam->findAllProjectRoleWidgetQuestions($this->project_id);
+			$form = new \App\Form\Project\AddProjectApplicationForm($this->_member, $this->project, $questions);
+			$this->view->form = $form;
+		}   	
     }
     
     /**

@@ -84,20 +84,29 @@ Reset" class="btn btn-primary">
 Reset</button>
  <a href="#" class="btn" data-dismiss="modal">Close</a>
         		 </div>
-       
-       </form>
-		
-		
+       </form>	
     </div>
    
-   
-   
-
-   
-   
-		
+	
+	
 <script src="/media/tools/handlebars-1.0.0.beta.6.js"></script>   
-        <script type="text/javascript">  	
+        <script type="text/javascript">  
+
+        // validation of deny-form	
+       	var formDeny = $('#form-deny'); 
+        formDeny.validate({
+    	    		rules: {
+    	    			message :{
+    		    			required: true,
+    	    				minlength: 2
+    			    		}
+    	    		},
+    	    		   submitHandler: function(form) {
+    	    			   formDeny.submit();				 		    
+    			 		   }
+    	    	}
+    	   );	
+
 			var Models = {
 					
 			init: function(config){
@@ -204,19 +213,19 @@ Reset</button>
     <script>
  $(document).ready(function() {
       $("#searchInput").keyup(function(){
- //hide all the rows
+ 		//hide all the rows
           $("#fbody").find("tr").hide();
- //split the current value of searchInput
+ 			//split the current value of searchInput
           var data = this.value.split(" ");
- //create a jquery object of the rows
+ 			//create a jquery object of the rows
           var jo = $("#fbody").find("tr");
- //Recursively filter the jquery object to get results. 
+ 			//Recursively filter the jquery object to get results. 
           $.each(data, function(i, v){
               jo = jo.filter("*:contains('"+v+"')");
           });
- //show the rows that match.
+ 			//show the rows that match.
           jo.show();
- //Removes the placeholder text 
+ 			//Removes the placeholder text 
       }).focus(function(){
           this.value="";
           $(this).css({"color":"black"});

@@ -159,7 +159,7 @@ class ProjectApplication extends \App\Entity\ProjectApplication implements \Doct
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'roleName', 'created', 'modified', 'content', 'result', 'state', 'level', 'project', 'projectRole', 'user');
+        return array('__isInitialized__', 'id', 'roleName', 'created', 'modified', 'content', 'description', 'result', 'state', 'level', 'project', 'projectRole', 'user');
     }
 
     public function __clone()

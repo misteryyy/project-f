@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 function debug($object, $label = '') {
     Boilerplate_Controller_Plugin_Debug::debug($object, $label);
 }
@@ -26,6 +29,8 @@ function getRealIpAddr() {
 	}
 	return $ip;
 }
+
+
 
  /*
   * Function creates random hash, which is used for password recovery

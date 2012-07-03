@@ -286,14 +286,13 @@ class TeamFacade {
 		
 		
 	}
-		
-	
-	
+
+
 	/*
 	 * Return applications for the project
 	*/
 	public function findApplications($user_id,$project_id,$options = array()){
-	
+			
 		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
 		if(!$project){
 			throw new \Exception("Can't find this project for this user.");
@@ -358,9 +357,9 @@ class TeamFacade {
 		$application->user->addProjectRole($newRole); // add application to the member in application
 		// TODO think about this, if delete or not
 		// set application to the new statea
-		//$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
-		//$application->setProjectRole($newRole); // set role for the application
-		
+		$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
+		$application->setProjectRole($newRole); // set role for the application
+				
 		$this->em->remove($application); // delete application, only role is left
 		$this->em->flush();
 

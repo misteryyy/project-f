@@ -4,6 +4,7 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
 
    protected $_member = array(); 
    protected $_member_id = 1;
+   protected $facadeAcl;
    
    /**
     * @var Doctrine\ORM\EntityManager
@@ -32,6 +33,9 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
  	$this->_helper->viewRenderer->setNoRender(true);
  }  
    
+ public function dPr($var){
+ 	\Doctrine\Common\Util\Debug::dump($var);
+ }
  
  public function init(){
 
@@ -62,8 +66,11 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
    }
     	
    $this->view->member = $this->_member;
-  // debug($this->_member);
-
+   
+   // for permission checking
+   $this->facadeAcl = new \App\Facade\ACLFacade($this->_em);
+   
+   
   // Navigation settings
   $uri = $this->_request->getPathInfo();           
   $activeNav = $this->view->navigation()->findByUri($uri);

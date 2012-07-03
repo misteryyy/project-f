@@ -1,0 +1,21 @@
+ <?php  
+	$allow[1] = false;
+	$allow[2] = false;
+	$allow[3] = false;
+
+	switch ($this->step){
+		case 1 : $allow[1] = true;
+		break;
+		case 2 : $allow[2] = true;
+		break;
+		case 3 : $allow[3] = true;
+		break;
+	}
+	
+  ?>
+   
+  <ul class="nav nav-tabs">
+  	<li class="<?php echo($allow[1] == true ? "active" : "disable" );?>"> <a href="/member/my-collaboration/index/">Accepted</a></li>
+ 	<li class="<?php echo($allow[2] == true ? "active" : "disable" );?>"> <a href="/member/my-collaboration/denied/">Denied Application</a></li>
+ 	<li class="<?php echo($allow[3] == true ? "active" : "disable" );?>"> <a href="/member/my-collaboration/waiting/">Waiting for response</a></li>
+  </ul>

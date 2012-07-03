@@ -2,12 +2,12 @@
 
 <?php 
 // The main project navigation
-$this->step = 1;
+$this->step = 3;
 echo $this->partial('my-collaboration/my-collaboration-navigation.phtml',array("step" => $this->step));
 ?>
 
 <?php 
-if(count ($this->collaborationsRoles) <= 0){	echo "No projects"; return; } ?>
+if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 
 <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
 	<thead>
@@ -24,8 +24,8 @@ if(count ($this->collaborationsRoles) <= 0){	echo "No projects"; return; } ?>
 	</thead>
 	<tbody>
 <?php 	
-	foreach($this->collaborationsRoles as $role){
-				$project = $role->project; // role is for collaborator
+	foreach($this->applications as $a){
+				$project = $a->project; // role is for collaborator
 ?>
 		<tr>
 			<td><?php echo $project->id?></td>
@@ -33,7 +33,7 @@ if(count ($this->collaborationsRoles) <= 0){	echo "No projects"; return; } ?>
 			<td><?php echo $project->title?></td>
 			<td><?php echo $project->created->format('Y/m/d');?></td>
 			<td><?php echo $project->modified->format('Y/m/d');?></td>
-			<td><?php echo $project->getTagsString()?>, my role <?php echo $role->name ." from L". $role->level ." and description " . $role->description?> </td>
+			<td><?php echo $project->getTagsString()?>, my role <?php echo $a->roleName ." from L". $a->level ." and description " . $a->description?> </td>
 		
 			<td><?php echo $project->category->name?>		
 			</td>
