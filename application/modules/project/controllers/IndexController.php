@@ -3,8 +3,11 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 {
 	private $project_id = null;
 	private $project = null;
+	private $isCreator = false;
+	private $isCollaborator = false;
 	
 	private $facadeProject;
+	private $facadeACL;
 	
 	/*
 	 * Check all neccessary things
@@ -20,6 +23,18 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 			// init basic things
 			$this->project = $this->facadeProject->findOneProject($id);
 			$this->project_id = $id;
+			
+			// acl setting
+			
+			// is creator
+			$this->isCreator = $this->facadeACL->isCreator($this->_member_id, $this->project_id);
+			$this->view->isCreator = $this->isCreator; 
+			
+			// is collaborator
+			$this->isCollaborator = $this->facadeACL->isCollaborator($this->_member_id, $this->project_id);
+			$this->view->isCollaborator = $this->isCollaborator;
+				
+			
 			$this->view->pageTitle = $this->project->title;
 			$this->view->project = $this->project;
 	
@@ -34,6 +49,7 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 	public function init(){
 		parent::init();
 		$this->facadeProject = new \App\Facade\ProjectFacade($this->_em);
+		$this->facadeACL = new \App\Facade\ACLFacade($this->_em);
 		
 		$this->checkProject();
 		

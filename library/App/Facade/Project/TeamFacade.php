@@ -275,18 +275,63 @@ class TeamFacade {
 	 * @param unknown_type $project_id
 	 * @param unknown_type $role_id
 	 */
-	public function deleteProjectRole($user_id, $project_id, $role_id){
+	public function denyProjectRole($user_id, $project_id, $role_id){
 		
+		// find project for this user
 		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
 		if(!$project){
 			throw new \Exception("Can't find this project for this user.");
 		}
 		
-		// delete the project role
 		
+		// find role
+		$role = $this->em->getRepository ('\App\Entity\ProjectRole')->findOneBy(array("id" => $role_id));
+		if(!$role){
+			throw new \Exception("This role doesn't exists");
+		}
 		
+		// find application which has this role_id
+		$application = $this->em->getRepository ('\App\Entity\ProjectApplication')->findOneBy(array("projectRole" => $role));
+		if(!$application){
+			throw new \Exception("This role application doesn't exists");
+		}
+
+		// change application state
+		$application->setState(\App\Entity\ProjectApplication::APPLICATION_DENIED);
+		 // update application information, if there was some change
+		 // the role will be deleted, so this is to have consistency in database
+		$application->setDescription($role->getDescription());
+		$application->setProjectRole(null); // member was kicked out
+		$application->setResult("You been kickout from the project.");
+		
+			$this->em->remove($role);
+			$this->em->flush();
 	}
 
+	/**
+	 * Delete the role for the current project
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $role_id
+	 */
+	public function deleteProjectRole($user_id, $project_id, $role_id){
+	
+		// find project for this user
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+	
+		// find role
+		$role = $this->em->getRepository ('\App\Entity\ProjectRole')->findOneBy(array("id" => $role_id));
+		if(!$role){
+			throw new \Exception("This role doesn't exists");
+		}
+	
+		$this->em->remove($role);
+		$this->em->flush();
+	}
+	
 
 	/*
 	 * Return applications for the project
@@ -360,10 +405,38 @@ class TeamFacade {
 		$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
 		$application->setProjectRole($newRole); // set role for the application
 				
-		$this->em->remove($application); // delete application, only role is left
 		$this->em->flush();
 
 	}
+	
+	/**
+	 * Create new role for project
+	 * Members will be able to apply for this role
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $data
+	 * @param unknown_type $level
+	 * @throws \Exception
+	 */
+	public function createProjectRole($user_id,$project_id,$data=array(),$level = 2){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		// create new role for project
+		$newRole = new \App\Entity\ProjectRole($data['role_name'], \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+		$newRole->setDescription($data['description']);
+		$newRole->setLevel($level);
+		
+		$project->addProjectRole($newRole);
+		$this->em->flush();
+	}
+	
+	
+	
+		
+	
 	
 	/**
 	 * Accept application from member

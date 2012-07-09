@@ -9,15 +9,14 @@ echo $this->partial('my-collaboration/my-collaboration-navigation.phtml',array("
 <?php 
 if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 
-<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+<table class="table table-striped">
 	<thead>
 		<tr>
-			<th>id</th>
-			<th>image</th>
-			<th>name</th>
-			<th>created</th>
-			<th>modified</th>
-			<th>tags</th>
+			<th>date</th>
+			<th>project</th>
+			<th>role</th>
+			<th>level</th>
+			<th>detail</th>
 			<th>category</th>
 			<th>actions</th>
 		</tr>
@@ -28,28 +27,27 @@ if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 				$project = $a->project; // role is for collaborator
 ?>
 		<tr>
-			<td><?php echo $project->id?></td>
-			<td><img src="/storage/projects/<?php echo $project->dir?>/<?php echo $project->getPicture("small");?>" /></td>
+			<td><?php echo $project->created->format('Y/m/d h:m:s')?></td>
 			<td><?php echo $project->title?></td>
-			<td><?php echo $project->created->format('Y/m/d');?></td>
-			<td><?php echo $project->modified->format('Y/m/d');?></td>
-			<td><?php echo $project->getTagsString()?>, my role <?php echo $a->roleName ." from L". $a->level ." and description " . $a->description?> </td>
-		
+			<td><?php echo $a->roleName?></td>
+			<td><?php echo $a->level;?></td>
+			<td><?php echo $a->description;?></td>	
 			<td><?php echo $project->category->name?>		
 			</td>
 			<td>
+				<a class="btn btn-info" data-toggle="modal" href="#surveyModal-id-<?php echo $a->id;?>">Survey</a>
 				<a class="btn btn-info" href="/project/index/index/id/<?php echo $project->id?>">Project Public Page</a>
-				<a class="btn btn-info" href="/project/index/survey/id/<?php echo $project->id?>">Survey</a>
-				<a class="btn btn-info" href="/project/index/project-board/id/<?php echo $project->id?>">DashBoard</a>
-			</td>
+				</td>
 		</tr>
+			<!-- modal  -->
+		    	<div class="modal hide" id="surveyModal-id-<?php echo $a->id;?>">
+				<div class="modal-body">
+    			<p><?php echo $a->content;?></p>
+    			</div>
+    				<div class="modal-footer"> <a href="#" class="btn" data-dismiss="modal">Close</a></div>
+    			</div>
 		<?php	
 	} // end foreach
 	?>
 	</tbody>
 	</table>	
-
-
-
-
-

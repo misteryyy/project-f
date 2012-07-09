@@ -1,0 +1,17 @@
+<?php 	
+$divider = '<span class="divider">~</span>';
+
+$bread= array();
+	foreach ($this->pages as $page)
+	{
+	
+		if ($page->isActive()) {
+			$link = '<li class="active">'.$page->getlabel().'</li>';
+		} else { 
+			$link = '<li> <a href="'.$page->getHref().'"> '. $page->getLabel(). '</a> </li>'.PHP_EOL;
+		}
+		
+	    $bread[] = $link;
+	}
+	echo implode($divider,$bread);
+?>

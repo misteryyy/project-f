@@ -48,7 +48,40 @@ class ACLFacade {
 		//$count = $query->getSingleScalarResult();
 	}
 		
-
+	/**
+	 * Return true if current user is creator
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 */
+	public function isCreator($user_id,$project_id){	
+		
+		$stmt = 'SELECT COUNT(a.id) FROM App\Entity\Project a WHERE a.id = ?1 AND a.user = ?2';
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, $user_id);
+		$result = $query->getOneOrNullResult();
+		return $result[1];
+	}
+	
+	
+	/**
+	 * Return true if current user is creator
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 */
+	public function isCollaborator($user_id,$project_id){
+	
+		$stmt = 'SELECT COUNT(a.id) FROM App\Entity\ProjectRole a WHERE a.project = ?1 AND a.user = ?2 AND a.type = ?3' ;
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, $user_id);
+		$query->setParameter(3, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+		$result = $query->getOneOrNullResult();
+		return $result[1];
+	}
+	
+	
+	
 	
 }
 

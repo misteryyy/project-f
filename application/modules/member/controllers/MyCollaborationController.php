@@ -48,11 +48,11 @@ class Member_MyCollaborationController extends  Boilerplate_Controller_Action_Ab
      */
     public function indexAction()
     {
-    	$this->view->pageTitle = "My Collaborations - Accepted " ;
+    	$this->view->pageTitle = "My Collaborations - Accepted" ;
     	// get categories for form
     	$facadeCollaboration = new \App\Facade\Project\CollaborationFacade($this->_em);
-    	$collaborationsRoles = $facadeCollaboration->findAllCollaborationRolesForUser($this->_member_id);
-    	$this->view->collaborationsRoles = $collaborationsRoles;
+    	$applications = $facadeCollaboration->findApplications($this->_member_id, array('state'=>\App\Entity\ProjectApplication::APPLICATION_ACCEPTED ));
+    	$this->view->applications = $applications;
 
     }
     
@@ -82,6 +82,7 @@ class Member_MyCollaborationController extends  Boilerplate_Controller_Action_Ab
     	$this->view->applications = $applications;
     
     }
+    
     
     
 }

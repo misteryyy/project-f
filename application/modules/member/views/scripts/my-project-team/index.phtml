@@ -22,6 +22,37 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 ?>
 </div>
 
+<hr>
+<?php 
+ $roles = \App\Entity\ProjectRole::getRolesArray();
+ 	
+?>
+<h4>Now you know what you want. Create new position for members.</h4>
+
+<!-- Form for creating new task -->
+<form id="form-create-role" class="well form-search" action="#" method="post" autocomplete="off">
+			<div class="control-group">
+				<div class="controls">
+						<input type="hidden" name="level" value="2" />
+						<select id="role_name" class="" name="role_name">
+						   <?php 
+						   		foreach($roles as $r){
+						   			echo "<option label='$r' value='$r'>$r</option>";
+						   		}
+						   ?>
+						</select>
+						<input type="text" name="description" placeholder="write detailed specification for position" class="input-xlarge" id="input-role-create"/>
+				</div>
+			</div>
+		<!-- cant change or add div, because its looking in the script for this-->
+		<input type="submit" class="btn btn-primary create"  name='submit' data-toggle="button" data-loading-text="processing..." value="create new position" />						
+    </form>
+   
+
+
+    
+    
+
 <div class="well">My Project People </div>
 <hr/>
 
@@ -43,17 +74,30 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
     				</thead>
    				 <tbody>
 				{{#each this}}				
+				<form method="post" action="" class="form-search" data-question_id="{{id}}">
 				<tr>
 						<td>{{id}}</td>
 						<td>{{level}}</td>  
-						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
+						{{#if user_id}}
+  						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
+  						{{else}}
+    						<td>Empty</td>
+						{{/if}}
 						<td>{{role_name}}</td>  
-						<td><input type="text" name="description" value="{{role_description}}" disabled /></td>  
+						<td><input type="text" name="description" value="{{description}}"/></td>  
 						<td class="actions" id="{{id}}">
-								<input  class="btn btn-danger deny" type="submit"  data-loading-text="processing..." value="Kickout" name="submit" />
 						
+							<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />	
+						
+						{{#if user_id}}
+  							<input  class="btn btn-danger deny" type="submit"  data-loading-text="processing..." value="kickout" name="submit" />
+						{{else}}
+    						<input  class="btn btn-danger delete" type="submit"  data-loading-text="processing..." value="Delete role" name="submit" />
+						{{/if}}
+					
 						</td>
 				</tr>
+				</form>
 				<!-- modal  -->
 		    	<div class="modal hide" id="surveyModal-id-{{id}}">
 				<div class="modal-body">
@@ -94,7 +138,10 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				},
 				
 			bindEvents: function(){
-				this.config.modelList.on('click','td.actions input.deny',this.acceptMember); // edit question 				
+				this.config.modelList.on('click','td.actions input.deny',this.denyMember); // edit question 
+				this.config.modelList.on('click','td.actions input.delete',this.deleteRole); // edit question 
+				this.config.formCreate.on('click','input.create',this.createData); // create new question
+								
 				},
 				
 			findData: function(){
@@ -109,22 +156,64 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 								self.config.modelList.append(self.config.modelListTemplate(results.data));
 								//newAlert (results.respond, results.message)
 							}else{
-								self.config.modelList.append("No requests.");
+								self.config.modelList.append("No members in your team.");
 							}
 				 		}
 				 );	
 	
 				},
+				
+				// create data
+				createData:function(e){
+					var self = Models;
+					var but  = $(this).button('toggle');
+					var form = $(this).parent(); // directly this form
+
+					// validation
+					form.validate({
+					    		rules: {
+					    			description :{
+						    			required: true,
+					    				minlength: 2
+							    		}
+					    		},
+					   			submitHandler: function(f) {
+								// send data
+					   				but.button('loading');
+					   				//create method
+									 $.ajax({
+									 	data: form.serialize() + "&_method=create", // take data from the form and send it to the method delete
+									 }).done(
+											function (results){
+									 			newAlert (results.respond, results.message); // display alert
+									 			self.findData(); // refresh questions
+									 			but.button('reset');
+									 			form.each (function(){
+					  										this.reset();
+												});
+									 		}
+									 );
+									
+									 e.preventDefault();
+
+
+								   			    
+						   		}		 
+					    	}
+					   );
+					
+				
+				},
 	
-			// acceptMember
-			acceptMember:function(e){
+			// denyMember
+			denyMember:function(e){
 				var self = Models;
 				var par = $(this).parent();
-				var application_id = par.attr("id");
+				var role_id = par.attr("id");
 				$(this).button('loading');
 				console.log($(this));
 				$.ajax({
-					data:   "&_method=accept&&application_id="+application_id, // take data from the form and send it to the method update
+					data:   "&_method=deny&&role_id="+role_id, // take data from the form and send it to the method update
 				}).done(
 						function (results){
 							newAlert (results.respond, results.message); // display alert
@@ -134,9 +223,28 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				e.preventDefault();
 			},
 
+			// denyEmpty Role
+			deleteRole:function(e){
+				var self = Models;
+				var par = $(this).parent();
+				var role_id = par.attr("id");
+				$(this).button('loading');
+				console.log($(this));
+				$.ajax({
+					data:   "&_method=delete&&role_id="+role_id, // take data from the form and send it to the method update
+				}).done(
+						function (results){
+							newAlert (results.respond, results.message); // display alert
+							self.findData(); // refresh questions
+						}
+				);
+				e.preventDefault();
+			},
+			
 			};
-
+   
 			Models.init({
+				formCreate: $('#form-create-role'),
 				modelListTemplate: $('#model_list_template').html(),
 				modelList: $("#model_list"),
 			});

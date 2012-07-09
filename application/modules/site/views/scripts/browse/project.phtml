@@ -1,0 +1,30 @@
+<h3>Browse Projects</h3>
+
+
+<!-- Project Displaying -->
+<?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
+    <?php if (count($this->paginator)) {?>
+   <ul class="thumbnails">
+    <?php foreach ($this->paginator as $project){ ?>
+
+    	  <li class="span3">
+          <div class="thumbnail">
+          <a href="/project/index/index/id/<?php echo $project->id?>"> 
+          <img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " />
+           </a>
+            <div class="caption">
+              <h4><?php echo $project->title; ?></h4>
+              <p> By <strong><?php echo $project->user->name?></strong> in <em><?php echo $project->category->name?></em></p>
+              <p><?php echo $project->pitchSentence; ?></p>
+              <p>ROLES SLIDE</p>
+              <p><a class="btn btn-info" href="/project/index/index/id/<?php echo $project->id?>">Detail</a> </p>
+            </div>
+          </div>
+        </li>		
+    <?php } ?>
+  </ul>
+    				
+
+    <?php } else echo "No Projects Available"?>
+
+    

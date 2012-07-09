@@ -3,7 +3,7 @@ namespace App\Entity;
 
 /**
  * @Entity(repositoryClass="App\Repository\Project\ProjectApplication")
- * @Table(name="project_application",indexes={@index(name="search_project_application",columns={"project_id"}),@index(name="search_project_application_user",columns={"user_id"})})
+ * @Table(name="project_application",indexes={@index(name="search_project_application",columns={"project_id"}),@index(name="search_project_role",columns={"project_role_id"}),@index(name="search_project_application_user",columns={"user_id"})})
  */
 class ProjectApplication {
 	
@@ -16,7 +16,7 @@ class ProjectApplication {
 	const PROJECT_ROLE_TYPE_MEMBER = "member";
 	const APPLICATION_ACCEPTED = 2;
 	const APPLICATION_DENIED = 1;
-	const APPLICATION_NEW = 1;
+	const APPLICATION_NEW = 0;
 	
 	/**
 	 * @Id @Column(type="integer", name="id")
@@ -115,6 +115,13 @@ class ProjectApplication {
 
 	}
 	
+	/**
+	 * Set description of application
+	 * @param unknown_type $description
+	 */
+	public function setDescription($description){
+		$this->description = $description;
+	}
 
 	
 	/**

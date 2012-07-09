@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\ProjectRole")
+ * @Entity(repositoryClass="App\Repository\Project\ProjectRole")
  * @Table(name="project_role",indexes={@index(name="search_project_role",columns={"project_id"}),@index(name="search_project_role_user",columns={"user_id"})})
  */
 class ProjectRole {
@@ -57,6 +57,18 @@ class ProjectRole {
 	 */
 	private $created;
 	
+	/**
+	 * Return array of all roles in the system
+	 */
+	public static function getRolesArray(){
+		
+		return array(self::PROJECT_ROLE_STARTER,
+					self::PROJECT_ROLE_LEADER,
+					self::PROJECT_ROLE_GROWER,
+					self::PROJECT_ROLE_BUILDER,
+					self::PROJECT_ROLE_ADVISER);
+	}
+	
 	public function setUser($user) {
 		$this->user = $user;
 	}
@@ -91,6 +103,16 @@ class ProjectRole {
 	public function getDescription(){
 		return $this->description;
 	}
+	
+	public function setLevel($level){
+		$this->level = $level;
+	}
+	
+	public function setDescription($description){
+		return $this->description = $description;
+	}
+	
+	
 	/**
 	 *
 	 * @param $name field_type       	
@@ -131,12 +153,17 @@ class ProjectRole {
 				"role_name" => $this->name,
 				"type" => $this->type,
 				"description" => $this->description,
-				"project_id" => $this->project->id,
-				"user_id" => $this->user->id,
-				"user_name" => $this->user->name,
-	
-	
+				"project_id" => $this->project->id
 		);
+		
+		// add information about the user who has this role
+		if(isset($this->user)){
+			$params["user_id"]= $this->user->id;
+			$params["user_name"] = $this->user->name;
+		}
+		
+		
+		
 		return $params;
 	}
 }

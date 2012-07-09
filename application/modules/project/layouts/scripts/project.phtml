@@ -16,10 +16,25 @@
     	if(Zend_Auth::getInstance()->hasIdentity()){
     		echo $this->action('admin-menu', 'index', 'admin');  
     	}	
-  		 ?>
+    	
+   
+    	
+  	  ?>
   	 <hr>		 
 	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
-	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+	  	
+	 <?php // creator menu
+    	if($this->isCreator){
+    		echo $this->action('menu-creator', 'menu', 'project',array("id" => $this->project->id));
+    	}
+    	// collaborator widget
+    	if($this->isCollaborator){
+    		echo "Yes, you are collaborating in this project.";
+    		echo "<hr>";
+    	}
+     ?>
+    <hr>
+	<?= $this->action('breadcrumbs', 'index', 'site');  ?>
 	 <hr>
 	<div class="row" style="margin-left: 10px"> 
 	      <div class="span6">
