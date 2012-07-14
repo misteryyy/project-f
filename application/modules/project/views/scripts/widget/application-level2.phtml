@@ -1,0 +1,70 @@
+<?php //if($this->aclPermissionDenied) { echo "<div class='well'>You have alredy applied or you are in collaboration team. </div>"; return;}?>
+<?php if($this->project->disableRoleWidget) { echo "<div class='well'>Widget for collaboration disabled</div>"; return;}?>
+<?php if($this->project->level > 2) { echo "<div class='well'>Is not possible to apply for collaboration in this level.</div>"; return;}?>
+
+<?php 
+// generate forms in cycle for all roles 
+// get all roles which are in system
+
+$allRoles = \App\Entity\ProjectRole::getRolesArray(); // array(starter, builder, ..)
+
+foreach($allRoles as $currentRole){ 
+	$count = 0; // number of free roles for current position
+	// count roles 
+	foreach ($this->freePositions as $p){
+		if($p->name == $currentRole){
+			$count++;
+		}
+	}
+	
+	// display form for current role with free positions
+	if($count > 0){
+	?>	
+		<div class="free-roles-<?php echo $currentRole;?>">
+		<span><?php echo $count;?> roles is free for <?php echo $currentRole;?>'s positions </span>
+		<div class="modal span7 hide" id="modal-form-application-level2-<?php echo $currentRole;?>">
+ <?php 
+
+ $form = new \App\Form\Project\AddProjectApplicationLevel2Form($this->member, $this->project, $this->freePositions, $currentRole);
+ echo $form;
+?>
+</div>
+
+
+	<div style="text-align: center">
+		<a class="btn btn-xlarge btn-info" data-toggle="modal"
+			href="#modal-form-application-level2-<?php echo $currentRole;?>">Apply for <?php echo $currentRole;?> positions</a>
+	</div>
+	<hr>
+<script type="text/javascript">
+$(document).ready(function() { 
+	var form = $('#form-application-level-2-<?php echo $currentRole;?>');
+	var myModal = $('#modal-form-application-level2-<?php echo $currentRole;?>');
+
+	form.validate({
+	    		rules: {
+	    			content: {
+	    				required: true,
+	    				minlength: 2
+	    			}
+	    		},
+	    		   submitHandler: function(form) {
+		    		   form.submit();
+				 		myModal.modal('hide');					 		    
+			 		   }
+	    	}
+	   );	
+    }); 
+</script>		
+</div>
+	<?php 	
+		
+	}
+	
+}
+
+ ?>
+
+ 
+
+

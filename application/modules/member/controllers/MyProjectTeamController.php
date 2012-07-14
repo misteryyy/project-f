@@ -219,7 +219,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     			//  create new question
     			case 'findAllNewApplications' :
     				try{
-    					$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id,array('state' =>\App\Entity\ProjectApplication::APPLICATION_NEW));
+    					$applications = $facadeTeam->findApplications($this->_member_id,$this->project_id,array('level' => 1,'state' =>\App\Entity\ProjectApplication::APPLICATION_NEW));
     					$data = array(); // data for sending to the script
     					foreach($applications as $a){
     						$data[] = $a->toArray();
@@ -237,6 +237,29 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     	
     				break;
     				
+    				//  create new question
+    				case 'findAllFreeProjectRoles' :
+    				
+    					try{
+       						$roles = $facadeTeam->findFreeProjectRolesForProject($this->project_id);
+    						$data = array(); // data for sending to the script
+    						foreach($roles as $a){
+    							$data[] = $a->toArray();
+    						}
+    							
+    						$respond = array("respond" => "success",
+    								"message" => "Data loaded successfully.",
+    								"data" => $data);
+    						$this->_response->setBody(json_encode($respond));
+    						break;
+    					}catch(Exception $e){
+    						$respond = array("respond" => "error","message" => $e->getMessage());
+    						$this->_response->setBody(json_encode($respond));
+    					}
+    					
+    					break;
+    					
+    					
     			// accept application
     			case 'accept' :
     				try{

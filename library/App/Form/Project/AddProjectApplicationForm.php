@@ -56,6 +56,8 @@ class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
 				UserRole::MEMBER_ROLE_ADVISER => UserRole::MEMBER_ROLE_ADVISER,
 		);
 	
+		
+		
 		// Country Select Box
 		$this->addElement('select','role', array(
 				'label' => 'Choose role',
@@ -65,10 +67,9 @@ class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
 		
 		// For whic level are we applying?
 		$this->addElement('hidden','level', array(
-				'value' => $this->project->level
+				'value' => 1
 		));
 	
-
 		// maximum 5 question
 		$addToGroup = 	array('logged_member','level','role');
 		$index = 1;

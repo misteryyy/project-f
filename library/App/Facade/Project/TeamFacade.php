@@ -31,6 +31,31 @@ class TeamFacade {
 		return $query->getResult();	
 	}
 	
+	/**
+	 * Return one project role
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $id
+	 * @throws \Exception
+	 * @return object
+	 */
+	public function findOneProjectRole($project_id,$id){
+	
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById ($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+	
+		$r = $this->em->getRepository ('\App\Entity\ProjectRole')->findOneBy(array("id" => $id));
+		if($r){
+			return $r;
+		}else {
+			throw new \Exception("This project role doesn't exists");
+		}
+	
+	}
+	
+	
 	
 	/**
 	 * Return all project widget question
@@ -165,6 +190,8 @@ class TeamFacade {
 	 * @param unknown_type $data
 	 */
 	public function createProjectApplication($user_id,$project_id,$data = array()){		
+		
+		
 		// checking errors
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 		if(!$user){
@@ -176,9 +203,10 @@ class TeamFacade {
 			throw new \Exception("Can't find this project.");
 		}
 		
-	
+		$content = "<h3>Survey for level ". $data['level']. "  </h3> <br/>";
+		// if level 1
 		if($data['level'] == 1) {
-			$content = "<h3>Survey for level ". $data['level']. "  </h3> <br/>";
+	
 			$i = 1;
 			for($i; $i < 6; $i++){
 				$questionString = "question_".$i;
@@ -190,14 +218,30 @@ class TeamFacade {
 					$content ." <hr> ";
 				}		
 			}
+		
+		
 			
 			$content .= "General question: " .$data['content']. " <br />";
 
+			
 			$newApplication = new  \App\Entity\ProjectApplication($user, $project, $data['level'], $content, $data['role']);
 			$this->em->persist($newApplication);
 			$this->em->flush();
-		} else {
-			// TODO second level		
+		} 
+		// application for level 2
+		else if ($data['level'] == 2) {
+			
+			
+			// find project role
+			$role = $this->findOneProjectRole($project_id, $data['role_id']);
+			
+			$content .= "General question: " .$data['content']. " <br />";
+			$newApplication = new  \App\Entity\ProjectApplication($user, $project, $data['level'], $content, $role->name);
+			$newApplication->setDescription($role->description);
+			$newApplication->setProjectRole($role);
+			$this->em->persist($newApplication);
+			$this->em->flush();
+				
 		}		
 	}
 	
@@ -238,16 +282,39 @@ class TeamFacade {
 		}
 		
 		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 ';
-		
 		$stmt .= 'ORDER BY r.name, r.level, r.description DESC';
 		
 		$query = $this->em->createQuery($stmt);
 		$query->setParameter(1, $project_id);
 		$query->setParameter(2, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
 		
-		return $query->getResult();
-		
+		return $query->getResult();	
 	}
+	
+
+	/**
+	 * Find all free positions for project
+	 * @param unknown_type $project_id
+	 * @param unknown_type $options
+	 * @throws \Exception
+	 */
+	public function findFreeProjectRolesForProject($project_id,$options = array()){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+	
+		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 AND r.user is NULL ';
+		$stmt .= 'ORDER BY r.name, r.level, r.description DESC';
+	
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+	
+		return $query->getResult();
+	}
+	
+	
 	/**
 	 * Find creator roles for project
 	 * @param unknown_type $project_id
@@ -352,7 +419,18 @@ class TeamFacade {
 		
 		}
 		
-		$stmt .= 'ORDER BY a.created, a.roleName DESC';
+		// filter level
+		if(isset($options['level'])){
+			// select application for level
+			if( $options['level'] == 1 )
+				$stmt .= ' AND a.level = 1 '; //. \App\Entity\ProjectApplication::APPLICATION_NEW;
+		
+			if( $options['level'] == 2 )
+				$stmt .= ' AND a.level = 2 '; //. \App\Entity\ProjectApplication::APPLICATION_NEW;
+			
+		}
+		
+		$stmt .= 'ORDER BY a.level, a.created, a.roleName DESC';
 	
 		$query = $this->em->createQuery($stmt);
 		$query->setParameter(1, $project_id);

@@ -49,8 +49,17 @@
 	        <?= $this->action('task', 'widget', 'project',array("id" => $this->project->id));  ?>
 	    	
 	    
-	    	<!-- Form Application -->
-	        <?= $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
+	    	<!-- Form Applications for Level 1 -->
+	        <?php 
+	 if($this->project->level == 1)       	 
+     		echo $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
+	    	 
+	    	<!-- Form Applications for Level 2 -->
+	        <?
+     if($this->project->level == 2)
+     		echo $this->action('application-level2', 'widget', 'project',array("id" => $this->project->id));?>
+	    	
+	    	
 	    	<!-- Similar projects -->
 	     </div>
   

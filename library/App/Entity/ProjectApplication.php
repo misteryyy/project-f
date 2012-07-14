@@ -76,7 +76,7 @@ class ProjectApplication {
 	private $project;
 
 	/**
-	 * @ManyToOne(targetEntity="ProjectRole")
+	 * @ManyToOne(targetEntity="ProjectRole",inversedBy="applications")
 	 * @JoinColumn(name="project_role_id", referencedColumnName="id")
 	 */
 	private $projectRole; // if empty, we are in the first level
@@ -254,6 +254,7 @@ class ProjectApplication {
 				"level" => $this->level,
 				"role_name" => $this->roleName,
 				"content" => $this->content,
+				"description" => $this->description,
 				"project_id" => $this->project->id,
 				"user_id" => $this->project->user->id,
 				"created" => $this->created->format('Y/m/d h:m:s'),

@@ -7,18 +7,20 @@
 namespace App\Form\Project;
 use App\Entity\UserRole;
 
-class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
+class AddProjectApplicationLevel2Form extends \Twitter_Bootstrap_Form_Horizontal
 {
 	// object for form
 	private $member;
 	private $project; 
-	private $questions; // questions for applicants
+	private $freeRoles; // questions for applicants
+	private $role;
 	
-	public function __construct($member,$project,$questions)
+	public function __construct($member,$project,$freeRoles,$role)
 	{	
 		$this->member = $member;
 		$this->project = $project;
-		$this->questions = $questions;
+		$this->freeRoles = $freeRoles;
+		$this->role = $role;
 		parent::__construct();
 	}
 	
@@ -29,71 +31,23 @@ class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
 	public function init()
 	{
 		// ajax call
-		$this->setAction("/project/widget/ajax-application/id/".$this->project->id."/_method/create");
-		$this->addAttribs(array("id" => "form-application"));
+		$this->setAction("/project/widget/ajax-application/id/".$this->project->id."/_method/create-level-2");
+		$this->addAttribs(array("id" => "form-application-level-2-".$this->role));
 		// header for modal window
-		$this->generateHeader();
-		// changes with different levels
-		if($this->project->level == 2){
-			$this->generateLevel2(); 
-		}
-
+		$this->generateHeader();		
+		$this->generateContent(); 
 		// The same for every level
 		$this->generateFooter();
 
 	}
 
 	/**
-	 * Look for LEVEL 1 / Max 5 questoins plus one compulsory question
+	 * In Level 2, Choose the role with description and write why are you appliing.
 	 */
-	private function generateLevel2(){
-		$name = "role";
-		$arrayRoles = array(
-				UserRole::MEMBER_ROLE_STARTER => UserRole::MEMBER_ROLE_STARTER,
-				UserRole::MEMBER_ROLE_LEADER => UserRole::MEMBER_ROLE_LEADER,
-				UserRole::MEMBER_ROLE_BUILDER => UserRole::MEMBER_ROLE_BUILDER,
-				UserRole::MEMBER_ROLE_GROWER => UserRole::MEMBER_ROLE_GROWER,
-				UserRole::MEMBER_ROLE_ADVISER => UserRole::MEMBER_ROLE_ADVISER,
-		);
+	private function generateContent(){
 	
-		// Country Select Box
-		$this->addElement('select','role', array(
-				'label' => 'Choose role',
-				'multiOptions' => $arrayRoles
-					
-		));
-		
-		// For whic level are we applying?
-		$this->addElement('hidden','level', array(
-				'value' => $this->project->level
-		));
-	
-
 		// maximum 5 question
 		$addToGroup = 	array('logged_member','level','role');
-		$index = 1;
-		foreach($this->questions as $q){
-			
-			// For whic level are we applying?
-			$this->addElement('hidden','question_'.$index, array(
-					'value' => $this->project->level
-			));
-			
-			$this->addElement('textarea', 'answer_'.$index, array(
-				'label' => $q->question,
-				'required' => true,
-				'rows' => 4,
-				'errorMessages' => array("You should have descripton of your project."),
-				'description' => "description",
-				'validators' => array("NotEmpty"),
-				'disableLoadDefaultDecorators' => true,
-			));
-			// add to group
-			$addToGroup[] = 'question_'.$index;
-			$addToGroup[] = 'answer_'.$index;
-			$index++;
-		} 
-
 		// Notification about level
 		$this->addElement('hidden', 'hr', array(
 				'description' => '<hr />',
@@ -101,7 +55,42 @@ class AddProjectApplicationForm extends \Twitter_Bootstrap_Form_Horizontal
 				'decorators' => array(
 						array('Description', array('escape'=>false, 'tag'=>'')),
 				),
+		)); 
+		
+		foreach($this->freeRoles as $r){
+			// filter descriptions
+			if($r->name === $this->role){
+				$arrayDescription[$r->id] = $r->description;
+			}
+		}
+		
+		$addToGroup[] = 'role_name';
+		$this->addElement('text', 'role_name', array(
+				'label' => 'Role',
+				'value' => $this->role,
+				'required' => true,
+				'disabled' => true,
+				'filters'    => array('StringTrim'),
+				'description' => "Position you are applying for.",
+				'validators' => array( array('StringLength', false, array(0,100) ))));
+
+		$addToGroup[] = 'role_id'; 
+		// Country Select Box
+		$this->addElement('select','role_id', array(
+				'label' => 'Choose specific position',
+				'multiOptions' => $arrayDescription
+					
 		));
+		
+		
+		
+		// For whic level are we applying?
+		$this->addElement('hidden','level', array(
+				'value' => 2
+		));
+	
+
+	
 		$addToGroup[] = 'hr'; // make separator
 			
 		$addToGroup[] = 'content'; // make separator

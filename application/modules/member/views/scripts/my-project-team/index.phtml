@@ -69,6 +69,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				<th>Member</th>
     			<th>Role</th>
 				<th>Description</th>	
+				<th>Applications</th>
     			<th>Actions</th>
     		</tr>
     				</thead>
@@ -85,6 +86,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 						{{/if}}
 						<td>{{role_name}}</td>  
 						<td><input type="text" name="description" value="{{description}}"/></td>  
+						<td>{{applications_count}}</td>  
 						<td class="actions" id="{{id}}">
 						
 							<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />	

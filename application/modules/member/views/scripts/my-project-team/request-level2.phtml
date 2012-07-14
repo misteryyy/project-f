@@ -60,95 +60,35 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 </div>
 
 <!-- modal deny form  -->
-<div class="modal hide" id="modal-form-deny">
+	<div class="modal hide" id="modal-form-deny">
 	<form id="form-deny" enctype="application/x-www-form-urlencoded" class=" form-horizontal" action="/member/my-project-team/ajax-request/id/<?php echo $this->project->id;?>/_method/deny" method="post">
+
 		<div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
 				<h3>Please Explain the reason why you have denied the member.</h3></div>
 				<div class="modal-body">
-					<fieldset id="fieldset-application_group">
-						<input type="hidden" name="application_id" value="" class="" id="application_id">              
-						<div class="control-group">
-						
-						<label for="message" class="control-label required">Reason</label>	
-							<div class="controls">
-								 <textarea name="message" id="message" rows="4" class="" cols="80"></textarea>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-<div class="modal-footer">	
-	<input type="submit" name="submit" id="submit" value="Confirm deny" class="btn btn-primary">
-	<button name="reset" id="reset" type="reset" value="Reset" class="btn btn-primary">Reset</button>
-	<a href="#" class="btn" data-dismiss="modal">Close</a></div>
-    </form>	
-    </div>
-
-<hr>
-
-
-    <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
-    	 <div id="model_list_level2">
-    	 
-    		<script id="model_list_template_level2" type="text/x-handlebars-template">
-			<?php // LEVEL 2 handling?>   
-			<h3>Applications for LEVEL 2</h3><hr>
-			<table class="table table-striped">
-        	<thead>
-    		<tr>
-    			<th>ID</th>
-				<th>Level</th>
-				<th>Member</th>
-    			<th>Role</th>
-				<th>Description</th>	
-    			<th>Actions</th>
-    		</tr>
-    				</thead>
-   				 <tbody>
-				{{#each this}}	
-				<tr>
-						<td>{{id}}</td>
-						<td>{{level}}</td>  
-						{{#if user_id}}
-  						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
-  						{{else}}
-    						<td>Empty</td>
-						{{/if}}
-						<td>{{role_name}} (waiting {{applications_count}})</td>  
-						<td>{{description}}</td>  
+			<fieldset id="fieldset-application_group">
+				<input type="hidden" name="application_id" value="" class="" id="application_id">              
+				<div class="control-group">
 				
-						<td class="actions" id="{{id}}">				
-						</td>
-				</tr>			
-				{{#each this.applications}}			
-					<tr class="sub-applications" >
-							<td>-- application {{id}}</td>
-							<td>{{level}}</td>  
-							<td>{{created}}</td>
-							<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
-
-							<td>{{role_name}}</td>  
-							<td class="actions" id="{{id}}">
-								<a class="btn btn-info" data-toggle="modal" href="#surveyModal-id-{{id}}" >Survey</a>
-								<input  class="btn btn-success accept" type="submit"  data-loading-text="processing..." value="Accept" name="submit" />
-								<input  class="btn btn-success deny" type="submit"  data-loading-text="processing..." value="Deny" name="submit" />
-							</td>
-					</tr>
-						<!-- modal  -->
-		    			<div class="modal hide" id="surveyModal-id-{{id}}">
-							<div class="modal-body">
-    						<p>{{{content}}}</p>
-    						</div>
-    					<div class="modal-footer"> <a href="#" class="btn" data-dismiss="modal">Close</a></div>
-    				</div>
-				{{/each}}			
-
-				{{/each}}
-		    		 		
-   			 </tbody>
-    		</table>	
-		</script>		
+				<label for="message" class="control-label required">Reason</label>	
+					<div class="controls">
+						 <textarea name="message" id="message" rows="4" class="" cols="80"></textarea>
+					</div>
+				</div>
+			</fieldset>
 </div>
-
+<div class="modal-footer">	
+                    
+<input type="submit" name="submit" id="submit" value="Confirm deny" class="btn btn-primary">
+<button name="reset" id="reset" type="reset" value="
+Reset" class="btn btn-primary">
+Reset</button>
+ <a href="#" class="btn" data-dismiss="modal">Close</a>
+        		 </div>
+       </form>	
+    </div>
+   
+	
 	
 <script src="/media/tools/handlebars-1.0.0.beta.6.js"></script>   
         <script type="text/javascript">  
@@ -182,27 +122,19 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				this.config = config;
 				this.bindEvents();
 				this.setutTemplates();
-				this.findData(); // fill the question_list for level 1
-				this.findDataL2(); // fill the question_list for level 2
-				
-				
+				this.findData(); // fill the question_list
 				},
 			// setting template system
 			setutTemplates: function(){
 				this.config.modelListTemplate = Handlebars.compile(this.config.modelListTemplate);
-				this.config.modelListTemplateL2 = Handlebars.compile(this.config.modelListTemplateL2);
-									
+					
 				},
 				
 			bindEvents: function(){
-				// events for level 1
+				this.config.modelList.on('click','td.actions input.survey',this.findSurvey); // edit question 				
 				this.config.modelList.on('click','td.actions input.accept',this.acceptMember); // edit question 	
 				this.config.modelList.on('click','td.actions input.deny',this.showModaldenyMember); // edit question 			
-
-				// events for level 2
-				this.config.modelListL2.on('click','td.actions input.accept',this.acceptMember); // edit question 	
-				this.config.modelListL2.on('click','td.actions input.deny',this.showModaldenyMember); // edit question 			
-					
+				
 				},
 				
 			findData: function(){
@@ -217,33 +149,32 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 								self.config.modelList.append(self.config.modelListTemplate(results.data));
 								//newAlert (results.respond, results.message)
 							}else{
-								self.config.modelList.append("No requests for level 1.");
+								self.config.modelList.append("No requests.");
 							}
 				 		}
 				 );	
 	
 				},
 
-			findDataL2: function(){
-				 var self = Models;
-					
-				 $.ajax({
-				 	data: "_method=findAllFreeProjectRoles",// take data from the form and send it to the method delete
-					 }).done(
+			// find survey
+			findSurvey:function(e){
+				var self = Models;
+				var par = $(this).parent();
+				var application_id = par.attr("id");
+				
+				$(this).button('loading');
+				console.log($(this));
+				//delete method
+				$.ajax({
+					data:   "&_method=getSurvey&&application_id="+application_id, // take data from the form and send it to the method update
+				}).done(
 						function (results){
-				 			self.config.modelListL2.empty();
-							if(results.data[0]){
-								self.config.modelListL2.append(self.config.modelListTemplateL2(results.data));
-								//newAlert (results.respond, results.message)
-							}else{
-								self.config.modelListL2.append("No members in your team.");
-							}
-				 		}
-				 );
-		
-				},
-
-		
+							newAlert (results.respond, results.message); // display alert
+							self.findData(); // refresh questions
+						}
+				);
+				e.preventDefault();
+			},	
 			
 			// acceptMember
 			acceptMember:function(e){
@@ -275,14 +206,52 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			Models.init({
 				modelListTemplate: $('#model_list_template').html(),
 				modelList: $("#model_list"),
-
-				// level 2 setting
-				modelListTemplateL2: $('#model_list_template_level2').html(),
-				modelListL2: $("#model_list_level2"),
 			});
  </script>  
 
-
+    
+    
+    <script>
+ $(document).ready(function() {
+      $("#searchInput").keyup(function(){
+ 		//hide all the rows
+          $("#fbody").find("tr").hide();
+ 			//split the current value of searchInput
+          var data = this.value.split(" ");
+ 			//create a jquery object of the rows
+          var jo = $("#fbody").find("tr");
+ 			//Recursively filter the jquery object to get results. 
+          $.each(data, function(i, v){
+              jo = jo.filter("*:contains('"+v+"')");
+          });
+ 			//show the rows that match.
+          jo.show();
+ 			//Removes the placeholder text 
+      }).focus(function(){
+          this.value="";
+          $(this).css({"color":"black"});
+          $(this).unbind('focus');
+      }).css({"color":"#C0C0C0"});
+  });
+</script>
+</head>
+<body>
+ <input id="searchInput" value="Type To Filter"><br/>
+ <table>
+  <thead>
+    <tr><th>Column1</th><th>Column2</th></tr>
+  </thead>
+  <tbody id="fbody">
+    <tr><td>cat</td><td>one</td></tr>
+    <tr><td>dog</td><td>two</td></tr>
+    <tr><td>cat</td><td>three</td></tr>
+    <tr><td>moose</td><td>four</td></tr>
+    <tr><td>mouse</td><td>five</td></tr>
+    <tr><td>dog</td><td>six</td></tr>
+  </tbody>
+ </table>
+</body>
+</html>
     
     
     

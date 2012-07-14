@@ -57,6 +57,12 @@ class ProjectRole {
 	 */
 	private $created;
 	
+	
+	/**
+	 * @oneToMany(targetEntity="ProjectApplication", mappedBy="projectRole")
+	 */
+	private $applications;
+	
 	/**
 	 * Return array of all roles in the system
 	 */
@@ -86,7 +92,8 @@ class ProjectRole {
 		$this->level = $level;
 		$this->type = $type;
 		$this->description = $description;
-		$this->created = new \DateTime ( "now" );		
+		$this->created = new \DateTime ( "now" );	
+		$this->applications = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 	/**
 	 *
@@ -153,8 +160,16 @@ class ProjectRole {
 				"role_name" => $this->name,
 				"type" => $this->type,
 				"description" => $this->description,
-				"project_id" => $this->project->id
+				"project_id" => $this->project->id,
+				"applications_count" => count($this->applications)
 		);
+		
+		// add application information to array
+		if (count($this->applications) > 0){
+			foreach($this->applications as $a){
+			$params["applications"][] = $a->toArray();
+			};
+		}
 		
 		// add information about the user who has this role
 		if(isset($this->user)){
