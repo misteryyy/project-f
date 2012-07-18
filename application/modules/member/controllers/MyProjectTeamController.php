@@ -23,10 +23,6 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 		$this->checkProjectAndUser();
 		$this->view->pageTitle = "Team" ;	
 		
-		// get creator roles
-		$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
-		$this->view->creatorRoles = $facadeTeam->findCreatorRolesForProject($this->project_id);
-		
 		$this->view->project = $this->project;
 
 	}

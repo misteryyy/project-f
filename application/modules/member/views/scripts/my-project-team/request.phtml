@@ -87,13 +87,17 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 
 <hr>
 
+
+<!-- Level 2 Requests -->
+<h3>Applications for LEVEL 2</h3><hr>
 <h4>Now you know what you want. Create new position for members.</h4>
 <?php 
  // reading roles
  $roles = \App\Entity\ProjectRole::getRolesArray();
 ?>
+ 
 <!-- Form for creating new task -->
-<form id="form-create-role" class="well form-search" action="#" method="post" autocomplete="off">
+<form id="form-create-role" class="well form-inline" action="#" method="post" autocomplete="off">
 			<div class="control-group">
 				<div class="controls">
 						<input type="hidden" name="level" value="2" />
@@ -116,7 +120,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
     	 
     		<script id="model_list_template_level2" type="text/x-handlebars-template">
 			<?php // LEVEL 2 handling?>   
-			<h3>Applications for LEVEL 2</h3><hr>
+		
 			<table class="table table-striped">
         	<thead>
     		<tr>

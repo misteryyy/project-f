@@ -142,7 +142,8 @@ class Project {
 	public function getCreatorRolesArray() {
 		$arr = array ();
 		foreach ( $this->roles as $role ) {
-			$arr [] = $role->getName ();
+			if($role->type == \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_CREATOR){
+			$arr [] = $role->getName ();}
 		}
 		return $arr;
 	}
