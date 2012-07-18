@@ -99,10 +99,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Form::setDefaultTranslator($translator);
     }
 
+    /**
+     * Set search engine
+     */
     public function _initElasticSearch(){
         $es = new Elastica_Client();
         Zend_Registry::set('es', $es);
     }
+    
+    
     #initializes the DEBUG constant to true or false based on config. settings and/or cookie
     #and stores a copy of the Zend_Logger in the Registry for future references
     protected function _initDebug() {

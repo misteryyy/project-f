@@ -1,0 +1,31 @@
+ <?php 
+ $addParams = null;
+	// additional params for category
+	if(isset($_GET['category'])){
+		$addParams = "category=".$_GET['category'];
+	}	
+ 
+ ?> 
+  
+    <ul class="nav nav-list">
+    <li class="nav-header">
+   	Categories
+    </li>
+    <li><a href='/browse-projects'>All</a></li>
+<?php 
+foreach($this->categories as $c){
+	echo "<li><a href='/browse-projects?category=$c->id'>$c->name</a> </li>".PHP_EOL;
+}
+?>
+    <li class="nav-header">
+   	Browse Project
+    </li>
+    <li><a href='/browse-projects?type=newest&&<?php echo $addParams;?>'>Recently created</a> </li>
+	<li><a href='/browse-projects?type=random&&<?php echo $addParams;?>'>Randomize</a> </li>
+	<li><a href='/browse-projects?type=most-viewed&&<?php echo $addParams;?>'>Most viewed</a> </li>
+	<li><a href='/browse-projects?type=recommended&&<?php echo $addParams;?>'>Recommended</a> </li>
+	
+
+	
+		
+</ul>

@@ -12,6 +12,18 @@
 								<label>Sitemap</label>
 								<uri>/site/index/sitemap</uri>
 						</sitemap>
+							<browse-member>
+							      <label>Browse Members</label>
+	    							<module>site</module>
+	            					<controller>browse</controller>
+	            					<action>member</action>                   			                 
+	               			</browse-member>
+	               			<browse-project>
+							      <label>Browse Projects</label>
+	    							<module>site</module>
+	            					<controller>browse</controller>
+	            					<action>project</action>                   			                 
+	               			</browse-project>
 						  <login>
                   			  <label>Member Login</label>
                     		 <uri>/member/index/login</uri>

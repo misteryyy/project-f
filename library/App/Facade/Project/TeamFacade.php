@@ -281,7 +281,7 @@ class TeamFacade {
 			throw new \Exception("Can't find this project for this user.");
 		}
 		
-		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 ';
+		$stmt = 'SELECT r FROM App\Entity\ProjectRole r WHERE r.project = ?1 AND r.type = ?2 AND r.user is NOT NULL ';
 		$stmt .= 'ORDER BY r.name, r.level, r.description DESC';
 		
 		$query = $this->em->createQuery($stmt);

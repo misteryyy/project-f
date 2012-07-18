@@ -1,26 +1,12 @@
- <!-- Carousel Slideshow Module -->
-<div id="myCarousel" class="carousel">
-  <div class="carousel-inner">
-   <?php 
-    $active = true;
-   	for($i=1;$i<6;$i++){
-   		$project = $this->slideshow->getProject($i);
-   		if($project){ ?>
-		<div class="item <?php if($active == true) {echo "active";$active = false;} // first project is set to be active?>">   		
-   			<p><img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " /></p>	
-   			<?php echo $project->title; ?>
-		</div>	
-   	<?php
-   		}
-   }
-   ?>
-  </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
-
-
+	<div class="row" style="margin-left: 10px"> 
+	  	<!-- Slideshow -->
+	  	<?= $this->action('top-project', 'widget', 'site');  ?>
+	  </div>
+	 
+	 
+	<div class="row" style="margin-left: 10px"> 
+	
+	<div class="span6">
 <!-- Project Displaying -->
 <?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
     <?php if (count($this->paginator)) {?>
@@ -46,5 +32,17 @@
     				
 
     <?php } else echo "No Projects Available"?>
+    
+    
+          </div>
+	    
+	    <div class="span6">
+	    	<h3>Widgets</h3>
+	    
+	    <!-- Category menu and filters module -->
+	  	<?= $this->action('category', 'widget', 'site');  ?>
+	     </div>
+  
+    </div>
 
     

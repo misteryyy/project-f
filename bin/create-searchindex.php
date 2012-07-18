@@ -2,8 +2,8 @@
 require_once('bootstrap.php');
 
 define('INDEX_LABEL', 'quotes');
-
-$client = Zend_Registry::get('es');
+$client = new Elastica_Client();
+echo "Status" . $client->getStatus();
 
 try {
     $index = $client->getIndex(INDEX_LABEL);

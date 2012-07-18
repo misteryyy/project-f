@@ -19,6 +19,9 @@ class ProjectFacade {
 	}
 	
 	
+	
+	
+	
 	/*
 	 * Returns one project by id
 	 */
@@ -39,12 +42,70 @@ class ProjectFacade {
 		
 			$stmt = 'SELECT p FROM App\Entity\Project p ';
 			$stmt .= 'ORDER BY p.created DESC';
+			
+			// if category	
 			$query = $this->em->createQuery($stmt);
 				
 			$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
 			$iterator = $paginator->getIterator();
 			$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
 			return new \Zend_Paginator($adapter);	
+	}
+	
+	/**
+	 * Find Category by ID
+	 * @param unknown_type $category_id
+	 * @throws \Exception
+	 */
+	public function findCategoryById($category_id){
+		// check the category
+		$category = $this->em->getRepository ('\App\Entity\Category')->findOneById ( $category_id );
+		if(!$category){
+			throw new \Exception("This category doesn't exits");
+		}
+		
+		return $category;
+	}
+	
+	
+	/**
+	 * Find Category by Name
+	 * @param unknown_type $category_name
+	 * @throws \Exception
+	 */
+	public function findCategoryByName($category_name){
+		// check the category
+		$category = $this->em->getRepository ('\App\Entity\Category')->findOneByName ( $category_name);
+		if(!$category){
+			throw new \Exception("This category doesn't exits");
+		}
+	
+		return $category;
+	}
+	
+	
+	/**
+	 * Find projects by category
+	 * @param unknown_type $category_id
+	 * @param unknown_type $options
+	 * @throws \Exception
+	 */
+	public function findAllProjectsByCategory($category_id,$options= array()){
+		
+		$category = $this->findCategoryById($category_id);
+		
+		$stmt = 'SELECT p FROM App\Entity\Project p WHERE p.category = ?1';
+		$stmt .= 'ORDER BY p.created DESC';
+			
+		// if category
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $category_id);
+		
+		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
+		$iterator = $paginator->getIterator();
+		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+		return new \Zend_Paginator($adapter);
+		
 	}
 	
 
@@ -78,6 +139,8 @@ class ProjectFacade {
 		}	
 	}
 	
+	
+	
 	/**
 	 * Return all categories in array / used for form
 	 */
@@ -90,6 +153,14 @@ class ProjectFacade {
 			}	
 		}
 		return $arr;
+	}
+	
+	/**
+	 * Return all categories in array / used for form
+	 */
+	public function findAllProjectCategories(){
+		$categories = $this->em->getRepository ('\App\Entity\Category')->findThemAll();
+		return $categories;
 	}
 
 }

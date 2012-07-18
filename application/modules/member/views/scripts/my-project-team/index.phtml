@@ -23,34 +23,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 </div>
 
 <hr>
-<?php 
- $roles = \App\Entity\ProjectRole::getRolesArray();
- 	
-?>
-<h4>Now you know what you want. Create new position for members.</h4>
-
-<!-- Form for creating new task -->
-<form id="form-create-role" class="well form-search" action="#" method="post" autocomplete="off">
-			<div class="control-group">
-				<div class="controls">
-						<input type="hidden" name="level" value="2" />
-						<select id="role_name" class="" name="role_name">
-						   <?php 
-						   		foreach($roles as $r){
-						   			echo "<option label='$r' value='$r'>$r</option>";
-						   		}
-						   ?>
-						</select>
-						<input type="text" name="description" placeholder="write detailed specification for position" class="input-xlarge" id="input-role-create"/>
-				</div>
-			</div>
-		<!-- cant change or add div, because its looking in the script for this-->
-		<input type="submit" class="btn btn-primary create"  name='submit' data-toggle="button" data-loading-text="processing..." value="create new position" />						
-    </form>
-   
 
 
-    
     
 
 <div class="well">My Project People </div>
@@ -142,8 +116,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			bindEvents: function(){
 				this.config.modelList.on('click','td.actions input.deny',this.denyMember); // edit question 
 				this.config.modelList.on('click','td.actions input.delete',this.deleteRole); // edit question 
-				this.config.formCreate.on('click','input.create',this.createData); // create new question
-								
+									
 				},
 				
 			findData: function(){
@@ -165,47 +138,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 	
 				},
 				
-				// create data
-				createData:function(e){
-					var self = Models;
-					var but  = $(this).button('toggle');
-					var form = $(this).parent(); // directly this form
-
-					// validation
-					form.validate({
-					    		rules: {
-					    			description :{
-						    			required: true,
-					    				minlength: 2
-							    		}
-					    		},
-					   			submitHandler: function(f) {
-								// send data
-					   				but.button('loading');
-					   				//create method
-									 $.ajax({
-									 	data: form.serialize() + "&_method=create", // take data from the form and send it to the method delete
-									 }).done(
-											function (results){
-									 			newAlert (results.respond, results.message); // display alert
-									 			self.findData(); // refresh questions
-									 			but.button('reset');
-									 			form.each (function(){
-					  										this.reset();
-												});
-									 		}
-									 );
-									
-									 e.preventDefault();
-
-
-								   			    
-						   		}		 
-					    	}
-					   );
-					
 				
-				},
 	
 			// denyMember
 			denyMember:function(e){
@@ -246,7 +179,6 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 			};
    
 			Models.init({
-				formCreate: $('#form-create-role'),
 				modelListTemplate: $('#model_list_template').html(),
 				modelList: $("#model_list"),
 			});

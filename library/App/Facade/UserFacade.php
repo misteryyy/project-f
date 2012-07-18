@@ -2,6 +2,7 @@
 namespace App\Facade;
 
 use Doctrine\DBAL\Schema\Visitor\RemoveNamespacedAssets;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class UserFacade {
 	
@@ -22,6 +23,49 @@ class UserFacade {
 		
 	}
 	
+	/**
+	 * Return all users
+	 */
+public function findAllUsersNative($options = array()){
+	
+	// Equivalent DQL query: "select u from User u where u.name=?1"
+	// User owns an association to an Address but the Address is not loaded in the query.
+	$rsm = new ResultSetMapping;
+	$rsm->addEntityResult('\App\Entity\User', 'u');
+	$rsm->addFieldResult('u', 'id', 'id');
+	$rsm->addFieldResult('u', 'name', 'name');
+	
+	$query = $this->em->createNativeQuery('SELECT id, name FROM user WHERE MATCH(name) AGAINST ("josef" IN BOOLEAN MODE) ', $rsm);
+	//$query->setParameter(1, 'romanb');
+	
+	return $query->getResult();
+}
+	
+	/**
+	 * Return all users in application, used for search
+	 * @param unknown_type $user_id
+	 * @param unknown_type $options
+	 * @throws \Exception
+	 */
+	public function findAllUsersPaginator($user_id,$options = array()){
+	
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
+		if(!$user){
+			throw new \Exception("Member doesn't exists");
+		}
+		
+		$stmt = 'SELECT u FROM App\Entity\User u';
+		//$stmt .= 'ORDER BY a.created, a.roleName DESC';
+		$query = $this->em->createQuery($stmt);
+		//$query->setParameter(1, $project_id);
+			
+		$paginator = new \Doctrine\ORM\Tools\Pagination\Paginator($query);
+		$iterator = $paginator->getIterator();
+		$adapter = new \Zend_Paginator_Adapter_Iterator($iterator);
+		return new \Zend_Paginator($adapter);
+	}
+	
+
 	public function findOneUser($id){
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $id );
 		if($user){

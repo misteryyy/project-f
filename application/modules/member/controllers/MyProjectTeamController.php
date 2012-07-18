@@ -291,6 +291,18 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     					//$this->_response->setBody(json_encode($respond));
     				}
     				break;
+    			//  create new role
+    			case 'create' :
+    					try{
+    						$facadeTeam->createProjectRole($this->_member_id, $this->project_id,$this->_request->getParams());
+    						$respond = array("respond" => "success",'message' => "New position was created.");
+    						$this->_response->setBody(json_encode($respond));
+    					}catch(Exception $e){
+    						$respond = array("respond" => "error","message" => $e->getMessage());
+    						$this->_response->setBody(json_encode($respond));
+    					}
+    						
+    					break;
     		
     	} 
     	} else {

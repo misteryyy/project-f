@@ -1,6 +1,8 @@
+<div class="row" style="margin-left: 10px"> 
 <h3>Browse Projects</h3>
+<hr>
 
-
+	<div class="span6">
 <!-- Project Displaying -->
 <?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
     <?php if (count($this->paginator)) {?>
@@ -25,6 +27,12 @@
   </ul>
     				
 
-    <?php } else echo "No Projects Available"?>
-
-    
+    <?php } else echo "There are no projects in this category."?>
+      </div>
+	   
+	  <div class="span6">	    
+	    <!-- Category menu and filters module -->
+	  	<?= $this->action('category', 'widget', 'site');  ?>
+	     </div>
+  
+    </div>

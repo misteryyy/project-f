@@ -17,25 +17,19 @@
 </head>
 
 <body>
-  <div class="row-fluid" style="margin-left:10px">
-  <div class="span11" >
-   
+     
    <?= $this->action('header', 'index', 'site');  ?>
   	 <hr>		 
 	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
 	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
 	 <hr>
-    <div class="row-fluid">    
-      <div class="span10">
-         <!-- Bootstrap messaging generator -->
-      	<?php echo $this->flashMessenger() ; ?>
-        <?php echo $this->layout()->content; ?>
-      </div>
-    </div> 
+	 <!-- Bootstrap messaging generator -->
+	 <?php echo $this->flashMessenger() ; ?>
+	 <?php echo $this->layout()->content; ?>
+
     <footer>
       <?= $this->action('footer', 'index', 'site');  ?>
     </footer>
-  </div>
-</div>
-</body>
+
+    </body>
 </html>
