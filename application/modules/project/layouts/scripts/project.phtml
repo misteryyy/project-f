@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-  	<title>Project-F Beta / Project / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
-  <?= $this->action('lib', 'index', 'site');  // libraries ?>
- </head>
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Project-F Beta / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="<?=$this->baseUrl('/media/data-tables-1.9.1/css/data-table-bootstrap2-additional.css')?>">
+    <?= $this->action('lib', 'index', 'site');  // libraries ?>
+    <link rel="stylesheet" href="<?=$this->baseUrl('/media/slepice-site/1.0.0/css/flow_css.css')?>">
+
+</head>
+
 <body>
- 		<?= $this->action('header', 'index', 'site');  ?>
+ 	<div id="fl-container">
+   <div class="container">
+     <?= $this->action('header', 'index', 'site');  ?>
+   </div>
+
  			<?php 
 		// if the user has identity
     	if(Zend_Auth::getInstance()->hasIdentity()){
@@ -20,7 +31,7 @@
    
     	
   	  ?>
-  	 <hr>		 
+	 
 	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
 	  	
 	 <?php // creator menu
@@ -33,41 +44,219 @@
     		echo "<hr>";
     	}
      ?>
-    <hr>
+  <div id="fl-content">
+   <div class="container"> 
 	<?= $this->action('breadcrumbs', 'index', 'site');  ?>
-	 <hr>
-	<div class="row" style="margin-left: 10px"> 
-	      <div class="span6">
-	      	<!-- Bootstrap messaging generator -->
-	      	<?php echo $this->flashMessenger() ; ?>
-	        <?php echo $this->layout()->content; ?>
-	      </div>
-	    
-	    <div class="span6">
-	    	<h3>Widgets</h3>
-			<!-- Levels and Tasks module -->
-	        <?= $this->action('task', 'widget', 'project',array("id" => $this->project->id));  ?>
-	    	
-	    
-	    	<!-- Form Applications for Level 1 -->
-	        <?php 
-	 if($this->project->level == 1)       	 
-     		echo $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
-	    	 
-	    	<!-- Form Applications for Level 2 -->
-	        <?
-     if($this->project->level == 2)
-     		echo $this->action('application-level2', 'widget', 'project',array("id" => $this->project->id));?>
-	    	
-	    	
-	    	<!-- Similar projects -->
-	     </div>
+	 
+
+        <div class="row">
+          <div class="span11">
+ 	<!-- Bootstrap messaging generator -->
+ 	<?php echo $this->flashMessenger() ; ?>
+  <?php echo $this->layout()->content; ?>
+
+	      	    
+	        <div class="span4 fl-sidebar">
+	    	    <div class="inner">
+<!-- Levels and Tasks module -->
+                <h3 class="fl-sidebar-h3-first">Project Level</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-project-level">
+                  <div class="progress">
+                    <div class="fl_level<?php echo $this->project->level;?>"></div>
+                  </div>
+                  <p class="fl-project-level-info"><a href="" title="Learn more about Levels">Learn more about Levels</a></p>
+                </div>
+
+                <?= $this->action('task', 'widget', 'project',array("id" => $this->project->id));  ?>
+	    	      
+                <h3 class="fl-sidebar">Team</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-team">
+                  <div class="fl-team-author">
+                    <div class="fl-team-author-roles">
+                      <img src="slepice/img/role40x40_3.png" alt="" title="" />
+                      <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                    </div>
+                    <div class="fl-team-author-created">
+                      <span>Project created by</span>
+                      <span class="fl-team-author-name">Name of the author</span>
+                    </div>
+                  </div>
+
+                  <div class="fl_thin_divider"></div>
+                  
+                  <div class="fl-team-join-team">
+                    <div class="inner">
+                      <!-- Form Applications for Level 1 -->
+                      <?php 
+                       if($this->project->level == 1)          
+                            echo $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
+
+                          <!-- Form Applications for Level 2 -->
+                              <?
+                         if($this->project->level == 2)
+                            echo $this->action('application-level2', 'widget', 'project',array("id" => $this->project->id));?>
+                     </div>
+                  </div>
+                </div>
+
+
+                <h3 class="fl-sidebar">Passion Slider</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-passion-slider">
+                <div class="progress fl-passion-bar">
+                  <div class="bar fl-bar" style="width: 60%;"></div>
+                </div>
+                </div>
+
+                <h3 class="fl-sidebar">Leave feedback - help out!</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-feedback">
+                  <form>
+                    <fieldset>
+                      <legend class="hide">Leave feedback - help out</legend>
+                      <p class="fl-feedback-date">This poll was created on 24th of May 2012</p>
+                        
+                      <ul class="fl-feedback-poll">
+                          <li>
+                            <div class="fl-feedback-question">
+                              <p>How old is you dog?</p>
+                            </div>
+                            <div class="fl-feedback-answer">
+                              <input type="radio" name="q1" value="1" id="q1a1" > <label for="q1a1">1</label> 
+                              <input type="radio" name="q1" value="2" id="q1a2" > <label for="q1a2">2</label> 
+                              <input type="radio" name="q1" value="3" id="q1a3" > <label for="q1a3">3</label> 
+                              <input type="radio" name="q1" value="4" id="q1a4" > <label for="q1a4">4</label> 
+                              <input type="radio" name="q1" value="5" id="q1a5" > <label for="q1a5">5</label> 
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="fl-feedback-question">
+                              <p>How old is you dog?</p>
+                            </div>
+                            <div class="fl-feedback-answer">
+                              <input type="radio" name="q2" value="1" id="q2a1" /> <label for="q2a1">1</label> 
+                              <input type="radio" name="q2" value="2" id="q2a2" /> <label for="q2a2">2</label> 
+                              <input type="radio" name="q2" value="3" id="q2a3" /> <label for="q2a3">3</label> 
+                              <input type="radio" name="q2" value="4" id="q2a4" /> <label for="q2a4">4</label> 
+                              <input type="radio" name="q2" value="5" id="q2a5" /> <label for="q2a5">5</label> 
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="fl-feedback-question">
+                              <p>How old is you dog?</p>
+                            </div>
+                            <div class="fl-feedback-answer">
+                              <input type="radio" name="q3" value="1" id="q3a1" /> <label for="q3a1">1</label> 
+                              <input type="radio" name="q3" value="2" id="q3a2" /> <label for="q3a2">2</label> 
+                              <input type="radio" name="q3" value="3" id="q3a3" /> <label for="q3a3">3</label> 
+                              <input type="radio" name="q3" value="4" id="q3a4" /> <label for="q3a4">4</label> 
+                              <input type="radio" name="q3" value="5" id="q3a5" /> <label for="q3a5">5</label> 
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="fl-feedback-question">
+                              <p>How old is you dog?</p>
+                            </div>
+                            <div class="fl-feedback-answer">
+                              <input type="radio" name="q4" value="1" id="q4a1" /> <label for="q4a1">1</label> 
+                              <input type="radio" name="q4" value="2" id="q4a2" /> <label for="q4a2">2</label> 
+                              <input type="radio" name="q4" value="3" id="q4a3" /> <label for="q4a3">3</label> 
+                              <input type="radio" name="q4" value="4" id="q4a4" /> <label for="q4a4">4</label> 
+                              <input type="radio" name="q4" value="5" id="q4a5" /> <label for="q4a5">5</label> 
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="fl-feedback-question">
+                              <p>How old is you dog?</p>
+                            </div>
+                            <div class="fl-feedback-answer">
+                              <input type="radio" name="q5" value="1" id="q5a1" /> <label for="q5a1">1</label> 
+                              <input type="radio" name="q5" value="2" id="q5a2" /> <label for="q5a2">2</label> 
+                              <input type="radio" name="q5" value="3" id="q5a3" /> <label for="q5a3">3</label> 
+                              <input type="radio" name="q5" value="4" id="q5a4" /> <label for="q5a4">4</label> 
+                              <input type="radio" name="q5" value="5" id="q5a5" /> <label for="q5a5">5</label> 
+                            </div>
+                          </li>
+                      </ul>
+                  
+                      <p class="fl-feedback-info">You can change your answers later.</p>
+
+                      <input type="submit" name="submit" value="Vote" class="btn btn-primary right" />
+                    </fieldset>
+                  </form>
+                </div>
+
+
+                <h3 class="fl-sidebar">Similar projects</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-similar-projects">
+                  <ul class="fl-similar-projects-thumbnails">
+                    <li>
+                      <div class="fl-similar">
+                        <div class="inner-similar">
+                          <a href="" title=""><img src="slepice/img/project_img_similar.jpg" alt="" title="" /></a>
+                          <h4>Web for Pub in Africa</h4>
+                          <div class="progress fl-similar-project-bar">
+                            <div class="fl_level1 fl-similar-bar"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    
+                    <li>
+                      <div class="fl-similar">
+                        <div class="inner-similar">
+                          <a href="" title=""><img src="slepice/img/project_img_similar.jpg" alt="" title="" /></a>
+                          <h4>Web for Pub in Africa</h4>
+                          <div class="progress fl-similar-project-bar">
+                            <div class="fl_level1 fl-similar-bar"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="fl-similar">
+                        <div class="inner-similar">
+                          <a href="" title=""><img src="slepice/img/project_img_similar.jpg" alt="" title="" /></a>
+                          <h4>Web for Pub in Africa</h4>
+                          <div class="progress fl-similar-project-bar">
+                            <div class="fl_level1 fl-similar-bar"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="fl-similar">
+                        <div class="inner-similar">
+                          <a href="" title=""><img src="slepice/img/project_img_similar.jpg" alt="" title="" /></a>
+                          <h4>Web for Pub in Africa</h4>
+                          <div class="progress fl-similar-project-bar">
+                            <div class="fl_level1 fl-similar-bar"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+	         </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
   
-    </div>
-    
-    <footer>
+ <div class="fl-bottom-line">
       <?= $this->action('footer', 'index', 'site');  ?>
-    </footer>
+ </div>
 
 </body>
 </html>

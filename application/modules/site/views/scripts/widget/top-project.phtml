@@ -1,21 +1,59 @@
 <!-- Carousel Slideshow Module -->
-<div id="myCarousel" class="carousel">
-  <div class="carousel-inner">
-   <?php 
+<div class="row">
+     <div id="myCarousel" class="carousel slide">
+       <div class="carousel-inner">
+          <?php 
     $active = true;
-   	for($i=1;$i<6;$i++){
-   		$project = $this->slideshow->getProject($i);
-   		if($project){ ?>
-		<div class="item <?php if($active == true) {echo "active";$active = false;} // first project is set to be active?>">   		
-   			<p><img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('small'); ?> " /></p>	
-   			<?php echo $project->title; ?>
-		</div>	
-   	<?php
-   		}
+    for($i=1;$i<6;$i++){
+      $project = $this->slideshow->getProject($i);
+      if($project){ ?>
+    <div class="item <?php if($active == true) {echo "active";$active = false;} // first project is set to be active?>">
+       <div class="span5"> 
+         <div class="fl_slider_text">
+           <h2><?php echo $project->title; ?></h2>
+            <span class="author"><i class="icon-user"></i> Mahulena Omgato</span>
+            <div class="progress">
+               <div class="fl_level1"></div>
+            </div>
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+            <p class="info">
+              <span class="category"><i class="icon-folder-close"></i> Design</span>
+              <span class="followers"><i class="icon-eye-open"></i> <strong>56</strong> followers</span>
+              <span class="like"><i class="icon-thumbs-up"></i> <a href="" title="">Like</a></span>
+            </p>
+            
+            <div class="fl_slider_roles">
+              <div class="fl_slider_role">
+                <img src="/media/slepice-site/1.0.0/img/role60x60_1.png" alt="" />
+              </div>
+              <div class="fl_slider_role">
+                <img src="/media/slepice-site/1.0.0/img/role60x60_2.png" alt="" />
+              </div>
+              <div class="fl_slider_role">
+                <img src="/media/slepice-site/1.0.0/img/role60x60_3.png" alt="" />
+              </div>
+              <div class="fl_slider_role">
+                <img src="/media/slepice-site/1.0.0/img/role60x60_4.png" alt="" />
+              </div>
+              <div class="fl_slider_role">
+                <img src="/media/slepice-site/1.0.0/img/role60x60_5.png" alt="" />
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div class="span6"> 
+         <div class="thumbnail fl-img-frame">
+           <img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('small'); ?> " />
+         </div>
+       </div> 
+    </div>  
+    <?php
+      }
    }
    ?>
-  </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
+          
+        </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      </div>
+      </div>

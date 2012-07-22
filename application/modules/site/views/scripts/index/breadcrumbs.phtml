@@ -1,5 +1,11 @@
 <!-- Breadcrumbs generation -->
-		<ul class="breadcrumb">
+	 <div class="row">
+       <div class="span11">
+         <div id="fl_breadcrumb">
+           <span class="here">You are here</span><br />
+           <span class="great_than">&gt;&gt;</span>Home
+         </div>
+         <ul class="breadcrumb">
 		<?php 
 		
 		$container = $this->navigation()->breadcrumbs()->getContainer();
@@ -21,3 +27,9 @@
 		->setPartial(array('/index/partials/breadcrumb.phtml','site'));
 		?>
 		</ul>
+       </div>
+     </div> 
+
+     <div class="fl_thin_divider"></div> 
+
+		
