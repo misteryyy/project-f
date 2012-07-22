@@ -4,14 +4,12 @@ if(count ($this->project) > 0){ ?>
 <h2><?php echo $this->project->title?> <?php echo $this->project->level;?></h2>
               <p class="fl_project_head_info"><i class="icon-user"></i> <a href="" title=""><?php echo $this->project->user->name?></a>, <i class="icon-folder-close"></i> caterogy, <i class="icon-time"></i> <?php echo $this->project->created->format('Y/m/d');?>, <i class="icon-thumbs-up"></i> <a href="" title="">like</a></p>
 
-
 <?php
 $this->step = 1;
 echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
 ?>
-
-              
-           </div>
+        
+     </div>
        </div>
 
        <div class="row">
@@ -48,15 +46,16 @@ echo $this->partial('/index/project-navigation.phtml',array("step" => $this->ste
 
 			  <div class="fl-cnt-100 fl-bottom20">
                 <p><?php 
-		// displaying of tags for this project
-		$tags = $this->project->getTagsArray();
-		foreach($tags as $tag){
-			echo $tag;
-		}
-	?></p>
-              </div>
-
-              <div class="fl-cnt-project-by">
+				// displaying of tags for this project
+				$tags = $this->project->getTagsArray();
+				foreach($tags as $tag){
+					echo $tag;
+				}
+			?></p>
+     </div>
+     
+      <!-- Detail about author -->
+       <div class="fl-cnt-project-by">
                 <h3 class="fl-cnt-project-by-h3">Project by</h3>
                 <div class="fl_thick_divider"></div>
                 <div class="fl-cnt-project-by-content">
@@ -110,11 +109,8 @@ echo $this->partial('/index/project-navigation.phtml',array("step" => $this->ste
                   </div>
                 </div>
               </div>
-	
-	
-	
-
-	
+     
+     
 <?php } else {
 	
 	echo "This project doesn't exists.";

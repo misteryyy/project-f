@@ -3,10 +3,6 @@
 class Member_ErrorController extends  Boilerplate_Controller_Action_Abstract
 {
 
-		public function indexAction(){
-				$this->_redirect('/member/error/error');
-		}
-	
 	
     public function errorAction()
     {

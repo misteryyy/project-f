@@ -26,6 +26,8 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 			$this->_helper->FlashMessenger(array('error' => 'This project is not found, are you trying to hack us? :D '));
 			$this->_redirect('/member/error/');
 		}
+		
+		
 		try{
 			// init basic things
 			$this->project = $this->facadeProject->findOneProject($id);
@@ -67,6 +69,14 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     	$this->view->form = $form;
     }
     
+    /**
+     * Simmilar projects Widget
+     */
+    public function similarAction(){
+    	$this->checkProject();
+    	// check if application has been sent
+    }
+
     
     /**
      * Ajax Respond for polls
@@ -74,8 +84,7 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     public function ajaxPollAction(){
     	$this->ajaxify();
     	$this->checkProject();
-    	
-    	
+
     }
     
     

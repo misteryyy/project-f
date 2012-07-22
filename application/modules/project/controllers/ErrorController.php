@@ -4,10 +4,6 @@ class Project_ErrorController extends  Boilerplate_Controller_Action_Abstract
 {
 
 
-	public function indexAction(){
-				$this->_redirect('/member/error/project');
-	}
-	
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');

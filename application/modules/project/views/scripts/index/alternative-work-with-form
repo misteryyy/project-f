@@ -1,7 +1,0 @@
-<!-- Other way how to display forms -->
-<hr />
-<form id="contact" action="<?= $this->form->getAction(); ?>" method="<?= $this->form->getMethod(); ?>">
-<?= $this->form->content; ?>
-<?= $this->form->priority; ?>
-<?= $this->form->submit ?>
-</form>

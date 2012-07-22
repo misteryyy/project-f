@@ -3,9 +3,7 @@
 class Site_ErrorController extends  Boilerplate_Controller_Action_Abstract
 {
 
-	public function indexAction(){
-		$this->_redirect('/site/error/error');
-	}
+
 	
     public function errorAction()
     {

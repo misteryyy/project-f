@@ -16,9 +16,11 @@ class Project_IndexController extends  Boilerplate_Controller_Action_Abstract
 		$id = $this->_request->getParam("id");
 		// check id param for project
 		if(!is_numeric($id)){
+			echo $id . "is not numeric";
 			$this->_helper->FlashMessenger(array('error' => 'This project is not found, are you trying to hack us? :D '));
-			$this->_redirect('/member/error/');
+			$this->_redirect('/project/error/');
 		}
+		
 		try{
 			// init basic things
 			$this->project = $this->facadeProject->findOneProject($id);
