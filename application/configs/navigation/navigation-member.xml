@@ -6,7 +6,6 @@
             <label>Member</label>
             <uri>/member/</uri>
             <pages>
-              
                   <dashboard>
                     <label>Member Dashboard </label>
     				<module>member</module>

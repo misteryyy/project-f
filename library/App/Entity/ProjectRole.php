@@ -161,15 +161,22 @@ class ProjectRole {
 				"type" => $this->type,
 				"description" => $this->description,
 				"project_id" => $this->project->id,
-				"applications_count" => count($this->applications)
+				"applications" => null,
+				"applications_count" => 0
 		);
 		
 		// add application information to array
 		if (count($this->applications) > 0){
 			foreach($this->applications as $a){
-			$params["applications"][] = $a->toArray();
-			};
+			if($a->state == \App\Entity\ProjectApplication::APPLICATION_NEW) {
+				$params["applications"][] = $a->toArray();
+				
+				}
+			};	
 		}
+		
+		$params['applications_count']  = count($params["applications"]);
+		
 		
 		// add information about the user who has this role
 		if(isset($this->user)){

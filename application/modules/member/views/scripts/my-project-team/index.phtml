@@ -21,15 +21,9 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 		echo "]["; }
 ?>
 </div>
-
 <hr>
-
-
-    
-
 <div class="well">My Project People </div>
 <hr/>
-
   	<div id="alert-area"></div>
     <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
     	 <div id="model_list">
@@ -49,31 +43,23 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
     				</thead>
    				 <tbody>
 				{{#each this}}				
-				<form method="post" action="" class="form-search" data-question_id="{{id}}">
 				<tr>
 						<td>{{id}}</td>
 						<td>{{level}}</td>  
-						{{#if user_id}}
-  						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>
-  						{{else}}
-    						<td>Empty</td>
-						{{/if}}
+						<td><a href="/member/profile/index/id/{{user_id}}">{{user_name}}</a></td>	
 						<td>{{role_name}}</td>  
-						<td><input type="text" name="description" value="{{description}}"/></td>  
+						<td>
+							<form method="post" action="" class="form-search" data-question_id="{{id}}" id="form-edit-{{id}}">	
+								<input type="text" name="description" value="{{description}}"/>
+						 	</form>	
+						</td>  
+
 						<td>{{applications_count}}</td>  
-						<td class="actions" id="{{id}}">
-						
-							<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />	
-						
-						{{#if user_id}}
-  							<input  class="btn btn-danger deny" type="submit"  data-loading-text="processing..." value="kickout" name="submit" />
-						{{else}}
-    						<input  class="btn btn-danger delete" type="submit"  data-loading-text="processing..." value="Delete role" name="submit" />
-						{{/if}}
-					
-						</td>
+							<td class="actions" id="{{id}}">
+								<input  class="btn btn-success update" type="submit"  data-loading-text="processing..." value="edit" name="submit" />	
+  								<input  class="btn btn-danger delete" type="submit"  data-loading-text="processing..." value="delete" name="submit" />
+							</td>
 				</tr>
-				</form>
 				<!-- modal  -->
 		    	<div class="modal hide" id="surveyModal-id-{{id}}">
 				<div class="modal-body">
@@ -114,9 +100,9 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				},
 				
 			bindEvents: function(){
-				this.config.modelList.on('click','td.actions input.deny',this.denyMember); // edit question 
-				this.config.modelList.on('click','td.actions input.delete',this.deleteRole); // edit question 
-									
+					this.config.modelList.on('click','td.actions input.delete',this.deleteModel); // edit question 
+					this.config.modelList.on('click','td.actions input.update',this.updateModel); // edit question 
+								
 				},
 				
 			findData: function(){
@@ -137,36 +123,34 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				 );	
 	
 				},
-				
-				
-	
-			// denyMember
-			denyMember:function(e){
-				var self = Models;
-				var par = $(this).parent();
-				var role_id = par.attr("id");
-				$(this).button('loading');
-				console.log($(this));
-				$.ajax({
-					data:   "&_method=deny&&role_id="+role_id, // take data from the form and send it to the method update
-				}).done(
-						function (results){
-							newAlert (results.respond, results.message); // display alert
-							self.findData(); // refresh questions
-						}
-				);
-				e.preventDefault();
-			},
 
-			// denyEmpty Role
-			deleteRole:function(e){
+				// update question
+				updateModel:function(e){
+					var self = Models;
+					var par = $(this).parent();
+					var role_id = par.attr("id");
+					var form = $('#form-edit-'+role_id);
+					$(this).button('loading');	
+					//delete method
+					$.ajax({
+						data:  form.serialize() + "&_method=update&&role_id=" + role_id, // take data from the form and send it to the method update
+					}).done(
+							function (results){
+								newAlert (results.respond, results.message); // display alert
+								self.findData(); // refresh questions
+							}
+					);
+					e.preventDefault();
+				},
+					
+			// delete full Role
+			deleteModel:function(e){
 				var self = Models;
 				var par = $(this).parent();
 				var role_id = par.attr("id");
 				$(this).button('loading');
-				console.log($(this));
 				$.ajax({
-					data:   "&_method=delete&&role_id="+role_id, // take data from the form and send it to the method update
+					data: "&_method=delete&&role_id="+role_id, // take data from the form and send it to the method update
 				}).done(
 						function (results){
 							newAlert (results.respond, results.message); // display alert

@@ -1,24 +1,10 @@
-<?php //if($this->aclPermissionDenied) { echo "<div class='well'>You have alredy applied or you are in collaboration team. </div>"; return;}?>
-<?php if($this->project->disableRoleWidget) { echo "<div class='well'>Widget for collaboration disabled</div>"; return;}?>
-<?php if($this->project->level > 2) { echo "<div class='well'>Is not possible to apply for collaboration in this level.</div>"; return;}?>
+Polls
+<?php echo $this->form;?>
 
-<div class="well">
-	<div style="text-align: center">
-		<a class="btn btn-xlarge btn-info" data-toggle="modal"
-			href="#modal-form-application">Apply for the first LEVEL position</a>
-	</div>
-	<hr>
-</div>
-
-<div class="modal span7 hide" id="modal-form-application">
-	<?php echo $this->form;?>
-</div>
 
 <div id='debug'></div>
 
 <script type="text/javascript">
-
-//wait for the DOM to be loaded 
 $(document).ready(function() { 
 	var form = $('#form-application');
 	var myModal = $('#modal-form-application');
@@ -58,4 +44,3 @@ $(document).ready(function() {
 	   );	
     }); 
 </script>
-

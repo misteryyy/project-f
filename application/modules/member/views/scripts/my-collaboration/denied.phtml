@@ -8,10 +8,6 @@ echo $this->partial('my-collaboration/my-collaboration-navigation.phtml',array("
 
 
 
-
-
-
-
 <?php 
 if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 
@@ -33,7 +29,7 @@ if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 				$project = $a->project; // role is for collaborator
 ?>
 		<tr>
-			<td><?php echo $project->created->format('Y/m/d h:m:s')?></td>
+			<td><?php echo $a->created->format('Y/m/d h:m:s')?></td>
 			<td><?php echo $project->title?></td>
 			<td><?php echo $a->roleName?></td>
 			<td><?php echo $a->level;?></td>

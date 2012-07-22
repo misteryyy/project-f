@@ -25,6 +25,8 @@
 		break;
 		case 8 : $allow[8] = true;
 		break;
+		case 9 : $allow[9] = true;
+		break;
 		
 	}
   ?>
@@ -39,5 +41,6 @@
   <li class="<?php echo($allow[6] == true ? "active" : "disable" );?>"><a href="/member/my-project-team/index/id/<?php echo $this->project->id?>">Team</a></li>
   <li class="<?php echo($allow[7] == true ? "active" : "disable" );?>"><a href="/member/my-project/task/id/<?php echo $this->project->id?>">Tasks</a></li>
   <li class="<?php echo($allow[8] == true ? "active" : "disable" );?>"><a href="/member/my-project/level/id/<?php echo $this->project->id?>">Move to next level</a></li>
+  <li class="<?php echo($allow[9] == true ? "active" : "disable" );?>"><a href="/member/my-project/poll/id/<?php echo $this->project->id?>">Polls</a></li>
   
   </ul>

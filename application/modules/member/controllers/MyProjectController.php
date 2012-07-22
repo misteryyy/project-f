@@ -196,6 +196,66 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
 	    	$this->view->project = $this->project;
     }
      
+    
+    /**
+     * Polls for Project 
+     */
+    public function pollAction()
+    {
+    	$this->checkProjectAndUser();
+    	$this->view->pageTitle = "My Project Polls" ;
+    	 
+    	// receiving paginator
+    	$facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
+    	$paginator = $facadeProjectUpdate->findProjectUpdates($this->_member_id, $this->project_id);
+    	$paginator->setItemCountPerPage(3);
+    	$page = $this->_request->getParam('page', 1);
+    	$paginator->setCurrentPageNumber($page);
+    	$this->view->paginator = $paginator;
+    	$this->view->project = $this->project;
+    }
+    
+    
+    
+    /**
+     *
+     */
+    public function pollCreateAction()
+    {
+    	$this->checkProjectAndUser();
+    	$this->view->pageTitle = "Create New Poll" ; 
+    	$form = new \App\Form\Project\AddPollForm();
+    	
+    	
+    	if ($this->_request->isPost()) {
+    		if ($form->isValid($this->_request->getPost())) {
+    			
+    			try{
+    				$facadeProjectPoll = new \App\Facade\Project\PollFacade($this->_em);
+    				$facadeProjectPoll->createPoll($this->_member_id, $this->project_id, $form->getValues());
+    				
+    				$this->_helper->FlashMessenger( array('success' => "New Poll was created."));
+    				//$params = array('id' => $this->project_id);
+    				//$this->_helper->redirector('poll', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
+    				   
+    				
+				} catch (\Exception $e){
+					$this->_helper->FlashMessenger( array('error' => $e->getMessage()));
+					
+				}
+    				 
+    		}
+    		// not validated properly
+    		else {
+    			$this->_helper->FlashMessenger( array('error' => "Please check your input."));
+    		}
+    	}
+    	
+    	$this->view->form = $form;
+    	$this->view->project = $this->project;
+    
+    }
+    
     /**
      * 
      */
@@ -463,9 +523,6 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
     	// get categories for form
     	$facadeProject = new \App\Facade\ProjectFacade($this->_em);
     	$projects = $facadeProject->findAllProjectsForUser($this->_member_id);
-    	
-    	
-    		
     	
     	$this->view->projects = $projects;
 

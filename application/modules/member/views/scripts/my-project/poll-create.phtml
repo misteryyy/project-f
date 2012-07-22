@@ -1,0 +1,12 @@
+<?php 
+$this->step = 9;
+echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
+?>
+<div class="well">
+	<a class="btn btn-info" href="/member/my-project/poll/id/<?php echo $this->project->id?>">Back to list of polls</a>
+</div>
+
+
+
+<hr/>
+<?php echo $this->form;?>

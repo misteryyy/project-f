@@ -57,6 +57,29 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     }
     
     /**
+     * Poll Widget
+     */
+    public function pollAction(){
+    	$this->checkProject();
+    	// check if application has been sent
+    	
+    	$form = new \App\Form\Project\PollForm($this->_member,$this->project);
+    	$this->view->form = $form;
+    }
+    
+    
+    /**
+     * Ajax Respond for polls
+     */
+    public function ajaxPollAction(){
+    	$this->ajaxify();
+    	$this->checkProject();
+    	
+    	
+    }
+    
+    
+    /**
      * New Applicantions Level 2
      */
     public function applicationLevel2Action(){
@@ -67,17 +90,15 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     		//return;
     	}
     	$facadeTeam = new \App\Facade\Project\TeamFacade($this->_em);
-
     	// free positions
     	$freePositions = $facadeTeam->findFreeProjectRolesForProject($this->project_id,array("role"=>"all"));
     	$this->view->freePositions = $freePositions;
- 
     	// todo create forms for applying for all roles
-    	$form = new \App\Form\Project\AddProjectApplicationLevel2Form($this->_member, $this->project, $freePositions, \App\Entity\ProjectRole::PROJECT_ROLE_STARTER);
     	$this->view->member = $this->_member;
-    	$this->view->form = $form;
+    	
     	 		
     }
+    
     
     
     
@@ -132,8 +153,6 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     				break;
     				case 'create-level-2' :
     					// checking form
-    					
-    					//$form = new \App\Form\Project\AddProjectApplicationForm($this->_member, $this->project, $questions);
     					// validation data
     					if(trim($this->_request->getParam("content")) == ''){
     						$this->_helper->FlashMessenger(array('error' => 'Something is wrong with the form data. Have you filled all data in form?'));

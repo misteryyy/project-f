@@ -54,6 +54,12 @@ class ProjectApplication extends \App\Entity\ProjectApplication implements \Doct
         return parent::setProject($project);
     }
 
+    public function setDescription($description)
+    {
+        $this->__load();
+        return parent::setDescription($description);
+    }
+
     public function getRoleName()
     {
         $this->__load();

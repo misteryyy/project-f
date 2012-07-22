@@ -6,13 +6,16 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 	private $facadeComment;
 	private $facadeProject;
 	private $facadeProjectUpdate;
-
+	private $facadeProjectTeam;
+	
 	public function init(){	
 		parent::init();
 		// check project existance for user and project
 		$this->facadeProject = new \App\Facade\ProjectFacade($this->_em);	
 		$this->facadeComment = new \App\Facade\Project\CommentFacade($this->_em);
 		$this->facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
+		$this->facadeProjectTeam = new \App\Facade\Project\TeamFacade($this->_em);
+		
 	}
 
 	/**
@@ -23,6 +26,7 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 		$this->checkProjectAndUser();
 		$this->view->pageTitle = "Team" ;	
 		
+		$this->view->creatorRoles = $this->facadeProjectTeam->findCreatorRolesForProject($this->project_id);
 		$this->view->project = $this->project;
 
 	}
@@ -63,18 +67,6 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 					}
 					 
 					break;
-					// accept application
-				case 'deny' :
-					try{
-						$facadeTeam->denyProjectRole($this->_member_id, $this->project_id, $this->_request->getParam("role_id"));
-						$respond = array("respond" => "success",'message' => "Member was kickout from your team.");
-						$this->_response->setBody(json_encode($respond));
-							
-					}catch(Exception $e){
-						$respond = array("respond" => "error","message" => $e->getMessage());
-						$this->_response->setBody(json_encode($respond));
-					}
-					break;
 					
 				case 'delete' :
 						try{
@@ -87,10 +79,10 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
 						}
 						break;
 				//  create new role
-				case 'create' :
+				case 'update' :
 						try{
-							$facadeTeam->createProjectRole($this->_member_id, $this->project_id,$this->_request->getParams());
-							$respond = array("respond" => "success",'message' => "New position was created.");
+							$facadeTeam->updateProjectRole($this->_member_id, $this->project_id,$this->_request->getParam("role_id"),$this->_request->getParams());
+							$respond = array("respond" => "success",'message' => "Role was updated.");
 							$this->_response->setBody(json_encode($respond));
 						}catch(Exception $e){
 							$respond = array("respond" => "error","message" => $e->getMessage());
@@ -271,20 +263,19 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     				break;
     	
     			// not ajax
-    			case 'deny' :
-
+    			case 'deny':		
     				try {
     						// SUCCESS
     						$facadeTeam->denyApplication($this->_member_id, $this->project_id, $this->_request->getParam("application_id"),$_POST);
     						$this->_helper->FlashMessenger ( array ('success' => "Member was denied." ) );
     						$params = array('id' => $this->project_id);
 							$this->_helper->redirector('request', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
-						//$respond = array("respond" => "success",'message' => "Question was deleleted.");
-    					//$this->_response->setBody(json_encode($respond));
+							//$respond = array("respond" => "success",'message' => "Question was deleleted.");
+    						//$this->_response->setBody(json_encode($respond));
     				}catch(Exception $e){
     					$this->_helper->FlashMessenger ( array ('error' => $e->getMessage () ) );
-    					//$respond = array("respond" => "error","message" => $e->getMessage());
-    					//$this->_response->setBody(json_encode($respond));
+    						//$respond = array("respond" => "error","message" => $e->getMessage());
+    						//$this->_response->setBody(json_encode($respond));
     				}
     				break;
     			//  create new role
@@ -296,9 +287,20 @@ class Member_MyProjectTeamController extends  Boilerplate_Controller_Action_Abst
     					}catch(Exception $e){
     						$respond = array("respond" => "error","message" => $e->getMessage());
     						$this->_response->setBody(json_encode($respond));
-    					}
-    						
+    					}		
     					break;
+    			// delete position with all applications		
+    			case 'delete' :
+    						try{
+    							$facadeTeam->deleteProjectRole($this->_member_id, $this->project_id, $this->_request->getParam("role_id"));
+    							$respond = array("respond" => "success",'message' => "Position has been deleted.");
+    							$this->_response->setBody(json_encode($respond));
+    						}catch(Exception $e){
+    							$respond = array("respond" => "error","message" => $e->getMessage());
+    							$this->_response->setBody(json_encode($respond));
+    						}
+    						break;
+    					
     		
     	} 
     	} else {

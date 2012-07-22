@@ -191,7 +191,6 @@ class TeamFacade {
 	 */
 	public function createProjectApplication($user_id,$project_id,$data = array()){		
 		
-		
 		// checking errors
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 		if(!$user){
@@ -219,11 +218,8 @@ class TeamFacade {
 				}		
 			}
 		
-		
-			
 			$content .= "General question: " .$data['content']. " <br />";
-
-			
+				
 			$newApplication = new  \App\Entity\ProjectApplication($user, $project, $data['level'], $content, $data['role']);
 			$this->em->persist($newApplication);
 			$this->em->flush();
@@ -394,13 +390,64 @@ class TeamFacade {
 		if(!$role){
 			throw new \Exception("This role doesn't exists");
 		}
-	
+		
+		// should be just one accepted application
+		$applications = $this->findApplicationsForProjectRole($user_id, $project_id, $role_id,array('state' => 'new'));
+		
+		if(isset($applications)){
+			foreach ($applications as $a){
+				// set new state to the application
+				$a->setState(\App\Entity\ProjectApplication::APPLICATION_DENIED);
+				$a->setResult("Creator has decided to not have this position.");
+				$a->setProjectRole(null);
+				$a->setDescription($role->getDescription()); // for consistency, update the role
+			}	
+		}
+		
 		$this->em->remove($role);
 		$this->em->flush();
 	}
 	
+	
+	/**
+	 * Find Application for role
+	 * type = accepted, denied, ..
+	 * @param unknown_type $user_id
+	 * @param unknown_type $project_id
+	 * @param unknown_type $role_id
+	 * @param unknown_type $type
+	 * @throws \Exception
+	 */
+	public function findApplicationsForProjectRole($user_id,$project_id,$role_id,$options = array( "state" => "accepted")){
+		
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		$stmt = 'SELECT a FROM App\Entity\ProjectApplication a WHERE a.project = ?1 AND a.projectRole = ?2 ';
+		
+		// filter level
+		if(isset($options['state'])){
+			// select application for level
+			if( $options['state'] === 'accepted' )
+				$stmt .= ' AND a.state = '.\App\Entity\ProjectApplication::APPLICATION_ACCEPTED.' '; //. \App\Entity\ProjectApplication::APPLICATION_NEW;
+		
+			if( $options['state'] === 'new')
+				$stmt .= ' AND a.state = '.\App\Entity\ProjectApplication::APPLICATION_NEW.' '; //. \App\Entity\ProjectApplication::APPLICATION_NEW;			
+		}
+
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $project_id);
+		$query->setParameter(2, $role_id);
+		
+		return $query->getResult();
+		
+	}
+	
 
 	/*
+	 * 
 	 * Return applications for the project
 	*/
 	public function findApplications($user_id,$project_id,$options = array()){
@@ -459,7 +506,7 @@ class TeamFacade {
 	 * @param unknown_type $project_id
 	 * @param unknown_type $application_id
 	 */
-	public function acceptApplication($user_id,$project_id,$application_id,$level = 1){
+	public function acceptApplication($user_id,$project_id,$application_id){
 		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
 		if(!$user){
 			throw new \Exception("Member doesn't exists");
@@ -470,20 +517,48 @@ class TeamFacade {
 			throw new \Exception("Can't find this project.");
 		}
 		
+		
 		$application = $this->findOneApplication($user_id, $project_id, $application_id);
 		
-		// create new role for project
+		if($application->level == 1){
+				// create new role for project
+				$newRole = new \App\Entity\ProjectRole($application->roleName, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+				$project->addProjectRole($newRole);
+				$application->user->addProjectRole($newRole); // add application to the member in application
+				// set application to the new statea
+				$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
+				$application->setProjectRole($newRole); // set role for the application
+				$this->em->flush();
+		}
 		
-		$newRole = new \App\Entity\ProjectRole($application->roleName, \App\Entity\ProjectRole::PROJECT_ROLE_TYPE_MEMBER);
+		// second level, find role, denied all other application except this one
+		if($application->level == 2){
+			echo "level 2";
+			
+			// find role for this application 
+			
+			$role = $this->findOneProjectRole($project_id, $application->projectRole->id);
+			$role->setUser($application->user);
+			
+			// application set accepted
+			$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
+			$this->em->flush(); // save it
+			
+			// denied all other applications
+			$applications = $this->findApplicationsForProjectRole($user_id, $project_id, $role->id,array('state' => 'new'));
+			
+				if(isset($applications)){
+					foreach ($applications as $a){
+						// set new state to the application
+						$a->setState(\App\Entity\ProjectApplication::APPLICATION_DENIED);
+						$a->setResult("Creator gave this position to someone else and haven't explain the reason why.");
+				}
+			}
+			
+			// create new role for project
+			$this->em->flush();
+		}
 		
-		$project->addProjectRole($newRole);
-		$application->user->addProjectRole($newRole); // add application to the member in application
-		// TODO think about this, if delete or not
-		// set application to the new statea
-		$application->setState(\App\Entity\ProjectApplication::APPLICATION_ACCEPTED);
-		$application->setProjectRole($newRole); // set role for the application
-				
-		$this->em->flush();
 
 	}
 	
@@ -511,6 +586,39 @@ class TeamFacade {
 		$this->em->flush();
 	}
 	
+	
+	/**
+	 * Update project role or description
+	 * @param unknown_type $project_id
+	 * @param unknown_type $role_id
+	 * @param unknown_type $data
+	 */
+	public function updateProjectRole($user_id,$project_id,$role_id,$data = array()){
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneBy(array("id" => $project_id,"user" => $user_id));
+		if(!$project){
+			throw new \Exception("Can't find this project for this user.");
+		}
+		
+		// find role
+		$role = $this->em->getRepository ('\App\Entity\ProjectRole')->findOneBy(array("id" => $role_id));
+		if(!$role){
+			throw new \Exception("This role doesn't exists");
+		}
+		
+		// should be just one accepted application
+		$applications = $this->findApplicationsForProjectRole($user_id, $project_id, $role_id,array('state'=> 'all'));
+		
+		// update description if is updated for the role
+		if(count($applications) > 0){
+			foreach ($applications as $a){	
+				$a->setDescription($data['description']); // for consistency, update the role
+			}
+		}
+		
+		$role->setDescription($data['description']);
+		$this->em->flush(); // save 
+		
+	}
 	
 	
 		

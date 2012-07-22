@@ -3,7 +3,11 @@
 class Site_ErrorController extends  Boilerplate_Controller_Action_Abstract
 {
 
-    public function indexAction()
+	public function indexAction(){
+		$this->_redirect('/site/error/error');
+	}
+	
+    public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
 

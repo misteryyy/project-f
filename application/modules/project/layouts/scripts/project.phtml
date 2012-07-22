@@ -59,8 +59,12 @@
      if($this->project->level == 2)
      		echo $this->action('application-level2', 'widget', 'project',array("id" => $this->project->id));?>
 	    	
+	    	<!-- Project polls-->	
+	        <?
+	        echo $this->action('poll', 'widget', 'project',array("id" => $this->project->id));?>
 	    	
 	    	<!-- Similar projects -->
+	    
 	     </div>
   
     </div>

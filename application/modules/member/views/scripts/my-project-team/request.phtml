@@ -145,7 +145,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 						<td>{{role_name}} (waiting {{applications_count}})</td>  
 						<td>{{description}}</td>  
 				
-						<td class="actions" id="{{id}}">				
+						<td class="actions" id="{{id}}">	
+							<input  class="btn btn-success delete" type="submit"  data-loading-text="processing..." value="Delete this position" name="submit" />
 						</td>
 				</tr>			
 				{{#each this.applications}}			
@@ -218,6 +219,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				this.config.formDeny.on('click','input.deny',this.denyMember); // create new question
 				
 				// events for level 2
+				this.config.modelListL2.on('click','td.actions input.delete',this.deleteRole); // delete role 
 				this.config.modelListL2.on('click','td.actions input.accept',this.acceptMember); // edit question 	
 				this.config.modelListL2.on('click','td.actions input.deny',this.showModaldenyMember); // edit question 			
 					
@@ -281,7 +283,7 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 				},
 			
 		    	   
-			// create new position for level 2
+				// create new position for level 2
 				// create data
 				createData:function(e){
 					var self = Models;
@@ -320,6 +322,23 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 					
 				
 				},
+				// delete Role
+				deleteRole:function(e){
+					var self = Models;
+					var par = $(this).parent();
+					var role_id = par.attr("id");
+					$(this).button('loading');
+					$.ajax({
+						data: "&_method=delete&&role_id="+role_id, // take data from the form and send it to the method update
+					}).done(
+							function (results){
+								newAlert (results.respond, results.message); // display alert
+								self.findData(); // refresh model
+								self.findDataL2(); // refresh model
+							}
+					);
+					e.preventDefault();
+				},
 			
 			// acceptMember
 			acceptMember:function(e){
@@ -334,6 +353,8 @@ echo $this->partial('my-project-team/my-project-navigation.phtml',array("step" =
 						function (results){
 							newAlert (results.respond, results.message); // display alert
 							self.findData(); // refresh questions
+							self.findDataL2(); // refresh questions
+							
 						}
 				);
 				e.preventDefault();
