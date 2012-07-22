@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
@@ -10,26 +10,46 @@
   <meta name="author" content="">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="<?=$this->baseUrl('/css/style.css')?>">
-  <link rel="stylesheet" href="<?=$this->baseUrl('/media/bootstrap/css/bootstrap.css')?>">
+  
 	 <?= $this->action('lib', 'index', 'site');  // libraries ?>
+
+   <link rel="stylesheet" href="<?=$this->baseUrl('/media/slepice-site/1.0.0/css/flow_css.css')?>">
 
 </head>
 
 <body>
-     
-   <?= $this->action('header', 'index', 'site');  ?>
-  	 <hr>		 
-	 <?= $this->action('menu-debug', 'menu', 'project');  ?>  
-	 <?= $this->action('breadcrumbs', 'index', 'site');  ?>
-	 <hr>
+
+ <div id="fl-container">
+   <div class="container">
+     <?= $this->action('header', 'index', 'site');  ?>
+   </div>
+   <?= $this->action('menu-debug', 'menu', 'project');  ?>
+   <div id="fl-content">
+   <div class="container"> 	 
+	   <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+	 
 	 <!-- Bootstrap messaging generator -->
-	 <?php echo $this->flashMessenger() ; ?>
+	 
+   <?php echo $this->flashMessenger() ; ?>
+
 	 <?php echo $this->layout()->content; ?>
 
-    <footer>
-      <?= $this->action('footer', 'index', 'site');  ?>
-    </footer>
+
+    <div id="bottom">
+        <?= $this->action('footer', 'index', 'site');  ?>
+     </div>
+     
+  </div>
+  
+  </div>
+  
+  </div>
+
+    <div class="fl-bottom-line">
+<p>&copy; 2012 SLEPICE / ZF <br />
+<small><?php echo $this->translate("Today is"); ?> <b><?php echo new Zend_Date($this->timestamp); ?></b> <?php if ($this->cachedTimestamp) { ?>(<?php echo $this->translate("Timestamp served from Memcached");?>)<?php } ?></small>
+
+</div>
 
     </body>
 </html>

@@ -1,48 +1,118 @@
 <?php 
 if(count ($this->project) > 0){ ?>
-			
 
-<h3><?php echo $this->project->title?>  <span class="badge badge-success">level <?php echo $this->project->level;?></span>
-</h3>
-<hr>
- 
-<div class="well">
-Created by <i><?php echo $this->project->user->name?></i> ~ <?php echo $this->project->created->format('Y/m/d');?>
-</div>
+<h2><?php echo $this->project->title?> <?php echo $this->project->level;?></h2>
+              <p class="fl_project_head_info"><i class="icon-user"></i> <a href="" title=""><?php echo $this->project->user->name?></a>, <i class="icon-folder-close"></i> caterogy, <i class="icon-time"></i> <?php echo $this->project->created->format('Y/m/d');?>, <i class="icon-thumbs-up"></i> <a href="" title="">like</a></p>
+
 
 <?php
 $this->step = 1;
 echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
 ?>
 
-	<p>
-	<img alt="<?php echo $this->project->title; ?> - main picture" src="/storage/projects/<?php echo $this->project->dir."/".$this->project->getPicture('large'); ?> " />
-	</p>
-	<hr/>
-	<p>	
-	<?php echo $this->project->id?>
-	<?php echo $this->project->user->name?>
-	<?php echo $this->project->created->format('Y/m/d');?>
-	<?php echo $this->project->category->name?>		
-	<?php echo $this->project->content;?>	
-	<?php echo $this->project->pitchSentence;?>
-	<?php echo $this->project->viewCount;?>		
-	</p>
-	<hr/>
-	<p>
-	<?php echo $this->project->lesson;?>		
-	<?php echo $this->project->issue;?>		
-	<?php echo $this->project->plan;?>		
-	</p>			
-	
-	
-	<?php 
+              
+           </div>
+       </div>
+
+       <div class="row">
+            <div class="span7">	
+
+            <div class="fl-cnt-img">
+                <img alt="<?php echo $this->project->title; ?> - main picture" src="/storage/projects/<?php echo $this->project->dir."/".$this->project->getPicture('large'); ?> " />
+            </div>
+
+              <div class="fl-cnt-pitch">
+                <p><?php echo $this->project->pitchSentence;?></p>
+              </div>
+
+              <div class="fl-cnt-description">
+                <p><?php echo $this->project->content;?></p>
+              </div>
+
+              <div class="fl-cnt-plans-issues-lessons">
+                
+                <p>
+                  <span class="fl-cnt-plans-title-first">Plans</span>
+                  <?php echo $this->project->plan;?></p>
+
+                
+                <p>
+                  <span class="fl-cnt-plans-title">Issues</span>
+                  <?php echo $this->project->issue;?></p>
+
+                
+                <p>
+                  <span class="fl-cnt-plans-title">Lessons Learned</span>
+                  <?php echo $this->project->lesson;?></p>
+              </div>
+
+			  <div class="fl-cnt-100 fl-bottom20">
+                <p><?php 
 		// displaying of tags for this project
 		$tags = $this->project->getTagsArray();
 		foreach($tags as $tag){
 			echo $tag;
 		}
-	?>
+	?></p>
+              </div>
+
+              <div class="fl-cnt-project-by">
+                <h3 class="fl-cnt-project-by-h3">Project by</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-cnt-project-by-content">
+                  <div class="inner">
+                    <div class="fl-cnt-project-by-content-left">
+                      <img src="/media/slepice-site/1.0.0/img/author.jpg" alt="" title="" class="fl-cnt-project-by-author-photo"/>
+                      <div class="fl-cnt-project-by-content-skills">
+                        <div class="fl-cnt-project-by-content-skill">
+                          <img src="/media/slepice-site/1.0.0/img/role40x40_2.png" alt="" title="" />
+                          <span class="fl-cnt-project-by-content-skill-role">Builder</span><br />
+                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
+                        </div>
+                        <div class="fl-cnt-project-by-content-skill">
+                          <img src="/media/slepice-site/1.0.0/img/role40x40_3.png" alt="" title="" />
+                          <span class="fl-cnt-project-by-content-skill-role">Grower</span><br />
+                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
+                        </div>
+                      </div>
+                      <div class="fl_thick_divider"></div>
+                      <div class="fl-cnt-project-by-content-earned-role">
+                        <img src="/media/slepice-site/1.0.0/img/role40x40_6.png" alt="" title="earned role" />
+                      </div>
+                    </div>
+                    <div class="fl-cnt-project-by-content-right">
+                      <div class="fl-cnt-project-by-content-inner">
+                        <h4 class="fl-cnt-project-by-content-author"><?php echo $this->project->user->name?></h4>
+                        <p class="fl-cnt-project-by-content-author-info"><i class="icon-file"></i> <a href="" title="">Profile</a>, <i class="icon-thumbs-up"></i> <a href="" title="">Like</a></p>
+                        <p class="fl-cnt-project-by-content-author-description"> ... </p>
+                        
+                        <div class="fl_thin_divider"></div>
+
+                        <div class="fl-cnt-project-by-content-author-projects">
+                          <span><a href="" title="">more of 'My Projects'</a></span>
+                          <ul>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                          </ul>
+                        </div>
+
+                        <div class="fl-cnt-project-by-content-author-projects">
+                          <span><a href="" title="">more of 'My Collaborations'</a></span>
+                          <ul>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+	
+	
+	
 
 	
 <?php } else {
@@ -51,4 +121,5 @@ echo $this->partial('/index/project-navigation.phtml',array("step" => $this->ste
 	
 }?>
 
+</div>
 

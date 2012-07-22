@@ -1,32 +1,58 @@
-	<div class="row" style="margin-left: 10px"> 
+	 <div class="row">
+     <div class="span11">
 	  	<!-- Slideshow -->
 	  	<?= $this->action('top-project', 'widget', 'site');  ?>
-	  </div>
-	 
-	 
-	<div class="row" style="margin-left: 10px"> 
+	   </div>
+   </div>
 	
-	<div class="span6">
+  <div class="fl_thick_divider"></div>
+ 	 
+	<div class="row"> 
+	
+  	<div class="span9">
 <!-- Project Displaying -->
 <?php echo $this->paginationControl($this->paginator, 'Elastic', 'partials/pagination-control-bootstrap.phtml'); ?> 
     <?php if (count($this->paginator)) {?>
    <ul class="thumbnails">
     <?php foreach ($this->paginator as $project){ ?>
 
-    	  <li class="span3">
-          <div class="thumbnail">
-          <a href="/project/index/index/id/<?php echo $project->id?>"> 
-          <img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " />
-           </a>
-            <div class="caption">
-              <h4><?php echo $project->title; ?></h4>
-              <p> By <strong><?php echo $project->user->name?></strong> in <em><?php echo $project->category->name?></em></p>
-              <p><?php echo $project->pitchSentence; ?></p>
-              <p>ROLES SLIDE</p>
-              <p><a class="btn btn-info" href="/project/index/index/id/<?php echo $project->id?>">Detail</a> </p>
-            </div>
-          </div>
-        </li>		
+        <li class="span3 fl-thumbnail-frame">
+                  <div class="thumbnail">
+                    <a href="/project/index/index/id/<?php echo $project->id?>"> 
+                      <img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " />
+                    </a>
+                  <div class="progress">
+                    <div class="fl_level2"></div>
+                  </div>
+                  <h3><?php echo $project->title; ?></h3>
+                     <span class="author"><i class="icon-user"></i> <?php echo $project->user->name?></span>
+                     <p><?php echo $project->pitchSentence; ?></p>
+                     <p class="info">
+                       <span class="category"><i class="icon-folder-close"></i> <?php echo $project->category->name?></span>
+                       <span class="followers"><i class="icon-eye-open"></i> <strong>56</strong> followers</span>
+                       <span class="like"><i class="icon-thumbs-up"></i> <a href="" title="">Like</a></span>
+                     </p>
+                     
+                     <div class="fl_project_thumb_roles">
+                       <div class="fl_project_thumb_role">
+                         <img src="/media/slepice-site/1.0.0/img/role40x40_1.png" alt="" />
+                       </div>
+                       <div class="fl_project_thumb_role">
+                         <img src="/media/slepice-site/1.0.0/img/role40x40_2.png" alt="" />
+                       </div>
+                       <div class="fl_project_thumb_role">
+                         <img src="/media/slepice-site/1.0.0/img/role40x40_3.png" alt="" />
+                       </div>
+                       <div class="fl_project_thumb_role">
+                         <img src="/media/slepice-site/1.0.0/img/role40x40_4.png" alt="" />
+                       </div>
+                       <div class="fl_project_thumb_role">
+                         <img src="/media/slepice-site/1.0.0/img/role40x40_5.png" alt="" />
+                       </div>
+                     </div>
+                    
+                  </div>   
+                </li>
     <?php } ?>
   </ul>
     				
@@ -34,11 +60,8 @@
     <?php } else echo "No Projects Available"?>
     
     
-          </div>
-	    
-	    <div class="span6">
-	    	<h3>Widgets</h3>
-	    
+      </div>
+	    <div class="span2">
 	    <!-- Category menu and filters module -->
 	  	<?= $this->action('category', 'widget', 'site');  ?>
 	     </div>

@@ -1,9 +1,17 @@
-<h3><?php echo $this->project->title?></h3>
+<h2><?php echo $this->project->title?> <?php echo $this->project->level;?></h2>
+              <p class="fl_project_head_info"><i class="icon-user"></i> <a href="" title=""><?php echo $this->project->user->name?></a>, <i class="icon-folder-close"></i> caterogy, <i class="icon-time"></i> <?php echo $this->project->created->format('Y/m/d');?>, <i class="icon-thumbs-up"></i> <a href="" title="">like</a></p>
+
 <?php
 // basic project navigation
 $this->step = 6;
 echo $this->partial('/index/project-navigation.phtml',array("step" => $this->step,"project" => $this->project));
 ?>
+
+           </div>
+       </div>
+
+       <div class="row">
+            <div class="span7">	
 <h2>Project</h2>
 <p>Total number of messages <?php echo $this->paginator->getTotalItemCount();?> </p>
 <?php echo $this->form;?>
@@ -64,3 +72,5 @@ $(function(){
  	else {
 	echo "No Comments for this project";
 } ?>
+
+</div>

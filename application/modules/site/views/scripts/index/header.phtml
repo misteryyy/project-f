@@ -1,43 +1,62 @@
-<div class="navbar">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="/">Project F</a>
-          <?php if(Zend_Auth::getInstance()->hasIdentity() ) {?>
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> <?= $this->member['email']?>
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="/member/profile/index/id/<?= $this->member['id']?>">Public Profile</a></li>
-              <li class="divider"></li>
-              <li><a href="/member/index/logout">Sign Out</a></li>
-            </ul>
-          </div>
-          <?php }?>
-          
-          <div class="nav-collapse">
-            <ul class="nav">
-       	  <?php 
-					  $subtree = $this->navigation()->findOneByLabel('Home');
-					   
-					 $options = array("ulClass"=>"nav", 			
-					  				"intent"=>"333",
-					  				"minDepth" => 0,
-					  				"maxDepth" => 0,
-					 				"onlyActiveBranch" => false,
-					 				"renderParents" => true);
-					 
-					  echo $this->navigation()->menu()->renderMenu(null,$options);
-					  ?>
-            </ul>
-               <form class="form-search pull-right" method="GET" action="/browse-projects">
-   				 <input type="text" name="q" type="text" class="input-medium search-query">
-    			 <button type="submit" class="btn">Search in projectsHo</button>
-    			</form>
-          </div><!--/.nav-collapse -->
+<div class="row">
+     <div class="span5 offset6">
+   
+     <form class="form-inline fl-search fl-top">
+       <div class="input-append">
+       <label for="fl_search" class="hide">Search:</label><input id="fl_search" type="text"><button type="submit" class="btn">search</button>
+       </div>
+     </form>
+     
+     </div>
+   </div>
+   
+   <div class="row">
+     <div class="span3">
+        <h1><a href="/" title="FLOW - Start.Build.Lead.Grow.">FLOW PLATFORM<span></span></a></h1>
+     </div>
+   </div>
+   
+   <div class="row">
+     <div class="span2">
+       <p>
+         <a class="btn btn-primary btn-large">
+           Learn more
+         </a>
+       </p>
+     </div>
+     <div class="span6">
+     
+     
+     <?php 
+            $subtree = $this->navigation()->findOneByLabel('Home');
+             
+           $options = array("ulClass"=>"nav nav-pills fl-menu",       
+                    "intent"=>"333",
+                    "minDepth" => 0,
+                    "maxDepth" => 0,
+                  "onlyActiveBranch" => false,
+                  "renderParents" => true);
            
-        </div>
-      </div>
-    </div>
-
+            echo $this->navigation()->menu()->renderMenu(null,$options);
+      ?>
+     
+     
+     </div>
+     <div class="span3">
+       <?php if(Zend_Auth::getInstance()->hasIdentity() ) {?>
+       <ul class="nav nav-pills fl-user-menu">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="/media/slepice-site/1.0.0/img/member_img_menupic.jpg" alt="" class="fl-menu-img"/>  <?= $this->member['email']?> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/member/profile/index/id/<?= $this->member['id']?>" title="">My profile</a></li>
+                <li><a href="" title="">Edit my profile</a></li>
+                <li><a href="" title="">Account settings</a></li>
+                <li class="divider"></li>
+                <li><a href="/member/index/logout" title="">Log out</a></li>
+              </ul>
+            </li>
+          </ul>
+       <?php }?>
+     </div>
+     
+   </div>
