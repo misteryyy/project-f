@@ -42,6 +42,57 @@ class ProjectPollQuestion extends \App\Entity\ProjectPollQuestion implements \Do
     }
 
     
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
+        return parent::getId();
+    }
+
+    public function getQuestion()
+    {
+        $this->__load();
+        return parent::getQuestion();
+    }
+
+    public function getPoll()
+    {
+        $this->__load();
+        return parent::getPoll();
+    }
+
+    public function getAnswers()
+    {
+        $this->__load();
+        return parent::getAnswers();
+    }
+
+    public function setId($id)
+    {
+        $this->__load();
+        return parent::setId($id);
+    }
+
+    public function setQuestion($question)
+    {
+        $this->__load();
+        return parent::setQuestion($question);
+    }
+
+    public function setPoll($poll)
+    {
+        $this->__load();
+        return parent::setPoll($poll);
+    }
+
+    public function setAnswers($answers)
+    {
+        $this->__load();
+        return parent::setAnswers($answers);
+    }
+
     public function __get($property)
     {
         $this->__load();

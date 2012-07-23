@@ -1,8 +1,8 @@
 <?php
 namespace App\Entity;
 /**
- * @Entity(repositoryClass="App\Repository\Project\PollAnswer")
- * @Table(name="poll_answer")
+ * @Entity(repositoryClass="App\Repository\Project\ProjectPollAnswer")
+ * @Table(name="project_poll_answer")
  */
 class ProjectPollAnswer
 {
@@ -22,9 +22,16 @@ class ProjectPollAnswer
      */
     private $user;
     
+    
+    /**
+     * @ManyToOne(targetEntity="ProjectPoll",inversedBy="questions")
+     * @JoinColumn(name="poll_id", referencedColumnName="id")
+     */
+    private $poll;
+    
     /**
      * @ManyToOne(targetEntity="ProjectPollQuestion",inversedBy="answers")
-     * @JoinColumn(name="project_poll_question_id", referencedColumnName="id")
+     * @JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $question;
     
@@ -36,9 +43,10 @@ class ProjectPollAnswer
     /**
      * Initialization of Collections
      */
-    public function __construct($user,$answer){
+    public function __construct($user,$answer,$poll){
     	$this->user = $user;
 		$this->answer = $answer;	
+		$this->poll = $poll;
 		$this->created = new \DateTime ( "now" );
     }
     

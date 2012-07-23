@@ -204,13 +204,15 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
     {
     	$this->checkProjectAndUser();
     	$this->view->pageTitle = "My Project Polls" ;
-    	 
-    	// receiving paginator
-    	$facadeProjectUpdate = new \App\Facade\Project\UpdateFacade($this->_em);
-    	$paginator = $facadeProjectUpdate->findProjectUpdates($this->_member_id, $this->project_id);
-    	$paginator->setItemCountPerPage(3);
+    
+    	$facadeProjectPoll = new \App\Facade\Project\PollFacade($this->_em);
+    	// get paginator
+    	$paginator = $facadeProjectPoll->findAllPollsForProjectPaginator($this->project_id);
+    	$paginator->setItemCountPerPage(25);
     	$page = $this->_request->getParam('page', 1);
     	$paginator->setCurrentPageNumber($page);
+    	
+
     	$this->view->paginator = $paginator;
     	$this->view->project = $this->project;
     }
@@ -235,8 +237,8 @@ class Member_MyProjectController extends  Boilerplate_Controller_Action_Abstract
     				$facadeProjectPoll->createPoll($this->_member_id, $this->project_id, $form->getValues());
     				
     				$this->_helper->FlashMessenger( array('success' => "New Poll was created."));
-    				//$params = array('id' => $this->project_id);
-    				//$this->_helper->redirector('poll', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
+    				$params = array('id' => $this->project_id);
+    				$this->_helper->redirector('poll', $this->getRequest()->getControllerName(), $this->getRequest()->getModuleName(), $params);
     				   
     				
 				} catch (\Exception $e){

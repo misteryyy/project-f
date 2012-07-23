@@ -24,7 +24,7 @@
 
  			<?php 
 		// if the user has identity
-    	if(Zend_Auth::getInstance()->hasIdentity()){
+    	if(!Zend_Auth::getInstance()->hasIdentity()){
     		echo $this->action('admin-menu', 'index', 'admin');  
     	}	
     	

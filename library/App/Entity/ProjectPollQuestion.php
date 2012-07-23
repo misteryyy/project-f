@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\Project\PollQuestion")
+ * @Entity(repositoryClass="App\Repository\Project\ProjectPollQuestion")
  * @Table(name="project_poll_question",indexes={@index(name="search_project_poll_question",columns={"poll_id"})})
  */
 class ProjectPollQuestion {
@@ -32,6 +32,73 @@ class ProjectPollQuestion {
 	private $answers; // if empty, we are in the first level
 	
 	
+	/**
+	 * Create new question for poll
+	 * @param unknown_type $question
+	 * @param unknown_type $poll
+	 */
+	public function __construct($question,$poll){
+		$this->question = $question;
+		$this->poll = $poll;
+		$this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+	
+	/**
+	 * @return the $id
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return the $question
+	 */
+	public function getQuestion() {
+		return $this->question;
+	}
+
+	/**
+	 * @return the $poll
+	 */
+	public function getPoll() {
+		return $this->poll;
+	}
+
+	/**
+	 * @return the $answers
+	 */
+	public function getAnswers() {
+		return $this->answers;
+	}
+
+	/**
+	 * @param field_type $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * @param field_type $question
+	 */
+	public function setQuestion($question) {
+		$this->question = $question;
+	}
+
+	/**
+	 * @param field_type $poll
+	 */
+	public function setPoll($poll) {
+		$this->poll = $poll;
+	}
+
+	/**
+	 * @param field_type $answers
+	 */
+	public function setAnswers($answers) {
+		$this->answers = $answers;
+	}
+
 	public function __get($property) {
 		// If a method exists to get the property call it.
 		if (method_exists ( $this, 'get' . ucfirst ( $property ) )) {

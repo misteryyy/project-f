@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 /**
- * @Entity(repositoryClass="App\Repository\Poll")
+ * @Entity(repositoryClass="App\Repository\Project\ProjectPoll")
  * @Table(name="project_poll")
  */
 class ProjectPoll
@@ -51,9 +51,92 @@ class ProjectPoll
     }
     
 
+	    
     
-    
-    
+
+	/**
+	 * @return the $id
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return the $created
+	 */
+	public function getCreated() {
+		return $this->created;
+	}
+
+	/**
+	 * @return the $name
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @return the $active
+	 */
+	public function getActive() {
+		return $this->active;
+	}
+
+	/**
+	 * @return the $project
+	 */
+	public function getProject() {
+		return $this->project;
+	}
+
+	/**
+	 * @return the $questions
+	 */
+	public function getQuestions() {
+		return $this->questions;
+	}
+
+	/**
+	 * @param field_type $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * @param \DateTime $created
+	 */
+	public function setCreated($created) {
+		$this->created = $created;
+	}
+
+	/**
+	 * @param field_type $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @param field_type $active
+	 */
+	public function setActive($active) {
+		$this->active = $active;
+	}
+
+	/**
+	 * @param field_type $project
+	 */
+	public function setProject($project) {
+		$this->project = $project;
+	}
+
+	/**
+	 * @param field_type $questions
+	 */
+	public function setQuestions($questions) {
+		$this->questions = $questions;
+	}
 
 	public function __get($property) {
     	// If a method exists to get the property call it.

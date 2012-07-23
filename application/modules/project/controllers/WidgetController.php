@@ -64,9 +64,34 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
     public function pollAction(){
     	$this->checkProject();
     	// check if application has been sent
+    	$facadePoll = new \App\Facade\Project\PollFacade($this->_em);
+    	try{
+    		$poll = $facadePoll->findTheLastPollForProject($this->project_id);
+    		$form = new \App\Form\Project\PollForm($this->project,$poll);
+    		$this->view->form = $form;
+    	} catch (\Exception $e){
+    		// there is no poll awailable
+    		$this->form = null;
+   			$this->isPoll = false;
+    	}
+    	if($this->_request->isPost()){
+	    	// validation data
+	    	if($form->isValid($this->_request->getParams())){
+	    		
+	    		
+	    	 $facadePoll->answerPoll($this->project_id, $this->_member_id, $form->getValue("poll_id"),$form->getValues());
+	    		
+	    		$this->_helper->FlashMessenger(array('success' => 'You have answered the poll.'));
+	    		$this->_redirect('/project/index/index/id/'.$this->project_id);
+	    	} else {
+	    		
+	    		$this->_helper->FlashMessenger(array('error' => 'Something is wrong with the form data.'));
+	    		$this->_redirect('/project/index/index/id/'.$this->project_id);
+	    		 
+	    	}
     	
-    	$form = new \App\Form\Project\PollForm($this->_member,$this->project);
-    	$this->view->form = $form;
+    	}
+    
     }
     
     /**

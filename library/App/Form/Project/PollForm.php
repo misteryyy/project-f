@@ -4,12 +4,11 @@ namespace App\Form\Project;
 class PollForm extends \Twitter_Bootstrap_Form_Horizontal
 {
 	
-	private $member = null;
 	private $project = null;
-	
-	public function __construct($member,$project)
+	private $poll = null;
+	public function __construct($project,$poll)
 	{
-		$this->member = $member;
+		$this->poll = $poll; 
 		$this->project = $project;
 		parent::__construct();
 	
@@ -18,22 +17,11 @@ class PollForm extends \Twitter_Bootstrap_Form_Horizontal
 	public function init()
 	{	
 		// ajax call
-		$this->setAction("/project/widget/ajax-poll/id/".$this->project->id."/_method/create");
-		$this->addAttribs(array("id" => "form-poll"));
+			$this->addAttribs(array("id" => "form-poll"));
 		
-		// Description of roles
-		 $this->addElement('hidden', 'logged_member', array(
-		 					'description' => '<div class="alert alert-info">Logged as: <strong>'.$this->member['name'].'</strong></div>',
-		 					'ignore' => true,
-		 					'decorators' => array(
-		 							array('Description', array('escape'=>false, 'tag'=>'')),
-		 					),
-		 			));
-		 $addGroup[] = "logged_member";
-		 
 		 // Description of roles
 		 $this->addElement('hidden', 'message', array(
-		 		'description' => '<div class="alert alert-success">1 is the best. 5 is the worst.</div>',
+		 		'description' => '<div class="alert alert-info">1 is the best. 5 is the worst.</div>',
 		 		'ignore' => true,
 		 		'decorators' => array(
 		 				array('Description', array('escape'=>false, 'tag'=>'')),
@@ -41,17 +29,26 @@ class PollForm extends \Twitter_Bootstrap_Form_Horizontal
 		 ));
 		 $addGroup[] = "message";
 		 	
+
+		 $this->addElement('hidden', 'poll_id', array(
+		 		'value' => $this->poll->id));
+		 	
+		 $addGroup[] = 'poll_id';
 		 
 		 // questions 
 		 $arrayOptions = array(1 => 1,	2 =>2,	3 => 3,4 =>4, 5 => 5);
+		 // create questions
+		 
+		 foreach ($this->poll->questions as $q){
 		 // submit button
-		 $this->addElement('select','question_1',array(
-		 		'label' => "Question number one?",
+		 	$this->addElement('select','question_'.$q->id,array(
+		 		'label' => $q->question,
+		 		'dimension' => 1,
 		 		'multiOptions' => $arrayOptions
-		 ));
-		 $addGroup[] = "question_1";
+		 	));
+		 	$addGroup[] = "question_".$q->id;
 		 
-		 
+		 }
 	
 	
 		// Form section

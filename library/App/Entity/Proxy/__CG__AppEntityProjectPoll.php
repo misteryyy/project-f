@@ -42,6 +42,81 @@ class ProjectPoll extends \App\Entity\ProjectPoll implements \Doctrine\ORM\Proxy
     }
 
     
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
+        $this->__load();
+        return parent::getId();
+    }
+
+    public function getCreated()
+    {
+        $this->__load();
+        return parent::getCreated();
+    }
+
+    public function getName()
+    {
+        $this->__load();
+        return parent::getName();
+    }
+
+    public function getActive()
+    {
+        $this->__load();
+        return parent::getActive();
+    }
+
+    public function getProject()
+    {
+        $this->__load();
+        return parent::getProject();
+    }
+
+    public function getQuestions()
+    {
+        $this->__load();
+        return parent::getQuestions();
+    }
+
+    public function setId($id)
+    {
+        $this->__load();
+        return parent::setId($id);
+    }
+
+    public function setCreated($created)
+    {
+        $this->__load();
+        return parent::setCreated($created);
+    }
+
+    public function setName($name)
+    {
+        $this->__load();
+        return parent::setName($name);
+    }
+
+    public function setActive($active)
+    {
+        $this->__load();
+        return parent::setActive($active);
+    }
+
+    public function setProject($project)
+    {
+        $this->__load();
+        return parent::setProject($project);
+    }
+
+    public function setQuestions($questions)
+    {
+        $this->__load();
+        return parent::setQuestions($questions);
+    }
+
     public function __get($property)
     {
         $this->__load();

@@ -1,6 +1,13 @@
+<?php if(!$this->isPolls) echo "There are no polls"; 
+return?>
+
 <h3 class="fl-sidebar">Leave feedback - help out!</h3>
-                <div class="fl_thick_divider"></div>
-                <div class="fl-feedback">
+ <div class="fl_thick_divider"></div>
+ <div class="fl-feedback">
+ 				 <?php echo $this->form;?>
+ 				 
+ 				 <hr>
+ 
                   <form>
                     <fieldset>
                       <legend class="hide">Leave feedback - help out</legend>
@@ -18,59 +25,7 @@
                               <input type="radio" name="q1" value="4" id="q1a4" > <label for="q1a4">4</label> 
                               <input type="radio" name="q1" value="5" id="q1a5" > <label for="q1a5">5</label> 
                             </div>
-                          </li>
-
-                          <li>
-                            <div class="fl-feedback-question">
-                              <p>How old is you dog?</p>
-                            </div>
-                            <div class="fl-feedback-answer">
-                              <input type="radio" name="q2" value="1" id="q2a1" /> <label for="q2a1">1</label> 
-                              <input type="radio" name="q2" value="2" id="q2a2" /> <label for="q2a2">2</label> 
-                              <input type="radio" name="q2" value="3" id="q2a3" /> <label for="q2a3">3</label> 
-                              <input type="radio" name="q2" value="4" id="q2a4" /> <label for="q2a4">4</label> 
-                              <input type="radio" name="q2" value="5" id="q2a5" /> <label for="q2a5">5</label> 
-                            </div>
-                          </li>
-
-                          <li>
-                            <div class="fl-feedback-question">
-                              <p>How old is you dog?</p>
-                            </div>
-                            <div class="fl-feedback-answer">
-                              <input type="radio" name="q3" value="1" id="q3a1" /> <label for="q3a1">1</label> 
-                              <input type="radio" name="q3" value="2" id="q3a2" /> <label for="q3a2">2</label> 
-                              <input type="radio" name="q3" value="3" id="q3a3" /> <label for="q3a3">3</label> 
-                              <input type="radio" name="q3" value="4" id="q3a4" /> <label for="q3a4">4</label> 
-                              <input type="radio" name="q3" value="5" id="q3a5" /> <label for="q3a5">5</label> 
-                            </div>
-                          </li>
-
-                          <li>
-                            <div class="fl-feedback-question">
-                              <p>How old is you dog?</p>
-                            </div>
-                            <div class="fl-feedback-answer">
-                              <input type="radio" name="q4" value="1" id="q4a1" /> <label for="q4a1">1</label> 
-                              <input type="radio" name="q4" value="2" id="q4a2" /> <label for="q4a2">2</label> 
-                              <input type="radio" name="q4" value="3" id="q4a3" /> <label for="q4a3">3</label> 
-                              <input type="radio" name="q4" value="4" id="q4a4" /> <label for="q4a4">4</label> 
-                              <input type="radio" name="q4" value="5" id="q4a5" /> <label for="q4a5">5</label> 
-                            </div>
-                          </li>
-
-                          <li>
-                            <div class="fl-feedback-question">
-                              <p>How old is you dog?</p>
-                            </div>
-                            <div class="fl-feedback-answer">
-                              <input type="radio" name="q5" value="1" id="q5a1" /> <label for="q5a1">1</label> 
-                              <input type="radio" name="q5" value="2" id="q5a2" /> <label for="q5a2">2</label> 
-                              <input type="radio" name="q5" value="3" id="q5a3" /> <label for="q5a3">3</label> 
-                              <input type="radio" name="q5" value="4" id="q5a4" /> <label for="q5a4">4</label> 
-                              <input type="radio" name="q5" value="5" id="q5a5" /> <label for="q5a5">5</label> 
-                            </div>
-                          </li>
+                          </li>                          
                       </ul>
                   
                       <p class="fl-feedback-info">You can change your answers later.</p>

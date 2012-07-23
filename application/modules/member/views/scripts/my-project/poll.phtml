@@ -15,22 +15,28 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
         <table class="table table-striped">
         <thead>
     		<tr>
-    			<th>Title</th>
+    			<th>Name</th>
     			<th>Created</th>
-    			<th>Last Modification</th>
+    			<th>Statistics</th>
+    			<th>Votes</th>
     			<th>Actions</th>
     		</tr>
     	</thead>
     <tbody>
-    <?php foreach ($this->paginator as $update){ ?>
+    <?php foreach ($this->paginator as $poll){ ?>
     	<tr>
-    	<td><?php echo $update->title; ?></td>
-		<td><?php echo $update->created->format('Y/m/d'); ?></td>		
-		<td><?php echo $update->modified->format('Y/m/d'); ?></td>		
-    	<td> 
-    		<a class="btn btn-info" href="/member/my-project/update-edit/id/<?php echo $this->project->id?>/update_id/<?php echo $update->id ?>">Edit</a> ~
-    		<a class="btn btn-warning" href="/member/my-project/update-delete/id/<?php echo $this->project->id?>/update_id/<?php echo $update->id ?>">Delete</a>
- 
+    	<td><?php echo $poll->name; ?></td>
+		<td>Number of Questions : <?php echo count($poll->questions);?> <br>
+			
+			<?php foreach($poll->questions as $q){
+				echo $q->question  . ": <br>".PHP_EOL;
+			}?>
+		   
+		   
+		</td>	
+		<td><?php echo $poll->created->format('Y/m/d h:m:s'); ?></td>		
+		<td> 
+    		<a class="btn btn-info" href="/member/my-project/poll-detail/id/<?php echo $this->project->id?>/poll_id/<?php echo $poll->id ?>">Detail</a> 
     	</td>			
     	</tr>	 		
     <?php } ?>

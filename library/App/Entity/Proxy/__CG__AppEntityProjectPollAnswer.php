@@ -57,7 +57,7 @@ class ProjectPollAnswer extends \App\Entity\ProjectPollAnswer implements \Doctri
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'answer', 'created', 'user', 'question');
+        return array('__isInitialized__', 'id', 'answer', 'created', 'user', 'poll', 'question');
     }
 
     public function __clone()
