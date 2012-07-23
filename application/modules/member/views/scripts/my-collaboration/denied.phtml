@@ -1,4 +1,4 @@
-<h3>My Collaborations</h3>
+  <h2 class="fl-bottom20">My collaborations</h2>
 
 <?php 
 // The main project navigation
@@ -9,7 +9,7 @@ echo $this->partial('my-collaboration/my-collaboration-navigation.phtml',array("
 
 
 <?php 
-if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
+if(count ($this->applications) > 0){ ?>
 
 <table class="table table-striped">
 	<thead>
@@ -59,4 +59,8 @@ if(count ($this->applications) <= 0){	echo "No applications"; return; } ?>
 	} // end foreach
 	?>
 	</tbody>
-	</table>	
+	</table>
+	<?php
+}else{	echo "No applications"; } ?>
+
+</div>		

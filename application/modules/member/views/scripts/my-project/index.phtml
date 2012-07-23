@@ -1,62 +1,83 @@
-<h3>My projects</h3>
-<hr/>
-<div class="well">
-	<a class="btn btn-info" href="/member/project/create-project-step-one">Create New Project</a>
-</div>
+<h2 class="fl-bottom20">My projects <a href="/member/project/create-project-step-one" title=""><span class="green"><img src="/media/slepice-site/1.0.0/img/icon_new_project.jpg" alt="" title="" /> start new project</span></a></h2>
 
+<div class="fl-cnt-100">
 <?php 
-if(count ($this->projects) > 0){ ?>	
-<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
-	<thead>
-		<tr>
-			<th>id</th>
-			<th>image</th>
-			<th>name</th>
-			<th>created</th>
-			<th>modified</th>
-			<th>tags</th>
-			<th>category</th>
-			<th>actions</th>
-		</tr>
-	</thead>
-	<tbody>
-<?php 	
-	foreach($this->projects as $project){
-		?>
-		<tr>
-			<td><?php echo $project->id?></td>
-			<td><img src="/storage/projects/<?php echo $project->dir?>/<?php echo $project->getPicture("small");?>" /></td>
-			<td><?php echo $project->title?></td>
-			<td><?php echo $project->created->format('Y/m/d');?></td>
-			<td><?php echo $project->modified->format('Y/m/d');?></td>
-			<td><?php echo $project->getTagsString()?> , <?php pr($project->getCreatorRolesArray());?> </td>
+if(count ($this->projects) > 0){ 
+
+  foreach($this->projects as $project){
+?>
+
+                <div class="fl-list-project">
+                  <div class="fl-cnt-20">
+                    <div class="fl-project-thumb">
+                      <div class="inner-5">
+                        <a href="" title=""><img src="/storage/projects/<?php echo $project->dir?>/<?php echo $project->getPicture("small");?>" alt="" title="" /></a>
+                        <div class="progress fl-similar-project-bar">
+                          <div class="fl_level<?php echo $project->level?> fl-similar-bar"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-80">
+                    <div class="inner-list-project">
+                      <div class="fl-list-project-head">
+                        <h3 class="fl-list-project-h3"><?php echo $project->title?></h3>
+                        <p class="fl-list-project-info"><i class="icon-folder-close"></i> <?php echo $project->category->name?>, <i class="icon-eye-open"></i> 87 Followers</p>
+                      </div>
+                      <div class="fl-list-project-button">
+                        <button class="btn btn-danger"><i class="icon-wrench icon-white"></i> edit project</button>
+                      </div>
+                      <div class="fl-list-project-roles">
+                        <div class="fl-list-project-roles-available">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <p class="fl-list-project-queue"><strong>6 members</strong> are waiting</p>
+                        </div>
+                        <div class="fl-list-project-roles-my">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-100 fl-margin-top10">
+                    <ul class="nav nav-pills fl-projectlist-nav">
+                      <li><a href="" title="">Updates</a></li>
+                      <li><a href="" title="">Project board</a></li>
+                      <li><a href="/member/my-project/poll/id/<?php echo $project->id?>" title="">Polls</a></li>
+                      <li><a href="/member/my-project-team/index/id/<?php echo $project->id?>" title="">Team <span class="label label-info">5/13</span></a></li>
+                      <li><a href="/member/my-project/survey/id/<?php echo $project->id?>" title="">Project survey <span class="label label-info">10/50</span></a></li>
+                      <li><a href="/member/my-project/comment-creator/id/<?php echo $project->id?>" title="">Comments for you <span class="label label-info">10</span></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="fl_thin_divider"></div>
+
+<div class="fl-cnt-100">
+			<?php echo $project->id?><br />
+			<?php echo $project->created->format('Y/m/d');?><br />
+			<?php echo $project->modified->format('Y/m/d');?><br />
+			<?php echo $project->getTagsString()?> , <?php pr($project->getCreatorRolesArray());?><br />
 		
-			<td><?php echo $project->category->name?>		
-			</td>
-			<td>
 			<a class="btn btn-info" href="/project/index/index/id/<?php echo $project->id?>">Project Public Page</a>
 			<a class="btn btn-info" href="/member/my-project/edit-project/id/<?php echo $project->id?>">Edit Description</a>
 			<a class="btn btn-info" href="/member/my-project/edit-project-picture/id/<?php echo $project->id?>">Edit Project Picture</a>
-			<a class="btn btn-info" href="/member/my-project/survey/id/<?php echo $project->id?>">Survey</a>
-			<a class="btn btn-info" href="/member/my-project/comment-creator/id/<?php echo $project->id?>">Comments for creator</a>
-			<a class="btn btn-info" href="/member/my-project/update/id/<?php echo $project->id?>">Updates</a>
-			<a class="btn btn-info" href="/member/my-project-team/index/id/<?php echo $project->id?>">Team</a>
-			<a class="btn btn-info" href="/member/my-project/poll/id/<?php echo $project->id?>">Polls</a>
 		
-			</td>
-		</tr>
-		<?php	
-	} // end foreach
-	?>
-	</tbody>
-	</table>	
+</div>
 
-
-<?php } else {
+<div class="fl_thin_divider"></div>
+<?php	
+  } // end foreach
+} else {
 	
 	echo "No projects";
 	
 }?>
+
+  </div>
+</div>
 
 
 

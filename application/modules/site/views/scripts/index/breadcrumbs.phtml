@@ -4,8 +4,9 @@
          <div id="fl_breadcrumb">
            <span class="here">You are here</span><br />
            <span class="great_than">&gt;&gt;</span>Home
-         </div>
-         <ul class="breadcrumb">
+         
+
+        <ul class="breadcrumb">
 		<?php 
 		
 		$container = $this->navigation()->breadcrumbs()->getContainer();
@@ -27,6 +28,7 @@
 		->setPartial(array('/index/partials/breadcrumb.phtml','site'));
 		?>
 		</ul>
+		</div>
        </div>
      </div> 
 
