@@ -338,22 +338,29 @@ h4.fl-project-name span{
   background: #f7f7f7;
 }
 
-
-#fl_breadcrumb{
-  width: 100%;
-  float: left;
-  margin: 5px 0 0 0;
+.fl-ul-breadcrumb{
+  list-style: none;
+  margin: 20px 0 10px 0;
   font-size: 11px;
 }
+.fl-ul-breadcrumb li {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
 
-.here{
-  font-size: 10px;
-  color: #306ba5;
+  *zoom: 1;
+  text-shadow: 0 1px 0 #ffffff;
+}
+.fl-ul-breadcrumb .divider {
+  padding: 0 5px 0 0;
+  color: #999999;
+}
+.fl-ul-breadcrumb .active a {
+  color: #333333;
 }
 
-.fl-breadcrumb-address{
-  font-size: 11px;
-  margin: 0px;
+.fl-ul-breadcrumb span{
+  font-weight: bold;
 }
 
 .fl_slider_text{
@@ -2123,3 +2130,5 @@ tr.fl-user-banned:hover{
 @media (max-width: 767px) {
 
 }
+
+

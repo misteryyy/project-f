@@ -1,36 +1,31 @@
 <!-- Breadcrumbs generation -->
-	 <div class="row">
-       <div class="span11">
-         <div id="fl_breadcrumb">
-           <span class="here">You are here</span><br />
-           <span class="great_than">&gt;&gt;</span>Home
-         
-
-        <ul class="breadcrumb">
-		<?php 
-		
-		$container = $this->navigation()->breadcrumbs()->getContainer();
-		
-		$pg = $container->findAllBy('params_label', 'ID_PROJECT_NAME');
-		foreach($pg as &$p){
-			$p->setLabel($this->project->title);
-		}
-		
-		// adding current parrameter
-		$pg = $container->findAllBy('params_id', 'ID_PROJECT');
-		foreach($pg as &$p){
-			$p->setParams(array(
-					'id'=> Zend_Controller_Front::getInstance()->getRequest()->getParam('id'),));
-		}
-		
-		echo $this->navigation()->breadcrumbs()
-		->setLinkLast(true)->setMinDepth(0)
-		->setPartial(array('/index/partials/breadcrumb.phtml','site'));
-		?>
-		</ul>
+	  <div class="row">
+        <div class="span11">       
+			<ul class="fl-ul-breadcrumb">
+	        	<li><span>You are here:</span></li>
+			<?php 
+			
+			$container = $this->navigation()->breadcrumbs()->getContainer();
+			
+			$pg = $container->findAllBy('params_label', 'ID_PROJECT_NAME');
+			foreach($pg as &$p){
+				$p->setLabel($this->project->title);
+			}
+			
+			// adding current parrameter
+			$pg = $container->findAllBy('params_id', 'ID_PROJECT');
+			foreach($pg as &$p){
+				$p->setParams(array(
+						'id'=> Zend_Controller_Front::getInstance()->getRequest()->getParam('id'),));
+			}
+			
+			echo $this->navigation()->breadcrumbs()
+			->setLinkLast(true)->setMinDepth(0)
+			->setPartial(array('/index/partials/breadcrumb.phtml','site'));
+			?>
+			</ul>
 		</div>
-       </div>
-     </div> 
+      </div> 
 
      <div class="fl_thin_divider"></div> 
 

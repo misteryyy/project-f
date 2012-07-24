@@ -1,5 +1,50 @@
-<h3>Slideshow Administration</h3>
-<hr />
+<h2>Slideshow</h2>
+
+  <div class="fl-cnt-100 fl-top">
+  			    <div class="fl-list-project">
+                  <div class="fl-cnt-20">
+                    <div class="fl-project-thumb">
+                      <div class="inner-5">
+                        <a href="" title=""><img src="slepice/img/project_img_small.jpg" alt="" title="" /></a>
+                        <div class="progress fl-similar-project-bar">
+                          <div class="fl_level1 fl-similar-bar"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-50">
+                    <div class="inner-list-project">
+                      <div class="fl-cnt-100">
+                        <h3 class="fl-list-project-h3">Name of the project</h3>
+                        <p class="fl-list-project-info"><i class="icon-folder-close"></i> Category, <i class="icon-eye-open"></i> 87 Followers</p>
+                      </div>
+                      <div class="fl-cnt-100 fl-top40">
+                        <div class="fl-list-project-roles-available">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                        </div>
+                        <div class="fl-list-project-roles-my">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-30 fl-slot">
+                    <form class="fl-slot">
+                      <fieldset>
+                        <legend class="hide">Project ID</legend>
+
+                        <label for="">Project ID</label>
+                        <input type="text" name="" id="" class="fl-width95" /><br />
+                        <button class="btn fl-width100" name="" id="">Update this slot</button>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="fl_thin_divider"></div>
 
 <?php for($i=1;$i < 6;$i++) {
 	$f = "form_slot_".$i; ?>
@@ -7,3 +52,5 @@
 	echo $this->$f;
 	?>
 <?php }?>
+
+  </div>
