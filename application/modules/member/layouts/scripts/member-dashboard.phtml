@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Project-F Beta / <?= (!is_null($this->pageTitle)) ? $this->pageTitle : " Default "; ?> </title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+   <?= $this->action('lib', 'index', 'site');  // libraries ?>
+
+   <link rel="stylesheet" href="<?=$this->baseUrl('/media/slepice-site/1.0.0/css/flow_css.css')?>">
+
+</head>
+<body>
+ <div id="fl-container">
+   <div class="container">
+     <?= $this->action('header', 'index', 'site');  ?>
+   </div>
+     <h2>SPECIALNI LAYOUT</h2>
+   <?php 
+		// if the user has identity
+    	if(Zend_Auth::getInstance()->hasIdentity()){
+    		echo $this->action('member-menu', 'dashboard', 'member');  
+    	}
+   ?>
+
+
+<div id="fl-content">
+     <div class="container"> 
+  <?= $this->action('breadcrumbs', 'index', 'site');  ?>
+   
+
+        <div class="row">
+          <div class="span8">
+          
+  <!-- Bootstrap messaging generator -->
+  <?php echo $this->flashMessenger() ; ?>
+  <?php echo $this->layout()->content; ?>
+
+          <div class="span3 fl-sidebar">
+            <div class="inner">
+              <?= $this->action('left-menu', 'index', 'site');  ?>
+            </div>
+          </div>
+
+        </div>
+
+     </div>
+
+     <div id="bottom">
+        <?= $this->action('footer', 'index', 'site');  ?>
+     </div>
+     
+    </div>
+</div>
+
+  
+ <div class="fl-bottom-line">
+  <p>&copy; 2012 SLEPICE / ZF <br />
+<small><?php echo $this->translate("Today is"); ?> <b><?php echo new Zend_Date($this->timestamp); ?></b> <?php if ($this->cachedTimestamp) { ?>(<?php echo $this->translate("Timestamp served from Memcached");?>)<?php } ?></small></p>
+ </div>
+
+</body>
+</html>

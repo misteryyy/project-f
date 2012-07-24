@@ -8,6 +8,7 @@ class Member_DashboardController extends  Boilerplate_Controller_Action_Abstract
     {
     	$member = Zend_Auth::getInstance()->getIdentity();
     	$this->view->pageTitle = $member['name'] . '\'s Dashboard ' ;
+    	$this->_helper->_layout->setLayout('member-dashboard');
     	
     
     }
