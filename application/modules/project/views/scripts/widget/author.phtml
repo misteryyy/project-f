@@ -1,0 +1,112 @@
+      <!-- Detail about author -->
+       <div class="fl-cnt-project-by">
+                <h3 class="fl-cnt-project-by-h3">Project by</h3>
+                <div class="fl_thick_divider"></div>
+                <div class="fl-cnt-project-by-content">
+                  <div class="inner">
+                    <div class="fl-cnt-project-by-content-left">
+                      <img src="<?php echo $this->userWebStorage;?><?php echo $this->project->user->getProfilePicture();?>" alt="" title="" class="fl-cnt-project-by-author-photo"/>
+                      <div class="fl-cnt-project-by-content-skills">
+                        <div class="fl-cnt-project-by-content-skill">
+                          <img src="/media/slepice-site/1.0.0/img/role40x40_2.png" alt="" title="" />
+                          <span class="fl-cnt-project-by-content-skill-role">Builder</span><br />
+                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
+                        </div>
+                        <div class="fl-cnt-project-by-content-skill">
+                          <img src="/media/slepice-site/1.0.0/img/role40x40_3.png" alt="" title="" />
+                          <span class="fl-cnt-project-by-content-skill-role">Grower</span><br />
+                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
+                        </div>
+                      </div>
+                      <div class="fl_thick_divider"></div>
+                      <div class="fl-cnt-project-by-content-earned-role">
+                        <img src="/media/slepice-site/1.0.0/img/role40x40_6.png" alt="" title="earned role" />
+                      </div>
+                    </div>
+                    <div class="fl-cnt-project-by-content-right">
+                      <div class="fl-cnt-project-by-content-inner">
+                        <h4 class="fl-cnt-project-by-content-author"><?php echo $this->project->user->name?></h4>
+                        <p class="fl-cnt-project-by-content-author-info"><i class="icon-file"></i> <a href="<?php echo $this->project->user->profileUrl?>" title="Member's Public Profile">Profile</a>, <i class="icon-thumbs-up"></i> <a href="" title="">Like</a></p>
+                        <p class="fl-cnt-project-by-content-author-description"><?php echo $this->project->user->description;?></p>
+                        
+                        <div class="fl_thin_divider"></div>
+
+                        <div class="fl-cnt-project-by-content-author-projects">
+                          <span><a href="" title="">more of 'My Projects'</a></span>
+                          <ul>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                          </ul>
+                        </div>
+
+                        <div class="fl-cnt-project-by-content-author-projects">
+                          <span><a href="" title="">more of 'My Collaborations'</a></span>
+                          
+<?php 
+if(count ($this->collaborations) > 0){	
+	foreach($this->collaborations as $a){
+	  				$project = $a->project; // role is for collaborator
+	  ?>
+
+                <div class="fl-list-project">
+                  <div class="fl-cnt-20">
+                    <div class="fl-project-thumb">
+                      <div class="inner-5">
+                        <a href="" title=""><img src="slepice/img/project_img_small.jpg" alt="" title="" /></a>
+                        <div class="progress fl-similar-project-bar">
+                          <div class="fl_level<?php echo $a->level;?> fl-similar-bar"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-60">
+                    <div class="inner-list-project">
+                      <div class="fl-cnt-100">
+                        <h3 class="fl-list-project-h3"><?php echo $project->title?></h3>
+                        <p class="fl-list-project-info"><i class="icon-folder-close"></i> <?php echo $project->category->name?>, <i class="icon-eye-open"></i> 87 Followers</p>
+                      </div>
+                      <div class="fl-cnt-100 fl-top40">
+                        <div class="fl-list-project-roles-available">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                        </div>
+                        <div class="fl-list-project-roles-my">
+                          <img src="slepice/img/role40x40_4.png" alt="" title="" />
+                          <?php echo $a->roleName?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fl-cnt-20">
+                    <ul class="nav nav-pills nav-stacked fl-collaborations-nav">
+                      <li><a href="" title="">Updates</a></li>
+                      <li><a href="/project/index/project-board/id/<?php echo $project->id?>" title="">Project board</a></li>
+                      <li><a href="" title="">Team</a></li>
+                      <li><a href="#surveyModal-id-<?php echo $a->id;?>" title="" data-toggle="modal">Project survey</a></li>
+                      <li><a href="" title="">Comments</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="fl_thin_divider"></div>
+<div class="fl-cnt-100">
+			<?php echo $a->created->format('Y/m/d h:m:s')?><br />
+			<?php echo $a->description;?><br />		
+			<a class="btn btn-info" href="/project/index/index/id/<?php echo $project->id?>">Project Public Page</a>
+</div>
+
+<?php } }// end foreach ?>
+                          <ul>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>

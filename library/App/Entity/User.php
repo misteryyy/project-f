@@ -453,6 +453,15 @@ class User {
 		return $this->userInfo;
 	}
 	
+	/**
+	 * Profile Public Url
+	 */
+	public function getProfileUrl(){
+		
+		return '/member/profile/index/id/'.$this->id;
+	}
+	
+	
 	public function setUserInfo(\App\Entity\UserInfo $info){
 		$this->userInfo = $info;
 	}

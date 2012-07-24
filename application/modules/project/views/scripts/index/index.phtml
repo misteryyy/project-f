@@ -54,61 +54,9 @@ echo $this->partial('/index/project-navigation.phtml',array("step" => $this->ste
 			?></p>
      </div>
      
-      <!-- Detail about author -->
-       <div class="fl-cnt-project-by">
-                <h3 class="fl-cnt-project-by-h3">Project by</h3>
-                <div class="fl_thick_divider"></div>
-                <div class="fl-cnt-project-by-content">
-                  <div class="inner">
-                    <div class="fl-cnt-project-by-content-left">
-                      <img src="/media/slepice-site/1.0.0/img/author.jpg" alt="" title="" class="fl-cnt-project-by-author-photo"/>
-                      <div class="fl-cnt-project-by-content-skills">
-                        <div class="fl-cnt-project-by-content-skill">
-                          <img src="/media/slepice-site/1.0.0/img/role40x40_2.png" alt="" title="" />
-                          <span class="fl-cnt-project-by-content-skill-role">Builder</span><br />
-                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
-                        </div>
-                        <div class="fl-cnt-project-by-content-skill">
-                          <img src="/media/slepice-site/1.0.0/img/role40x40_3.png" alt="" title="" />
-                          <span class="fl-cnt-project-by-content-skill-role">Grower</span><br />
-                          <span class="fl-cnt-project-by-content-skill-tag">html, php, java</span>
-                        </div>
-                      </div>
-                      <div class="fl_thick_divider"></div>
-                      <div class="fl-cnt-project-by-content-earned-role">
-                        <img src="/media/slepice-site/1.0.0/img/role40x40_6.png" alt="" title="earned role" />
-                      </div>
-                    </div>
-                    <div class="fl-cnt-project-by-content-right">
-                      <div class="fl-cnt-project-by-content-inner">
-                        <h4 class="fl-cnt-project-by-content-author"><?php echo $this->project->user->name?></h4>
-                        <p class="fl-cnt-project-by-content-author-info"><i class="icon-file"></i> <a href="" title="">Profile</a>, <i class="icon-thumbs-up"></i> <a href="" title="">Like</a></p>
-                        <p class="fl-cnt-project-by-content-author-description"> ... </p>
-                        
-                        <div class="fl_thin_divider"></div>
-
-                        <div class="fl-cnt-project-by-content-author-projects">
-                          <span><a href="" title="">more of 'My Projects'</a></span>
-                          <ul>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                          </ul>
-                        </div>
-
-                        <div class="fl-cnt-project-by-content-author-projects">
-                          <span><a href="" title="">more of 'My Collaborations'</a></span>
-                          <ul>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                            <li><a href="" title=""><img src="slepice/img/more_of_my_projects.jpg" alt="" title="" /></a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+				<!-- Author Widget -->
+				<?php echo $this->action('author', 'widget', 'project',array("id" => $this->project->id));?>
+             
      
      
 <?php } else {

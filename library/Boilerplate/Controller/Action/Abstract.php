@@ -63,6 +63,8 @@ abstract class Boilerplate_Controller_Action_Abstract extends Zend_Controller_Ac
   				$userArray["profile_picture_50"] =  $profilePhotoPathWeb.$user->getProfilePicture(\App\Entity\User::PROFILE_PHOTO_RESOLUTION_50);  					
   			}
     		$this->_member = $userArray;	 
+    		
+    		$this->view->userWebStorage = '/storage/users/';
    }
     	
    $this->view->member = $this->_member;

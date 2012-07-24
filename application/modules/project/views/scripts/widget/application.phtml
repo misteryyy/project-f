@@ -2,9 +2,9 @@
 <?php if($this->project->disableRoleWidget) { echo "<div class='well'>Widget for collaboration disabled</div>"; return;}?>
 <?php if($this->project->level > 2) { echo "<div class='well'>Is not possible to apply for collaboration in this level.</div>"; return;}?>
 
-<a hdata-toggle="modal" href="#modal-form-application" class="btn btn-primary fl-join-team-btn">
+<a data-toggle="modal" href="#modal-form-application" class="btn btn-primary fl-join-team-btn">
    <span class="fl-join-team-btn-join">join</span><br />
-   <spam class="fl-join-team-btn-label">this project</span>
+   <span class="fl-join-team-btn-label">this project</span>
 </a>
 
 <div class="modal span7 hide" id="modal-form-application">

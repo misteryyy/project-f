@@ -58,6 +58,20 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 			$this->view->form = $form;			
     }
     
+    
+    /**
+     * Author widget
+     */
+    public function authorAction(){
+    	$this->checkProject();
+    	
+    	
+    	// find users collaboration
+    	$facadeCollaboration = new \App\Facade\Project\CollaborationFacade($this->_em);
+    	$applications = $facadeCollaboration->findApplications($this->project->user->id, array('state'=>\App\Entity\ProjectApplication::APPLICATION_ACCEPTED ));
+    	$this->collaborations = $applications;
+    }
+    
     /**
      * Poll Widget
      */
