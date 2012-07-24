@@ -11,8 +11,6 @@ class PollFacade {
 		$this->em = $em;
 	}	
 	
-
-	
 	
 	/**
 	 * 
@@ -97,6 +95,7 @@ class PollFacade {
 		
  		$polls = $query->getResult();
 		
+ 		
  		if(count($polls) > 0){
  				return $polls[0];
  		}
@@ -120,6 +119,56 @@ class PollFacade {
 			throw new \Exception("This poll doesn't exists");
 		}
 		
+	}
+	
+	
+	/**
+	 * Find all answers for specifil poll and user
+	 * @param unknown_type $user_id
+	 * @param unknown_type $poll_id
+	 */
+	public function findAllAnswersForUser($project_id, $user_id,$poll_id){
+		
+		$user = $this->em->getRepository ('\App\Entity\User')->findOneById ( $user_id );
+		if(!$user){
+			throw new \Exception("Member doesn't exists");
+		}
+		
+		$project = $this->em->getRepository ('\App\Entity\Project')->findOneById($project_id);
+		if(!$project){
+			throw new \Exception("Can't find this project.");
+		}
+		
+		$stmt = 'SELECT a FROM App\Entity\ProjectPollAnswer a WHERE  a.user = ?1 AND a.poll = ?2 ';
+		$stmt .= 'ORDER BY a.id ASC';
+		
+		$query = $this->em->createQuery($stmt);
+		$query->setParameter(1, $user_id);
+		$query->setParameter(2, $poll_id);
+		
+		$polls = $query->getResult();
+		
+		return $polls;
+		
+		
+	}
+	
+	/**
+	 * Delete all answers for member who has voted for Poll
+	 * @param unknown_type $project_id
+	 * @param unknown_type $user_id
+	 * @param unknown_type $poll_id
+	 */
+	public function deleteAllAnswersForPollAndUser($project_id,$user_id,$poll_id){
+		
+		$answers = $this->findAllAnswersForUser($project_id, $user_id, $poll_id);
+		
+		if($answers){
+			foreach ($answers as $a){
+				$this->em->remove($a);
+			}	
+		}
+		$this->em->flush(); // save persistence
 	}
 	
 	/**
@@ -146,12 +195,15 @@ class PollFacade {
 		unset($data['poll_id']); // leave just answers
 		
 		
+		// delete previous answers
+		$this->deleteAllAnswersForPollAndUser($project_id, $user_id, $poll_id);
+		
 		// creating anwers
 		foreach($data as $key => $value){
 	 			$question_id = substr(strrchr($key, '_'), 1);
 	 			// find question
 	 			$question = $this->findOneQuestionForProjectPoll($project_id,$question_id);
-	 			$a = new \App\Entity\ProjectPollAnswer($user, $value);
+	 			$a = new \App\Entity\ProjectPollAnswer($user, $value, $question, $poll); // create new answer for this user
 	 			$this->em->persist($a);	 			
 		}
 		

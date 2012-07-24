@@ -44,6 +44,35 @@ class ProjectPollQuestion {
 	}
 	
 	/**
+	 * Return sum of all integer answers
+	 */
+	public function sumOfAnswers(){
+		
+		$sum = 0;
+		foreach($this->answers as $ca){
+			$sum += $ca->answer;
+		}
+			
+		return $sum;
+	}
+	
+	/**
+	 * Return avg of all integer answers
+	 */
+	public function avgOfAnswers(){
+		
+		if(count($this->answers) == 0) return 0;
+		
+		$sum = 0;
+		foreach($this->answers as $ca){
+			$sum += $ca->answer;
+		}
+		
+		return round($sum / count($this->answers),2);
+	}
+	
+	
+	/**
 	 * @return the $id
 	 */
 	public function getId() {

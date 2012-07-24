@@ -1,81 +1,39 @@
-<?php if(!$this->isPolls) echo "There are no polls"; 
-return?>
+<?php if($this->isPobll === false) { echo "There are no polls"; return; } // check if there are any polls ?>
 
+
+<?php
+// zone for member who has voted
+if ($this->hasVoted) { ?>
+<h3 class="fl-sidebar">Thank you for your feedback.</h3>
+<div class="fl-feedback">
+
+	<ul class="fl-feedback-poll">
+	 <?php
+	foreach ( $this->answers as $a ) {
+		?>
+		<li>
+			<div class="fl-feedback-question">
+				<p><?php echo $a->question->question;?></p>
+			</div>
+			<div class="fl-feedback-answer">
+						<?php echo $a->answer . "  AVG ". $a->question->avgOfAnswers();?>           
+            </div>
+		</li>                          
+		<?php }?>      
+	 </ul>
+
+	<p class="fl-feedback-info"><?php echo $this->countOfVotedMembers; ?> has voted</p>
+	<input type="submit" name="submit" value="Change your answers"
+		class="btn btn-primary right" />
+
+</div>
+
+<?php
+}
+?>
 <h3 class="fl-sidebar">Leave feedback - help out!</h3>
- <div class="fl_thick_divider"></div>
- <div class="fl-feedback">
- 				 <?php echo $this->form;?>
+<div class="fl_thick_divider"></div>
+<div class="fl-feedback">
  				 
- 				 <hr>
- 
-                  <form>
-                    <fieldset>
-                      <legend class="hide">Leave feedback - help out</legend>
-                      <p class="fl-feedback-date">This poll was created on 24th of May 2012</p>
-                        
-                      <ul class="fl-feedback-poll">
-                          <li>
-                            <div class="fl-feedback-question">
-                              <p>How old is you dog?</p>
-                            </div>
-                            <div class="fl-feedback-answer">
-                              <input type="radio" name="q1" value="1" id="q1a1" > <label for="q1a1">1</label> 
-                              <input type="radio" name="q1" value="2" id="q1a2" > <label for="q1a2">2</label> 
-                              <input type="radio" name="q1" value="3" id="q1a3" > <label for="q1a3">3</label> 
-                              <input type="radio" name="q1" value="4" id="q1a4" > <label for="q1a4">4</label> 
-                              <input type="radio" name="q1" value="5" id="q1a5" > <label for="q1a5">5</label> 
-                            </div>
-                          </li>                          
-                      </ul>
-                  
-                      <p class="fl-feedback-info">You can change your answers later.</p>
-
-                      <input type="submit" name="submit" value="Vote" class="btn btn-primary right" />
-                    </fieldset>
-                  </form>
-                </div>
-
-
-
-
-
-<script type="text/javascript">
-$(document).ready(function() { 
-	var form = $('#form-application');
-	var myModal = $('#modal-form-application');
-
-	form.validate({
-	    		rules: {
-	    			answer_1 :{
-		    			required: true,
-	    				minlength: 2
-			    		},
-			    	answer_2 :{
-		    			required: true,
-	    				minlength: 2
-			    		},
-			    	answer_3 :{
-			    			required: true,
-		    				minlength: 2
-				    		},
-				    answer_4 :{
-				    			required: true,
-			    				minlength: 2
-					    		},
-					answer_5 :{
-					    			required: true,
-				    				minlength: 2
-						    		},
-	    			content: {
-	    				required: true,
-	    				minlength: 2
-	    			}
-	    		},
-	    		   submitHandler: function(form) {
-		    		   form.submit();
-				 		myModal.modal('hide');					 		    
-			 		   }
-	    	}
-	   );	
-    }); 
-</script>
+	<?php echo $this->form;?> 	
+</div>

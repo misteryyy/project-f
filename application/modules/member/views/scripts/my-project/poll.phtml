@@ -29,10 +29,10 @@ echo $this->partial('my-project/my-project-navigation.phtml',array("step" => $th
 		<td>Number of Questions : <?php echo count($poll->questions);?> <br>
 			
 			<?php foreach($poll->questions as $q){
-				echo $q->question  . ": <br>".PHP_EOL;
+				echo $q->question  . ": with AVG ".$q->avgOfAnswers()."<br>".PHP_EOL;
 			}?>
-		   
-		   
+			
+			<?php echo count($poll->questions[0]->answers)." has been voted.";?>
 		</td>	
 		<td><?php echo $poll->created->format('Y/m/d h:m:s'); ?></td>		
 		<td> 

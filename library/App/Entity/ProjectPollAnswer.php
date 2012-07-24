@@ -43,9 +43,10 @@ class ProjectPollAnswer
     /**
      * Initialization of Collections
      */
-    public function __construct($user,$answer,$poll){
+    public function __construct($user,$answer,$question,$poll){
     	$this->user = $user;
 		$this->answer = $answer;	
+		$this->question = $question;
 		$this->poll = $poll;
 		$this->created = new \DateTime ( "now" );
     }

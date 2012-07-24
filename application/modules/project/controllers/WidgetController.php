@@ -63,24 +63,39 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
      */
     public function pollAction(){
     	$this->checkProject();
-    	// check if application has been sent
     	$facadePoll = new \App\Facade\Project\PollFacade($this->_em);
+    	
+    	// check if there is any poll
     	try{
     		$poll = $facadePoll->findTheLastPollForProject($this->project_id);
-    		$form = new \App\Form\Project\PollForm($this->project,$poll);
-    		$this->view->form = $form;
+    		$this->isPoll = true;
     	} catch (\Exception $e){
     		// there is no poll awailable
     		$this->form = null;
-   			$this->isPoll = false;
+    		$this->isPoll = false;
     	}
+    	
+    	
+    	// check if application has been sent
+    	// try to check if the user has already voted
+    		$answers = $facadePoll->findAllAnswersForUser($this->project_id, $this->_member_id, $poll->id);
+    		if($answers){
+	    		$this->view->answers = $answers;
+	    		$form = new \App\Form\Project\PollForm($this->project,$poll,$answers);
+	    		$this->view->form = $form;
+	    		$this->view->countOfVotedMembers = count($poll->questions[0]->answers); // there must be always at least one question
+	    		$this->view->hasVoted = true;
+	    	} else {
+	    		$form = new \App\Form\Project\PollForm($this->project,$poll);
+	    		$this->view->form = $form;
+	    		$this->view->hasVoted = false;	
+    		}
+
+    	// handle new voting
     	if($this->_request->isPost()){
 	    	// validation data
-	    	if($form->isValid($this->_request->getParams())){
-	    		
-	    		
+	    	if($form->isValid($this->_request->getParams())){	
 	    	 $facadePoll->answerPoll($this->project_id, $this->_member_id, $form->getValue("poll_id"),$form->getValues());
-	    		
 	    		$this->_helper->FlashMessenger(array('success' => 'You have answered the poll.'));
 	    		$this->_redirect('/project/index/index/id/'.$this->project_id);
 	    	} else {
@@ -89,6 +104,7 @@ class Project_WidgetController extends  Boilerplate_Controller_Action_Abstract
 	    		$this->_redirect('/project/index/index/id/'.$this->project_id);
 	    		 
 	    	}
+	    	
     	
     	}
     

@@ -67,7 +67,8 @@
                   <p class="fl-project-level-info"><a href="" title="Learn more about Levels">Learn more about Levels</a></p>
                 </div>
 
-                <?= $this->action('task', 'widget', 'project',array("id" => $this->project->id));  ?>
+                <?php
+	//                echo $this->action('task', 'widget', 'project',array("id" => $this->project->id));  ?>
 	    	      
                 <h3 class="fl-sidebar">Team</h3>
                 <div class="fl_thick_divider"></div>
@@ -89,8 +90,8 @@
                     <div class="inner">
                       <!-- Form Applications for Level 1 -->
                       <?php 
-                       if($this->project->level == 1)          
-                            echo $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
+//                        if($this->project->level == 1)          
+//                             echo $this->action('application', 'widget', 'project',array("id" => $this->project->id));?>
 
                           <!-- Form Applications for Level 2 -->
                               <?
