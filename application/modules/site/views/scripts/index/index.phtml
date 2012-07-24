@@ -22,7 +22,7 @@
                       <img alt="<?php echo $project->title; ?> - main picture" src="/storage/projects/<?php echo $project->dir."/".$project->getPicture('large'); ?> " />
                     </a>
                   <div class="progress">
-                    <div class="fl_level2"></div>
+                    <div class="fl_level<?php echo $project->level?>"></div>
                   </div>
                   <h3><?php echo $project->title; ?></h3>
                      <span class="author"><i class="icon-user"></i> <?php echo $project->user->name?></span>
