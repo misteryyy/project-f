@@ -1,19 +1,34 @@
-<h3>Member Administration</h3>
+<h2>Browse members</h2>
 
+              <div class="fl-cnt-100">
+                <form action="" class="well">
+                  <fieldset>
+                    <legend class="hide">Filtr members</legend>
 
+				<div class="input-append">
+                    <label for="" class="hide">Fill out the name</label>
+                    <input type="text" id="" name="" class="input-medium" />
+                    <input type="submit" class="btn" id="" name="" value="Search" />
+                </div>
+
+                  </fieldset>
+                </form>
+              </div>
+
+<div class="fl-cnt-100">
 <?php 
 if(count ($this->users) > 0){ ?>
 
 <?php 
-$message_unban = "Make Free";
-$message_ban = "Ban this user";
+$message_unban = "Unban";
+$message_ban = "Ban";
 
 ?>
 
 <div id="result">
 </div>
 
-<div class="container" style="margin-top: 20px;">			
+<div class="fl-cnt-100">			
 <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
 	<thead>
 		<tr>
@@ -34,17 +49,16 @@ $message_ban = "Ban this user";
 			<td><?php echo $user->name?></td>
 			<td><?php echo $user->email?></td>
 			<td><?php echo $user->created->format('Y/m/d');?></td>
-			<td><?php echo implode(",",$user->getRolesArray())?>		
-			</td>
+			<td><?php echo implode(",",$user->getRolesArray())?></td>
 			<td>
-			<a class="btn btn-info" href="/member/profile/index/id/<?php echo $user->id?>">Profile</a>
-			<a class="btn btn-info" href="/admin/member/log/id/<?php echo $user->id?>">Log</a>
-			~ 
 			<?php if($user->ban){?>
 				<button class="btn btn-success ban" id="submit_ban" value="<?php echo $user->id?>" ><?php echo $message_unban?></button>
 			<?php }else{ ?>
 				<button class="btn btn-danger ban" id="submit_ban" value="<?php echo $user->id?>" ><?php echo $message_ban?></button>
 			<?php }?>
+
+			<a class="btn btn-info" href="/member/profile/index/id/<?php echo $user->id?>">Profile</a>
+			<a class="btn btn-info" href="/admin/member/log/id/<?php echo $user->id?>">Log</a>
 			</td>
 		</tr>
 		<?php	
@@ -52,9 +66,9 @@ $message_ban = "Ban this user";
 	?>
 	</tbody>
 	</table>	
-	</div>
+</div>
 	
-	 <script defer="defer" src="<?=$this->baseUrl('media/data-tables-1.9.1/js/jquery.dataTables.js')?>"></script>
+	<script defer="defer" src="<?=$this->baseUrl('media/data-tables-1.9.1/js/jquery.dataTables.js')?>"></script>
 	<script defer="defer" type="text/javascript" charset="utf-8" language="javascript" src="<?=$this->baseUrl('media/data-tables-1.9.1/js/DT_bootstrap.js')?>"></script>
 	
 	<!-- ban button -->
@@ -102,5 +116,7 @@ $message_ban = "Ban this user";
 	echo "No users";
 	
 }?>
+
+</div>
 
 
